@@ -22,10 +22,10 @@
 /***********************************************************************************************************************/
 
 #include"0_meta_programming.hpp"
-//#include"1_register_machine.hpp"
+#include"1_register_machine.hpp"
 
 	using namespace meta_programming;
-//	using namespace register_machine;
+	using namespace register_machine;
 
 /***********************************************************************************************************************/
 
@@ -38,8 +38,8 @@
 
 	int main(int argc, char *argv[])
 	{
-		printf("%s\n", V_equals_void<void> ? "true" : "false");
-		printf("%s\n", V_equals_void<char> ? "true" : "false");
+		printf("%d\n", RI::apply);
+		printf("%d\n", RI::apply_2_1);
 
 		return 0;
 	}

@@ -31,25 +31,17 @@ namespace register_machine
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
-// controller:
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
-// definitions:
+// keywords:
 
 	using size_type = unsigned char;
 
 /***********************************************************************************************************************/
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
 
-// auto category:
+// controller:
 
-	template<auto V>
-	using map_type = void(*)(auto_list<V>);
-
-	template<auto V>
-	constexpr map_type<V> U_value_V = type_map<auto_list<V>>;
-
+/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
 // f array:
@@ -71,20 +63,33 @@ namespace register_machine
 
 // register:
 
-	enum RI : size_type { assign = 0, apply, test, branch, _goto, save, restore };
+	struct RI
+	{
+		enum : size_type { assign = 0, test, l_branch, r_branch, l_goto, r_goto, save, restore };
+		enum : size_type
+		{
+			apply = restore + 1	,
+
+			apply_2_0 = restore + 1	, apply_2_1	, apply_2_2	, apply_2_3	,
+			apply_2_4		, apply_2_5	, apply_2_6	, apply_2_7	, apply_2_8
+		};
+	};
 
 /***********************************************************************************************************************/
 
 // template:
 
-	enum TI : size_type
+	struct TI
 	{
-		stop = 0	, start		, pause		,
+		enum : size_type
+		{
+			stop = 0	, start		, pause		,
 
-		replace_0	, replace_1	, replace_2	, replace_3	,
-		replace_4	, replace_5	, replace_6	, replace_7	,
+			replace_0	, replace_1	, replace_2	, replace_3	,
+			replace_4	, replace_5	, replace_6	, replace_7	,
 
-		dimension
+			dimension
+		};
 	};
 
 /***********************************************************************************************************************/
@@ -136,37 +141,47 @@ namespace register_machine
 
 /***********************************************************************************************************************/
 
-//	template
-//	<
-//		auto pause_next, auto stop_next,
-//		auto lgoto_next, auto rgoto_next,
-//		auto lbranch_next, auto rbranch_next,
-//		auto label_next, auto instr_next
-//	>
-
-	template<auto pause_next, auto stop_next, auto goto_next, auto branch_next, auto label_next, auto instr_next>
+/*
+	template
+	<
+		auto pause_next, auto stop_next,
+		auto lgoto_next, auto rgoto_next,
+		auto lbranch_next, auto rbranch_next,
+		auto label_next, auto instr_next
+	>
 	constexpr size_type next(size_type d, controller_type c, size_type m, size_type n, bool branch = false)
 	{
-		bool d_break	= !bool(d);
-		bool c_break	= !d_break && (m == controller_length(c));
-		bool m_break	= !d_break && !c_break && (n == label_length(c(m)));
-		bool is_goto	= !d_break && !c_break && !m_break && (c(m)(n)(1) == RI::_goto);
+		bool d_break		= !bool(d);
+		bool c_break		= !d_break && (m == controller_length(c));
+		bool m_break		= !d_break && !c_break && (n == label_length(c(m)));
+		bool is_l_branch	= !d_break && !c_break && !m_break && (c(m)(n)(1) == RI::l_goto);
+		bool is_r_branch	= !d_break && !c_break && !m_break && (c(m)(n)(1) == RI::r_goto);
+		bool is_l_goto		= !d_break && !c_break && !m_break && (c(m)(n)(1) == RI::l_goto);
+		bool is_r_goto		= !d_break && !c_break && !m_break && (c(m)(n)(1) == RI::r_goto);
 
-		return (d_break ? pause_next		:
-			c_break ? stop_next		:
+		return (d_break ? pause_next			:
+			c_break ? stop_next			:
 			m_break ?
-				(is_goto ? goto_next	:
-				 branch  ? branch_next	:
-					   label_next)	:
-				(is_goto ? goto_next	:
-				 branch  ? branch_next	:
-					   instr_next))	(c, m, n);
+
+				(is_l_branch ? l_branch_next	:
+				 is_r_branch ? r_branch_next	:
+				 is_l_goto   ? l_goto_next	:
+				 is_r_goto   ? r_goto_next	:
+					       label_next)	:
+
+				(is_l_branch ? l_branch_next	:
+				 is_r_branch ? r_branch_next	:
+				 is_l_goto   ? l_goto_next	:
+				 is_r_goto   ? r_goto_next	:
+					       instr_next))	(c, m, n);
 	}
+*/
 
 /***********************************************************************************************************************/
 
 // next c:
 
+/*
 	constexpr size_type pn_c(controller_type c, size_type m, size_type n)	{ return TI::pause;		}
 	constexpr size_type sn_c(controller_type c, size_type m, size_type n)	{ return TI::stop;		}
 	constexpr size_type gn_c(controller_type c, size_type m, size_type n)	{ return c( c(m)(n)(1) )(1)(1);	}
@@ -176,11 +191,13 @@ namespace register_machine
 
 	constexpr size_type (*next_c)(size_type, controller_type, size_type, size_type, bool)	= next
 		<pn_c, sn_c, gn_c, bn_c, ln_c, in_c>;
+*/
 
 /***********************************************************************************************************************/
 
 // next m:
 
+/*
 	constexpr size_type pn_m(controller_type c, size_type m, size_type n)	{ return m;		}
 	constexpr size_type sn_m(controller_type c, size_type m, size_type n)	{ return m;		}
 	constexpr size_type gn_m(controller_type c, size_type m, size_type n)	{ return c(m)(n)(1);	}
@@ -190,11 +207,13 @@ namespace register_machine
 
 	constexpr size_type (*next_m)(size_type, controller_type, size_type, size_type, bool)	= next
 		<pn_m, sn_m, gn_m, bn_m, ln_m, in_m>;
+*/
 
 /***********************************************************************************************************************/
 
 // next n:
 
+/*
 	constexpr size_type pn_n(controller_type c, size_type m, size_type n)	{ return n; }
 	constexpr size_type sn_n(controller_type c, size_type m, size_type n)	{ return n; }
 	constexpr size_type gn_n(controller_type c, size_type m, size_type n)	{ return 1; }
@@ -204,6 +223,7 @@ namespace register_machine
 
 	constexpr size_type (*next_n)(size_type, controller_type, size_type, size_type, bool)	= next
 		<pn_n, sn_n, gn_n, bn_n, ln_n, in_n>;
+*/
 
 /***********************************************************************************************************************/
 
@@ -235,13 +255,16 @@ namespace register_machine
 
 // apply:
 
+/*
 	template<typename Op, auto arg1, auto arg2>
 	constexpr auto binary_apply = Op::template result<arg1, arg2>;
+*/
 
 /***********************************************************************************************************************/
 
 // at:
 
+/*
 	template<size_type> struct at;
 
 	template<>
@@ -299,6 +322,7 @@ namespace register_machine
 		template<auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7, auto... Rs>
 		static constexpr auto result = R7;
 	};
+*/
 
 /***********************************************************************************************************************/
 
@@ -310,6 +334,7 @@ namespace register_machine
 	// n  - instruction index
 	// Rs - registers
 
+/*
 	template<auto d, auto c, auto m, auto n, auto... Rs>
 	constexpr auto register_machine(void(*)(auto_list<TI::stop>))
 	{
@@ -327,6 +352,7 @@ namespace register_machine
 	{
 		return register_machine<d-1, c, m, n, Rs...>(U_value_V<next_c(d, c, m, n)>);
 	}
+*/
 
 /***********************************************************************************************************************/
 

@@ -65,7 +65,7 @@ namespace meta_programming
 
 	template<typename T>			// Unsafe to use directly,
 	constexpr void type_map(T) { }		// as T cannot equal void.
-						// use the following instead:
+						// use U_type_T instead:
 
 	template<typename T>
 	constexpr auto type_cache_to_map(void(*)(T(*)()))
@@ -97,6 +97,8 @@ namespace meta_programming
 
 /***********************************************************************************************************************/
 
+// auto to typename recovery:
+
 	template<typename> struct pattern_match_type_map;
 
 	template<typename T>
@@ -120,41 +122,38 @@ namespace meta_programming
 	//
 
 	template<typename T>
-	constexpr T auto_cache() { return { }; }
+	constexpr T type_init() { return { }; }
 
 	template<typename T>
 	constexpr auto type_map_to_cache(void(*)(T*))
 	{
-		return auto_cache<T>;
+		return type_init<T>;
 	}
 
 	template<typename T>
 	constexpr auto type_map_to_cache(void(*)(T&))
 	{
-		return auto_cache<T&>;
+		return type_init<T&>;
 	}
 
 	template<auto TMap>
-	using T_fast_type_U = decltype(type_map_to_cache<TMap>());
+	using T_fast_type_U = decltype(type_map_to_cache(TMap)());
+
+/***********************************************************************************************************************/
+
+	template<auto> struct value_map { };
+
+	template<auto V>
+	using auto_cache_type = void(*)(value_map<V>);
+
+	template<auto V>							// optimized because we know
+	constexpr auto_cache_type<V> U_value_V = type_map<value_map<V>*>;	// value_map<V> is not a reference.
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
 // identity type:
-
-/***********************************************************************************************************************/
-
-//	template<auto V1, auto V2>
-//	constexpr bool V_equal_VxV			= S__Vs::template result<V1, V2>::match;
-
-//	template<auto V1, auto V2>
-//	using S_equal_VxV				= S_boolean<V_equal_VxV<V1, V2>>;
-
-	//
-
-//	template<auto V1, auto V2>
-//	constexpr bool V_not_equal_VxV			= ! S__Vs::template result<V1, V2>::match;
 
 /***********************************************************************************************************************/
 
@@ -168,23 +167,27 @@ namespace meta_programming
 
 	//
 
-	template<typename T1, typename T2>
-	constexpr bool V_equal_TxT			= V_is_equal_UxU(U_type_T<T1>, U_type_T<T2>);
+	template<auto TMap1, auto TMap2>
+	constexpr bool V_equal_UxU = V_is_equal_UxU(TMap1, TMap2);
+
+	template<auto TMap1, auto TMap2>
+	constexpr bool V_not_equal_UxU = ! V_is_equal_UxU(TMap1, TMap2);
 
 	//
 
 	template<typename T1, typename T2>
-	constexpr bool V_not_equal_TxT			= ! V_is_equal_UxU(U_type_T<T1>, U_type_T<T2>);
+	constexpr bool V_equal_TxT = V_is_equal_UxU(U_type_T<T1>, U_type_T<T2>);
 
-/***********************************************************************************************************************/
-
-	template<auto TMap1, auto TMap2>
-	constexpr bool V_equal_UxU			= V_is_equal_UxU(TMap1, TMap2);
+	template<typename T1, typename T2>
+	constexpr bool V_not_equal_TxT = ! V_is_equal_UxU(U_type_T<T1>, U_type_T<T2>);
 
 	//
 
-	template<auto TMap1, auto TMap2>
-	constexpr bool V_not_equal_UxU			= ! V_is_equal_UxU(TMap1, TMap2);
+	template<auto V1, auto V2>
+	constexpr bool V_equal_VxV = V_is_equal_UxU(U_value_V<V1>, U_value_V<V2>);		// optimized
+
+	template<auto V1, auto V2>
+	constexpr bool V_not_equal_VxV = ! V_is_equal_UxU(U_value_V<V1>, U_value_V<V2>);	// optimized
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -196,7 +199,7 @@ namespace meta_programming
 	constexpr auto U_void						= U_type_T<void>;
 	constexpr auto U_char_ptr					= U_type_T<char*>;
 
-/***********************************************************************************************************************/
+	//
 
 	template<typename T> constexpr bool V_equals_void		= V_equal_UxU<U_type_T<T>, U_void>;
 	template<typename T> constexpr bool V_equals_char_ptr		= V_equal_UxU<U_type_T<T>, U_char_ptr>;
