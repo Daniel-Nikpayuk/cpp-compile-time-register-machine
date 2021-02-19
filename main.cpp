@@ -23,9 +23,13 @@
 
 #include"0_meta_programming.hpp"
 #include"1_register_machine.hpp"
+#include"2_testing.hpp"
+#include"3_samples.hpp"
 
 	using namespace meta_programming;
 	using namespace register_machine;
+	using namespace testing;
+	using namespace samples;
 
 /***********************************************************************************************************************/
 

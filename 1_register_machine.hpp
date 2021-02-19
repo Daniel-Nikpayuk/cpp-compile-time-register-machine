@@ -65,7 +65,7 @@ namespace register_machine
 
 	struct RI
 	{
-		enum : size_type { assign = 0, test, l_branch, r_branch, l_goto, r_goto, save, restore };
+		enum : size_type { assign = 0, test, branch, l_goto, r_goto, save, restore };
 		enum : size_type
 		{
 			apply = restore + 1	,
@@ -83,7 +83,7 @@ namespace register_machine
 	{
 		enum : size_type
 		{
-			stop = 0	, start		, pause		,
+			stop = 0	, pause		, start		,
 
 			replace_0	, replace_1	, replace_2	, replace_3	,
 			replace_4	, replace_5	, replace_6	, replace_7	,
@@ -122,15 +122,15 @@ namespace register_machine
 
 // controller:
 
-	using controller_type = label_type(*)(size_type);
+	using contr_type = label_type(*)(size_type);
 
 		// pack length is stored as the initial value.
 
 	template<label_type... Vs>
-	constexpr controller_type controller = f_array
+	constexpr contr_type controller = f_array
 		<label_type, f_array<instruction_type, f_array<size_type, sizeof...(Vs)>>, Vs...>;
 
-	constexpr size_type controller_length(controller_type c) { return c(0)(0)(0); }
+	constexpr size_type controller_length(contr_type c) { return c(0)(0)(0); }
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -141,89 +141,67 @@ namespace register_machine
 
 /***********************************************************************************************************************/
 
-/*
 	template
 	<
-		auto pause_next, auto stop_next,
-		auto lgoto_next, auto rgoto_next,
-		auto lbranch_next, auto rbranch_next,
-		auto label_next, auto instr_next
+		auto stop_next, auto pause_next, auto branch_next,
+		auto l_goto_next, auto r_goto_next, auto label_next, auto instr_next
 	>
-	constexpr size_type next(size_type d, controller_type c, size_type m, size_type n, bool branch = false)
+	constexpr size_type next(size_type d,
+		contr_type c, size_type l, size_type m, size_type n = 0, bool is_branch = false)
 	{
-		bool d_break		= !bool(d);
-		bool c_break		= !d_break && (m == controller_length(c));
-		bool m_break		= !d_break && !c_break && (n == label_length(c(m)));
-		bool is_l_branch	= !d_break && !c_break && !m_break && (c(m)(n)(1) == RI::l_goto);
-		bool is_r_branch	= !d_break && !c_break && !m_break && (c(m)(n)(1) == RI::r_goto);
-		bool is_l_goto		= !d_break && !c_break && !m_break && (c(m)(n)(1) == RI::l_goto);
-		bool is_r_goto		= !d_break && !c_break && !m_break && (c(m)(n)(1) == RI::r_goto);
-
-		return (d_break ? pause_next			:
-			c_break ? stop_next			:
-			m_break ?
-
-				(is_l_branch ? l_branch_next	:
-				 is_r_branch ? r_branch_next	:
-				 is_l_goto   ? l_goto_next	:
-				 is_r_goto   ? r_goto_next	:
-					       label_next)	:
-
-				(is_l_branch ? l_branch_next	:
-				 is_r_branch ? r_branch_next	:
-				 is_l_goto   ? l_goto_next	:
-				 is_r_goto   ? r_goto_next	:
-					       instr_next))	(c, m, n);
+		if	(!bool(d))			return pause_next  (c, l, m);
+		else if	(l == controller_length(c))	return stop_next   (c, l, m);
+		else if (is_branch)			return branch_next (c, l, m);
+		else if	(c(l)(m)(1) == RI::l_goto)	return l_goto_next (c, l, m);
+		else if (c(l)(m)(1) == RI::r_goto)	return r_goto_next (c, n, m);
+		else if (m == label_length(c(l)))	return label_next  (c, l, m);
+		else					return instr_next  (c, l, m);
 	}
-*/
 
 /***********************************************************************************************************************/
 
 // next c:
 
-/*
-	constexpr size_type pn_c(controller_type c, size_type m, size_type n)	{ return TI::pause;		}
-	constexpr size_type sn_c(controller_type c, size_type m, size_type n)	{ return TI::stop;		}
-	constexpr size_type gn_c(controller_type c, size_type m, size_type n)	{ return c( c(m)(n)(1) )(1)(1);	}
-	constexpr size_type bn_c(controller_type c, size_type m, size_type n)	{ return c( c(m)(n)(5) )(1)(1);	}
-	constexpr size_type ln_c(controller_type c, size_type m, size_type n)	{ return c(m+1)(1)(1);		}
-	constexpr size_type in_c(controller_type c, size_type m, size_type n)	{ return c(m)(n+1)(1);		}
+	constexpr size_type sn_c(contr_type c, size_type l, size_type m)	{ return TI::stop;		}
+	constexpr size_type pn_c(contr_type c, size_type l, size_type m)	{ return TI::pause;		}
+	constexpr size_type bn_c(contr_type c, size_type l, size_type m)	{ return c( c(l)(m)(5) )(1)(1);	}
+	constexpr size_type lg_c(contr_type c, size_type l, size_type m)	{ return c( c(l)(m)(1) )(1)(1);	}
+	constexpr size_type rg_c(contr_type c, size_type l, size_type m)	{ return c(l)(1)(1);		}
+	constexpr size_type ln_c(contr_type c, size_type l, size_type m)	{ return c(l+1)(1)(1);		}
+	constexpr size_type in_c(contr_type c, size_type l, size_type m)	{ return c(l)(m+1)(1);		}
 
-	constexpr size_type (*next_c)(size_type, controller_type, size_type, size_type, bool)	= next
-		<pn_c, sn_c, gn_c, bn_c, ln_c, in_c>;
-*/
+	constexpr size_type (*next_c)(size_type, contr_type, size_type, size_type, size_type, bool) = next
+		<pn_c, sn_c, bn_c, lg_c, rg_c, ln_c, in_c>;
+
+/***********************************************************************************************************************/
+
+// next l:
+
+	constexpr size_type sn_l(contr_type c, size_type l, size_type m)	{ return l;		}
+	constexpr size_type pn_l(contr_type c, size_type l, size_type m)	{ return l;		}
+	constexpr size_type bn_l(contr_type c, size_type l, size_type m)	{ return c(l)(m)(5);	}
+	constexpr size_type lg_l(contr_type c, size_type l, size_type m)	{ return c(l)(m)(1);	}
+	constexpr size_type rg_l(contr_type c, size_type l, size_type m)	{ return l;		}
+	constexpr size_type ln_l(contr_type c, size_type l, size_type m)	{ return l+1;		}
+	constexpr size_type in_l(contr_type c, size_type l, size_type m)	{ return l;		}
+
+	constexpr size_type (*next_l)(size_type, contr_type, size_type, size_type, size_type, bool) = next
+		<pn_l, sn_l, bn_l, lg_l, rg_l, ln_l, in_l>;
 
 /***********************************************************************************************************************/
 
 // next m:
 
-/*
-	constexpr size_type pn_m(controller_type c, size_type m, size_type n)	{ return m;		}
-	constexpr size_type sn_m(controller_type c, size_type m, size_type n)	{ return m;		}
-	constexpr size_type gn_m(controller_type c, size_type m, size_type n)	{ return c(m)(n)(1);	}
-	constexpr size_type bn_m(controller_type c, size_type m, size_type n)	{ return c(m)(n)(5);	}
-	constexpr size_type ln_m(controller_type c, size_type m, size_type n)	{ return m+1;		}
-	constexpr size_type in_m(controller_type c, size_type m, size_type n)	{ return m;		}
+	constexpr size_type sn_m(contr_type c, size_type l, size_type m)	{ return m; }
+	constexpr size_type pn_m(contr_type c, size_type l, size_type m)	{ return m; }
+	constexpr size_type bn_m(contr_type c, size_type l, size_type m)	{ return 1; }
+	constexpr size_type lg_m(contr_type c, size_type l, size_type m)	{ return 1; }
+	constexpr size_type rg_m(contr_type c, size_type l, size_type m)	{ return 1; }
+	constexpr size_type ln_m(contr_type c, size_type l, size_type m)	{ return 1; }
+	constexpr size_type in_m(contr_type c, size_type l, size_type m)	{ return m+1; }
 
-	constexpr size_type (*next_m)(size_type, controller_type, size_type, size_type, bool)	= next
-		<pn_m, sn_m, gn_m, bn_m, ln_m, in_m>;
-*/
-
-/***********************************************************************************************************************/
-
-// next n:
-
-/*
-	constexpr size_type pn_n(controller_type c, size_type m, size_type n)	{ return n; }
-	constexpr size_type sn_n(controller_type c, size_type m, size_type n)	{ return n; }
-	constexpr size_type gn_n(controller_type c, size_type m, size_type n)	{ return 1; }
-	constexpr size_type bn_n(controller_type c, size_type m, size_type n)	{ return 1; }
-	constexpr size_type ln_n(controller_type c, size_type m, size_type n)	{ return 1; }
-	constexpr size_type in_n(controller_type c, size_type m, size_type n)	{ return n+1; }
-
-	constexpr size_type (*next_n)(size_type, controller_type, size_type, size_type, bool)	= next
-		<pn_n, sn_n, gn_n, bn_n, ln_n, in_n>;
-*/
+	constexpr size_type (*next_m)(size_type, contr_type, size_type, size_type, size_type, bool) = next
+		<pn_m, sn_m, bn_m, lg_m, rg_m, ln_m, in_m>;
 
 /***********************************************************************************************************************/
 
