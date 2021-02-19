@@ -45,7 +45,7 @@ namespace testing
 	constexpr size_type next_v1(size_type d, contr_type c, size_type l, size_type m, size_type n = 0, bool is_branch = false)
 	{
 		bool d_break		= !bool(d);
-		bool c_break		= !d_break && (l == controller_length(c));
+		bool c_break		= !d_break && (l == contr_length(c));
 		bool l_break		= !d_break && !c_break && (m == label_length(c(l)));
 		bool is_l_goto		= !d_break && !c_break && !l_break && (c(l)(m)(1) == RI::l_goto);
 		bool is_r_goto		= !d_break && !c_break && !l_break && (c(l)(m)(1) == RI::r_goto);

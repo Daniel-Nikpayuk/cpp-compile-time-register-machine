@@ -50,10 +50,11 @@ namespace samples
 
 // list 1000:
 
-		// rows:        40
-		// columns:     25
-		// length:    1000
-		// 1729:       704, 862, 887
+		// rows:           40
+		// columns:        25
+		// length:       1000
+		// 1729:          704, 862, 887
+		// U_type_T<int>: 299
 
 	using list_1000 = auto_list
 	<
@@ -70,7 +71,7 @@ namespace samples
 	     1, 3,   6,  3,    1,     1, 3,   6,  3, 1,     1, 3,    6,  3, 1,     1, 3,   6,  3, 1,     1, 3,   6,  3, 1,
 
 	     5, 3,  12,  9,    7,     5, 3,  12,  9, 7,     5, 3,   12,  9, 7,     5, 3,  12,  9, 7,     5, 3,  12,  9, 7,
-	    -2, 0, 223, 11,    7,     6, 5,   4,  3, 2,     6, 5,    4,  3, 2,     6, 5,   4,  3, 2,     6, 5,   4,  3, 2,
+	    -2, 0, 223, 11,    7,     6, 5,   4,  3, 2,     6, 5,    4,  3, 2,     6, 5,   4,  3, 2,     6, 5,   4,  3, U_type_T<int>,
 	     4, 4,   4,  4,    4,     4, 4,   4,  4, 4,     4, 4,    4,  4, 4,     4, 4,   4,  4, 4,     4, 4,   4,  4, 4,
 	     6, 5,   4,  3,    2,    -2, 0, 223, 11, 7,    -2, 0,  223, 11, 7,    -2, 0, 223, 11, 7,    -2, 0, 223, 11, 7,
 	     1, 3,   6,  3,    1,     1, 3,   6,  3, 1,     1, 3,    6,  3, 1,     1, 3,   6,  3, 1,     1, 3,   6,  3, 1,
@@ -127,12 +128,12 @@ namespace samples
 		<
 			label // fact loop:
 			<
-				instruction < RI::branch , base_case , eq         , n   , c_1        >,
-				instruction < RI::save   , cont                                      >,
-				instruction < RI::save   , n                                         >,
-				instruction < RI::apply  , n         , sub        , n   , c_1        >,
-				instruction < RI::assign , cont      , after_fact                    >,
-				instruction < RI::l_goto , fact_loop                                 >
+				instruction < RI::branch , base_case , eq         , n , c_1 >,
+				instruction < RI::save   , cont                             >,
+				instruction < RI::save   , n                                >,
+				instruction < RI::apply  , n         , sub        , n , c_1 >,
+				instruction < RI::assign , cont      , after_fact           >,
+				instruction < RI::l_goto , fact_loop                        >
 			>,
 
 			label // after fact:
@@ -149,7 +150,10 @@ namespace samples
 				instruction < RI::r_goto , cont       >
 			>,
 
-			label<> // base case:
+			label // fact done:
+			<
+				instruction < RI::size , 7 >
+			>
 		>;
 	};
 
