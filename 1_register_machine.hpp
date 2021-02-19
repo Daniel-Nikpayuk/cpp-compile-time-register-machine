@@ -65,7 +65,7 @@ namespace register_machine
 
 	struct RI
 	{
-		enum : size_type { assign = 0, test, branch, l_goto, r_goto, save, restore };
+		enum : size_type { assign = 0, branch, l_goto, r_goto, save, restore };
 		enum : size_type
 		{
 			apply = restore + 1	,
@@ -87,6 +87,8 @@ namespace register_machine
 
 			replace_0	, replace_1	, replace_2	, replace_3	,
 			replace_4	, replace_5	, replace_6	, replace_7	,
+			replace_8	, replace_9	, replace_10	, replace_11	,
+			replace_12	, replace_13	, replace_14	, replace_15	,
 
 			dimension
 		};
@@ -165,13 +167,13 @@ namespace register_machine
 	constexpr size_type sn_c(contr_type c, size_type l, size_type m)	{ return TI::stop;		}
 	constexpr size_type pn_c(contr_type c, size_type l, size_type m)	{ return TI::pause;		}
 	constexpr size_type bn_c(contr_type c, size_type l, size_type m)	{ return c( c(l)(m)(5) )(1)(1);	}
-	constexpr size_type lg_c(contr_type c, size_type l, size_type m)	{ return c( c(l)(m)(1) )(1)(1);	}
+	constexpr size_type lg_c(contr_type c, size_type l, size_type m)	{ return c( c(l)(m)(2) )(1)(1);	}
 	constexpr size_type rg_c(contr_type c, size_type l, size_type m)	{ return c(l)(1)(1);		}
 	constexpr size_type ln_c(contr_type c, size_type l, size_type m)	{ return c(l+1)(1)(1);		}
 	constexpr size_type in_c(contr_type c, size_type l, size_type m)	{ return c(l)(m+1)(1);		}
 
 	constexpr size_type (*next_c)(size_type, contr_type, size_type, size_type, size_type, bool) = next
-		<pn_c, sn_c, bn_c, lg_c, rg_c, ln_c, in_c>;
+		<sn_c, pn_c, bn_c, lg_c, rg_c, ln_c, in_c>;
 
 /***********************************************************************************************************************/
 
@@ -180,13 +182,13 @@ namespace register_machine
 	constexpr size_type sn_l(contr_type c, size_type l, size_type m)	{ return l;		}
 	constexpr size_type pn_l(contr_type c, size_type l, size_type m)	{ return l;		}
 	constexpr size_type bn_l(contr_type c, size_type l, size_type m)	{ return c(l)(m)(5);	}
-	constexpr size_type lg_l(contr_type c, size_type l, size_type m)	{ return c(l)(m)(1);	}
+	constexpr size_type lg_l(contr_type c, size_type l, size_type m)	{ return c(l)(m)(2);	}
 	constexpr size_type rg_l(contr_type c, size_type l, size_type m)	{ return l;		}
 	constexpr size_type ln_l(contr_type c, size_type l, size_type m)	{ return l+1;		}
 	constexpr size_type in_l(contr_type c, size_type l, size_type m)	{ return l;		}
 
 	constexpr size_type (*next_l)(size_type, contr_type, size_type, size_type, size_type, bool) = next
-		<pn_l, sn_l, bn_l, lg_l, rg_l, ln_l, in_l>;
+		<sn_l, pn_l, bn_l, lg_l, rg_l, ln_l, in_l>;
 
 /***********************************************************************************************************************/
 
@@ -201,27 +203,14 @@ namespace register_machine
 	constexpr size_type in_m(contr_type c, size_type l, size_type m)	{ return m+1; }
 
 	constexpr size_type (*next_m)(size_type, contr_type, size_type, size_type, size_type, bool) = next
-		<pn_m, sn_m, bn_m, lg_m, rg_m, ln_m, in_m>;
+		<sn_m, pn_m, bn_m, lg_m, rg_m, ln_m, in_m>;
 
 /***********************************************************************************************************************/
 
 // instruction accessors:
 
-/*
-	constexpr size_type rm_replace(control_type control, size_type m, size_type n)
-	{
-		return control(label)(index)(1);
-	}
-
-	template<control_type control, size_type m, size_type n>
-	using rm_op = T_type_U<control(label)(index)(0)>;
-
-	template<control_type control, size_type m, size_type n>
-	constexpr size_type rm_arg1 = control(label)(index)(1);
-
-	template<control_type control, size_type m, size_type n>
-	constexpr size_type rm_arg1 = control(label)(index)(2);
-*/
+	template<contr_type c, size_type l, size_type m>
+	constexpr size_type instr_name = c(l)(m)(1);
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -240,223 +229,283 @@ namespace register_machine
 
 /***********************************************************************************************************************/
 
-// at:
-
-/*
-	template<size_type> struct at;
-
-	template<>
-	struct at<0>
-	{
-		template<auto R0, auto... Rs>
-		static constexpr auto result = R0;
-	};
-
-	template<>
-	struct at<1>
-	{
-		template<auto R0, auto R1, auto... Rs>
-		static constexpr auto result = R1;
-	};
-
-	template<>
-	struct at<2>
-	{
-		template<auto R0, auto R1, auto R2, auto... Rs>
-		static constexpr auto result = R2;
-	};
-
-	template<>
-	struct at<3>
-	{
-		template<auto R0, auto R1, auto R2, auto R3, auto... Rs>
-		static constexpr auto result = R3;
-	};
-
-	template<>
-	struct at<4>
-	{
-		template<auto R0, auto R1, auto R2, auto R3, auto R4, auto... Rs>
-		static constexpr auto result = R4;
-	};
-
-	template<>
-	struct at<5>
-	{
-		template<auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto... Rs>
-		static constexpr auto result = R5;
-	};
-
-	template<>
-	struct at<6>
-	{
-		template<auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto... Rs>
-		static constexpr auto result = R6;
-	};
-
-	template<>
-	struct at<7>
-	{
-		template<auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7, auto... Rs>
-		static constexpr auto result = R7;
-	};
-*/
-
-/***********************************************************************************************************************/
-
 // kernel:
 
 	// d  - depth
 	// c  - control
-	// m  - label index
-	// n  - instruction index
+	// l  - label index
+	// m  - instruction index
 	// Rs - registers
 
-/*
-	template<auto d, auto c, auto m, auto n, auto... Rs>
-	constexpr auto register_machine(void(*)(auto_list<TI::stop>))
+	template<auto d, auto c, auto l, auto m, auto... Rs>
+	constexpr auto register_machine(void(*)(auto_map<TI::stop>*))
 	{
 		return type_map<auto_list<Rs...>>;
 	}
 
-	template<auto d, auto c, auto m, auto n, auto... Rs>
-	constexpr auto register_machine(void(*)(auto_list<TI::pause>))
+	template<auto d, auto c, auto l, auto m, auto... Rs>
+	constexpr auto register_machine(void(*)(auto_map<TI::pause>*))
 	{
-		return type_map<alt_list<c, m, n, Rs...>>;
+		return type_map<alt_list<c, l, m, Rs...>>;
 	}
 
-	template<auto d, auto c, auto m, auto n, auto... Rs>
-	constexpr auto register_machine(void(*)(auto_list<TI::start>))
+	template<auto d, auto c, auto... Rs>
+	constexpr auto register_machine(void(*)(auto_map<TI::start>*))
 	{
-		return register_machine<d-1, c, m, n, Rs...>(U_value_V<next_c(d, c, m, n)>);
+		return register_machine<d-1, c, 1, 1, Rs...>(U_value_V<c(1)(1)(1)>);
 	}
-*/
 
 /***********************************************************************************************************************/
 
-// replace:
+// replace (fast tracking) [0-15):
 
-/*
-	template<>
-	struct register_machine<TI::replace_0>
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_0>*))
 	{
-		template
+		return register_machine
 		<
-			auto d, auto c, auto m, auto n, auto V,
-			auto R0, auto... Rs
-		>
-		using result = typename register_machine
-		<
-			rm_instruction(c, false, m, n)
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			V, Rs...
 
-		>::template result<d-1, c, m, n, V, Rs...>;
-	};
+		>(U_value_V<next_c(c, l, m)>);
+	}
 
-	template<>
-	struct register_machine<TI::replace_1>
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_1>*))
 	{
-		template
+		return register_machine
 		<
-			auto d, auto c, auto m, auto n, auto V,
-			auto R0, auto R1, auto... Rs
-		>
-		using result = typename register_machine
-		<
-			rm_instruction(c, false, m, n)
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, V, Rs...
 
-		>::template result<d-1, c, m, n, R0, V, Rs...>;
-	};
+		>(U_value_V<next_c(c, l, m)>);
+	}
 
-	template<>
-	struct register_machine<TI::replace_2>
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_2>*))
 	{
-		template
+		return register_machine
 		<
-			auto d, auto c, auto m, auto n, auto V,
-			auto R0, auto R1, auto R2, auto... Rs
-		>
-		using result = typename register_machine
-		<
-			rm_instruction(c, false, m, n)
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, V, Rs...
 
-		>::template result<d-1, c, m, n, R0, R1, V, Rs...>;
-	};
+		>(U_value_V<next_c(c, l, m)>);
+	}
 
-	template<>
-	struct register_machine<TI::replace_3>
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto R3, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_3>*))
 	{
-		template
+		return register_machine
 		<
-			auto d, auto c, auto m, auto n, auto V,
-			auto R0, auto R1, auto R2, auto R3, auto... Rs
-		>
-		using result = typename register_machine
-		<
-			rm_instruction(c, false, m, n)
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, R2, V, Rs...
 
-		>::template result<d-1, c, m, n, R0, R1, R2, V, Rs...>;
-	};
+		>(U_value_V<next_c(c, l, m)>);
+	}
 
-	template<>
-	struct register_machine<TI::replace_4>
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto R3, auto R4, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_4>*))
 	{
-		template
+		return register_machine
 		<
-			auto d, auto c, auto m, auto n, auto V,
-			auto R0, auto R1, auto R2, auto R3, auto R4, auto... Rs
-		>
-		using result = typename register_machine
-		<
-			rm_instruction(c, false, m, n)
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, R2, R3, V, Rs...
 
-		>::template result<d-1, c, m, n, R0, R1, R2, R3, V, Rs...>;
-	};
+		>(U_value_V<next_c(c, l, m)>);
+	}
 
-	template<>
-	struct register_machine<TI::replace_5>
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_5>*))
 	{
-		template
+		return register_machine
 		<
-			auto d, auto c, auto m, auto n, auto V,
-			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto... Rs
-		>
-		using result = typename register_machine
-		<
-			rm_instruction(c, false, m, n)
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, R2, R3, R4, V, Rs...
 
-		>::template result<d-1, c, m, n, R0, R1, R2, R3, R4, V, Rs...>;
-	};
+		>(U_value_V<next_c(c, l, m)>);
+	}
 
-	template<>
-	struct register_machine<TI::replace_6>
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_6>*))
 	{
-		template
+		return register_machine
 		<
-			auto d, auto c, auto m, auto n, auto V,
-			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto... Rs
-		>
-		using result = typename register_machine
-		<
-			rm_instruction(c, false, m, n)
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, R2, R3, R4, R5, V, Rs...
 
-		>::template result<d-1, c, m, n, R0, R1, R2, R3, R4, R5, V, Rs...>;
-	};
+		>(U_value_V<next_c(c, l, m)>);
+	}
 
-	template<>
-	struct register_machine<TI::replace_7>
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_7>*))
 	{
-		template
+		return register_machine
 		<
-			auto d, auto c, auto m, auto n, auto V,
-			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7, auto... Rs
-		>
-		using result = typename register_machine
-		<
-			rm_instruction(c, false, m, n)
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, R2, R3, R4, R5, R6, V, Rs...
 
-		>::template result<d-1, c, m, n, R0, R1, R2, R3, R4, R5, R6, V, Rs...>;
-	};
-*/
+		>(U_value_V<next_c(c, l, m)>);
+	}
+
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+		auto R8, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_8>*))
+	{
+		return register_machine
+		<
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, R2, R3, R4, R5, R6, R7, V, Rs...
+
+		>(U_value_V<next_c(c, l, m)>);
+	}
+
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+		auto R8, auto R9, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_9>*))
+	{
+		return register_machine
+		<
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, R2, R3, R4, R5, R6, R7, R8, V, Rs...
+
+		>(U_value_V<next_c(c, l, m)>);
+	}
+
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+		auto R8, auto R9, auto R10, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_10>*))
+	{
+		return register_machine
+		<
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, V, Rs...
+
+		>(U_value_V<next_c(c, l, m)>);
+	}
+
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+		auto R8, auto R9, auto R10, auto R11, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_11>*))
+	{
+		return register_machine
+		<
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, V, Rs...
+
+		>(U_value_V<next_c(c, l, m)>);
+	}
+
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+		auto R8, auto R9, auto R10, auto R11, auto R12, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_12>*))
+	{
+		return register_machine
+		<
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, V, Rs...
+
+		>(U_value_V<next_c(c, l, m)>);
+	}
+
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+		auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_13>*))
+	{
+		return register_machine
+		<
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, V, Rs...
+
+		>(U_value_V<next_c(c, l, m)>);
+	}
+
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+		auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto R14, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_14>*))
+	{
+		return register_machine
+		<
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, V, Rs...
+
+		>(U_value_V<next_c(c, l, m)>);
+	}
+
+	template
+	<
+		auto d, auto c, auto l, auto m, auto V,
+		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+		auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto R14, auto R15, auto... Rs
+	>
+	constexpr auto register_machine(void(*)(auto_map<TI::replace_15>*))
+	{
+		return register_machine
+		<
+			d-1, c, next_l(c, l, m), next_m(c, l, m),
+			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, V, Rs...
+
+		>(U_value_V<next_c(c, l, m)>);
+	}
 
 /***********************************************************************************************************************/
 
@@ -466,30 +515,11 @@ namespace register_machine
 
 // operators:
 
-/*
-	template<>
-	struct register_machine<TI::binary_apply>
-	{
-		template<auto d, auto c, auto m, auto n, auto... Rs>
-		using result = typename register_machine
-		<
-			rm_replace(c, m, n)
-
-		>::template result
-		<
-			d-1, c, label(m), index(n),
-
-			binary_apply
-			<
-				rm_op<c, label, index>,
-				rm_arg1<c, label, index>,
-				rm_arg2<c, label, index>
-			>,
-
-			Rs...
-		>;
-	};
-*/
+//	template<auto d, auto c, auto l, auto m, auto... Rs>
+//	constexpr auto register_machine(void(*)(auto_map<TI::apply>*))
+//	{
+//		return register_machine  <d-1, c, l, m, apply(c, l, m), Rs...>  (U_value_V<replace(c, l, m)>);
+//	}
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

@@ -25,7 +25,7 @@
 
 namespace testing
 {
-	using namespace register_machine;
+	using namespace samples;
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -74,7 +74,6 @@ namespace testing
 	void print_RI(size_type n)
 	{
 		printf("%s, ",	(n == RI::assign  ) ? "assign"	:
-				(n == RI::test    ) ? "test"	:
 				(n == RI::branch  ) ? "branch"	:
 				(n == RI::l_goto  ) ? "l_goto"	:
 				(n == RI::r_goto  ) ? "r_goto"	:
@@ -86,6 +85,37 @@ namespace testing
 	{
 		print_RI(next_c(d, c, l, m, n, is_branch));
 		printf("%u, %u\n", next_l(d, c, l, m, n, is_branch), next_m(d, c, l, m, n, is_branch));
+	}
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// next:
+
+	void test_next()
+	{
+		print_next(1, fact_c, 1, 1, 0, true);	// assign  3 1
+		print_next(1, fact_c, 1, 1);		// save    1 2
+		print_next(1, fact_c, 1, 2);		// save    1 3
+		print_next(1, fact_c, 1, 3);		// apply   1 4
+		print_next(1, fact_c, 1, 4);		// assign  1 5
+		print_next(1, fact_c, 1, 5);		// l_goto  1 6
+		print_next(1, fact_c, 1, 6);		// branch  1 1
+		printf("\n");
+
+		print_next(1, fact_c, 2, 1);		// restore 2 2
+		print_next(1, fact_c, 2, 2);		// apply   2 3
+		print_next(1, fact_c, 2, 3);		// r_goto  2 4
+		print_next(1, fact_c, 2, 4, 1);		// branch  1 1
+		print_next(1, fact_c, 2, 4, 2);		// restore 2 1
+		print_next(1, fact_c, 2, 4, 3);		// assign  3 1
+		printf("\n");
+
+		print_next(1, fact_c, 3, 1);		// r_goto  3 2
+		print_next(1, fact_c, 3, 2, 1);		// branch  1 1
+		print_next(1, fact_c, 3, 2, 2);		// restore 2 1
+		print_next(1, fact_c, 3, 2, 3);		// assign  3 1
 	}
 
 /***********************************************************************************************************************/

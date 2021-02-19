@@ -23,13 +23,13 @@
 
 #include"0_meta_programming.hpp"
 #include"1_register_machine.hpp"
-#include"2_testing.hpp"
-#include"3_samples.hpp"
+#include"2_samples.hpp"
+#include"3_testing.hpp"
 
 	using namespace meta_programming;
 	using namespace register_machine;
-	using namespace testing;
 	using namespace samples;
+	using namespace testing;
 
 /***********************************************************************************************************************/
 
@@ -42,8 +42,7 @@
 
 	int main(int argc, char *argv[])
 	{
-		printf("%d\n", RI::apply);
-		printf("%d\n", RI::apply_2_1);
+	//	test_next();
 
 		return 0;
 	}

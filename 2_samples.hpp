@@ -127,7 +127,7 @@ namespace samples
 		<
 			label // fact loop:
 			<
-				instruction < RI::branch , eq        , n          , c_1 , base_case  >,
+				instruction < RI::branch , base_case , eq         , n   , c_1        >,
 				instruction < RI::save   , cont                                      >,
 				instruction < RI::save   , n                                         >,
 				instruction < RI::apply  , n         , sub        , n   , c_1        >,

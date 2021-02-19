@@ -141,13 +141,13 @@ namespace meta_programming
 
 /***********************************************************************************************************************/
 
-	template<auto> struct value_map { };
+	template<auto> struct auto_map { };
 
 	template<auto V>
-	using auto_cache_type = void(*)(value_map<V>);
+	using auto_cache_type = void(*)(auto_map<V>*);
 
 	template<auto V>							// optimized because we know
-	constexpr auto_cache_type<V> U_value_V = type_map<value_map<V>*>;	// value_map<V> is not a reference.
+	constexpr auto_cache_type<V> U_value_V = type_map<auto_map<V>*>;	// auto_map<V> is not a reference.
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -212,7 +212,132 @@ namespace meta_programming
 
 /***********************************************************************************************************************/
 
-	template<auto...> struct auto_list { };
+	template<auto...> struct auto_list	{ };
+	template<auto...> struct alt_list	{ };
+
+/***********************************************************************************************************************/
+
+// at (fast tracking) [0-15):
+
+	template
+	<
+		typename T,
+		auto V0, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(0)>)) { return V0; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(1)>)) { return V1; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(2)>)) { return V2; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto V3, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(3)>)) { return V3; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto V3, auto V4, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(4)>)) { return V4; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(5)>)) { return V5; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(6)>)) { return V6; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(7)>)) { return V7; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
+		auto V8, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(8)>)) { return V8; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
+		auto V8, auto V9, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(9)>)) { return V9; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
+		auto V8, auto V9, auto V10, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(10)>)) { return V10; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
+		auto V8, auto V9, auto V10, auto V11, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(11)>)) { return V11; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
+		auto V8, auto V9, auto V10, auto V11, auto V12, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(12)>)) { return V12; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
+		auto V8, auto V9, auto V10, auto V11, auto V12, auto V13, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(13)>)) { return V13; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
+		auto V8, auto V9, auto V10, auto V11, auto V12, auto V13, auto V14, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(14)>)) { return V14; }
+
+	template
+	<
+		typename T,
+		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
+		auto V8, auto V9, auto V10, auto V11, auto V12, auto V13, auto V14, auto V15, auto... Vs
+	>
+	constexpr auto at(void(*)(auto_map<T(15)>)) { return V15; }
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
