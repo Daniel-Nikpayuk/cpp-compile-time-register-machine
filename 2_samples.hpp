@@ -128,20 +128,20 @@ namespace samples
 		<
 			label // fact loop:
 			<
-				instruction < RI::branch , base_case , eq         , n , c_1 >,
-				instruction < RI::save   , cont                             >,
-				instruction < RI::save   , n                                >,
-				instruction < RI::apply  , n         , sub        , n , c_1 >,
-				instruction < RI::assign , cont      , after_fact           >,
-				instruction < RI::l_goto , fact_loop                        >
+				instruction < RI::b_branch , base_case , eq         , n , c_1 >,
+				instruction < RI::save     , cont                             >,
+				instruction < RI::save     , n                                >,
+				instruction < RI::b_apply  , n         , sub        , n , c_1 >,
+				instruction < RI::assign   , cont      , after_fact           >,
+				instruction < RI::l_goto   , fact_loop                        >
 			>,
 
 			label // after fact:
 			<
-				instruction < RI::restore , n                     >,
-				instruction < RI::restore , cont                  >,
-				instruction < RI::apply   , val  , mult , n , val >,
-				instruction < RI::r_goto  , cont                  >
+				instruction < RI::restore  , n                     >,
+				instruction < RI::restore  , cont                  >,
+				instruction < RI::b_apply  , val  , mult , n , val >,
+				instruction < RI::r_goto   , cont                  >
 			>,
 
 			label // base case:
@@ -152,7 +152,7 @@ namespace samples
 
 			label // fact done:
 			<
-				instruction < RI::size , 7 >
+				instruction < RI::r_size , 7 >
 			>
 		>;
 	};

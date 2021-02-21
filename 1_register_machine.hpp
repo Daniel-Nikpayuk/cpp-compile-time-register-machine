@@ -67,24 +67,39 @@ namespace register_machine
 	{
 		enum : size_type
 		{
-			stop = 0   , pause      , start      ,
-			replace_0  , replace_1  , replace_2  , replace_3  ,
-			replace_4  , replace_5  , replace_6  , replace_7  ,
-			replace_8  , replace_9  , replace_10 , replace_11 ,
-			replace_12 , replace_13 , replace_14 , replace_15 ,
-			branch     , l_goto     , r_goto     , save       , restore , assign
+			stop = 0   , pause      , start      , u_branch   ,
+			b_branch   , l_goto     , r_goto     , assign     ,
+			save       , restore    , u_apply    , b_apply    ,
+
+		// dispatch optimizations require these to be consecutive:
+
+			assign_0   , assign_1   , assign_2   , assign_3   ,
+			assign_4   , assign_5   , assign_6   , assign_7   ,
+			assign_8   , assign_9   , assign_10  , assign_11  ,
+			assign_12  , assign_13  , assign_14  , assign_15  ,
+
+		// dispatch optimizations require these to be consecutive:
+
+			save_0     , save_1     , save_2     , save_3     ,
+			save_4     , save_5     , save_6     , save_7     ,
+			save_8     , save_9     , save_10    , save_11    ,
+			save_12    , save_13    , save_14    , save_15    ,
+
+		// dispatch optimizations require these to be consecutive:
+
+			restore_0  , restore_1  , restore_2  , restore_3  ,
+			restore_4  , restore_5  , restore_6  , restore_7  ,
+			restore_8  , restore_9  , restore_10 , restore_11 ,
+			restore_12 , restore_13 , restore_14 , restore_15 ,
+
+			r_size
 		};
 
 		enum : size_type
 		{
-			apply = restore + 1 , apply_2_0 = restore + 1 ,
-			apply_2_1           , apply_2_2               , apply_2_3 , apply_2_4 ,
-			apply_2_5           , apply_2_6               , apply_2_7 , apply_2_8
-		};
-
-		enum : size_type
-		{
-			size = apply_2_8
+			fold = r_size + 1     ,
+			fold_2_0 = r_size + 1 , fold_2_1 , fold_2_2 , fold_2_3 , fold_2_4 ,
+			fold_2_5              , fold_2_6 , fold_2_7 , fold_2_8 , fold_2_9
 		};
 	};
 
@@ -126,78 +141,108 @@ namespace register_machine
 	constexpr contr_type controller = f_array
 		<label_type, f_array<instr_type, f_array<size_type, sizeof...(Vs)>>, Vs...>;
 
-	constexpr size_type contr_length(contr_type c) { return c(0)(0)(0); }
+	constexpr size_type contr_length(contr_type c)	{ return c(0)(0)(0); }
+	constexpr size_type reg_size(contr_type c)	{ return c(contr_length(c))(1)(2); }
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
-// iterators:
+// controller iteration:
 
-		// assumes the final controller label is the halt instruction.
+	// Assumes the final controller label is the halt instruction.
+
+	// modularizing assign, save, restore, is better design, but given
+	// compile time performance constraints optimization is privileged.
 
 /***********************************************************************************************************************/
 
 	template
 	<
-		auto stop_next, auto pause_next, auto branch_next,
-		auto l_goto_next, auto r_goto_next, auto label_next, auto instr_next
+		auto stop_next   , auto pause_next   , auto branch_next ,
+		auto l_goto_next , auto r_goto_next  , auto assign_next ,
+		auto save_next   , auto restore_next , auto label_next  , auto instr_next
 	>
 	constexpr size_type next(size_type d,
 		contr_type c, size_type l, size_type m, size_type n = 0, bool is_branch = false)
 	{
-		if	(!bool(d))			return pause_next  (c, l, m);
-		else if	(l == contr_length(c))		return stop_next   (c, l, m);
-		else if (is_branch)			return branch_next (c, l, m);
-		else if	(c(l)(m)(1) == RI::l_goto)	return l_goto_next (c, l, m);
-		else if (c(l)(m)(1) == RI::r_goto)	return r_goto_next (c, n, m);
-		else if (m == label_length(c(l)))	return label_next  (c, l, m);
-		else					return instr_next  (c, l, m);
+		if	(!bool(d))			return pause_next   (c, l, m);
+		else if	(l == contr_length(c))		return stop_next    (c, l, m);
+		else if (is_branch)			return branch_next  (c, l, m);
+		else if	(c(l)(m)(1) == RI::l_goto)	return l_goto_next  (c, l, m);
+		else if (c(l)(m)(1) == RI::r_goto)	return r_goto_next  (c, n, m);
+		else if (c(l)(m)(1) == RI::assign)	return assign_next  (c, l, m);
+		else if (c(l)(m)(1) == RI::save)	return save_next    (c, l, m);
+		else if (c(l)(m)(1) == RI::restore)	return restore_next (c, l, m);
+		else if (m == label_length(c(l)))	return label_next   (c, l, m);
+		else					return instr_next   (c, l, m);
 	}
 
 /***********************************************************************************************************************/
 
 // next c:
 
-	constexpr size_type sn_c(contr_type c, size_type l, size_type m)	{ return RI::stop;              }
-	constexpr size_type pn_c(contr_type c, size_type l, size_type m)	{ return RI::pause;             }
-	constexpr size_type bn_c(contr_type c, size_type l, size_type m)	{ return c( c(l)(m)(2) )(1)(1); }
-	constexpr size_type lg_c(contr_type c, size_type l, size_type m)	{ return c( c(l)(m)(2) )(1)(1); }
-	constexpr size_type rg_c(contr_type c, size_type l, size_type m)	{ return c(l)(1)(1);            }
-	constexpr size_type ln_c(contr_type c, size_type l, size_type m)	{ return c(l+1)(1)(1);          }
-	constexpr size_type in_c(contr_type c, size_type l, size_type m)	{ return c(l)(m+1)(1);          }
+	constexpr size_type stop_c      (contr_type c, size_type l, size_type m) { return RI::stop;                  }
+	constexpr size_type pause_c     (contr_type c, size_type l, size_type m) { return RI::pause;                 }
+	constexpr size_type break_c     (contr_type c, size_type l, size_type m) { return c( c(l)(m)(2) )(1)(1);     }
+	constexpr size_type (*l_goto_c) (contr_type c, size_type l, size_type m) = break_c;
+	constexpr size_type r_goto_c    (contr_type c, size_type l, size_type m) { return c(l)(1)(1);                }
+
+		// dispatch optimization requires RI enum consecutive constraint:
+
+	constexpr size_type assign_c    (contr_type c, size_type l, size_type m) { return RI::assign  + c(l)(m)(2);  }
+	constexpr size_type save_c      (contr_type c, size_type l, size_type m) { return RI::save    + reg_size(c); }
+	constexpr size_type restore_c   (contr_type c, size_type l, size_type m) { return RI::restore + reg_size(c); }
+
+	constexpr size_type label_c     (contr_type c, size_type l, size_type m) { return c(l+1)(1)(1);              }
+	constexpr size_type instr_c     (contr_type c, size_type l, size_type m) { return c(l)(m+1)(1);              }
 
 	constexpr size_type (*next_c)(size_type, contr_type, size_type, size_type, size_type, bool) = next
-		<sn_c, pn_c, bn_c, lg_c, rg_c, ln_c, in_c>;
+	<
+		stop_c, pause_c, break_c, l_goto_c, r_goto_c,
+		assign_c, save_c, restore_c, label_c, instr_c
+	>;
 
 /***********************************************************************************************************************/
 
 // next l:
 
-	constexpr size_type sn_l(contr_type c, size_type l, size_type m)	{ return l;          }
-	constexpr size_type pn_l(contr_type c, size_type l, size_type m)	{ return l;          }
-	constexpr size_type bn_l(contr_type c, size_type l, size_type m)	{ return c(l)(m)(2); }
-	constexpr size_type lg_l(contr_type c, size_type l, size_type m)	{ return c(l)(m)(2); }
-	constexpr size_type rg_l(contr_type c, size_type l, size_type m)	{ return l;          }
-	constexpr size_type ln_l(contr_type c, size_type l, size_type m)	{ return l+1;        }
-	constexpr size_type in_l(contr_type c, size_type l, size_type m)	{ return l;          }
+	constexpr size_type stop_l       (contr_type c, size_type l, size_type m)	{ return l;          }
+	constexpr size_type (*pause_l)   (contr_type c, size_type l, size_type m)	= stop_l;
+	constexpr size_type break_l      (contr_type c, size_type l, size_type m)	{ return c(l)(m)(2); }
+	constexpr size_type (*l_goto_l)  (contr_type c, size_type l, size_type m)	= break_l;
+	constexpr size_type (*r_goto_l)  (contr_type c, size_type l, size_type m)	= stop_l;
+	constexpr size_type (*assign_l)  (contr_type c, size_type l, size_type m)	= stop_l;
+	constexpr size_type (*save_l)    (contr_type c, size_type l, size_type m)	= stop_l;
+	constexpr size_type (*restore_l) (contr_type c, size_type l, size_type m)	= stop_l;
+	constexpr size_type label_l      (contr_type c, size_type l, size_type m)	{ return l+1;        }
+	constexpr size_type (*instr_l)   (contr_type c, size_type l, size_type m)	= stop_l;
 
 	constexpr size_type (*next_l)(size_type, contr_type, size_type, size_type, size_type, bool) = next
-		<sn_l, pn_l, bn_l, lg_l, rg_l, ln_l, in_l>;
+	<
+		stop_l, pause_l, break_l, l_goto_l, r_goto_l,
+		assign_l, save_l, restore_l, label_l, instr_l
+	>;
 
 /***********************************************************************************************************************/
 
 // next m:
 
-	constexpr size_type sn_m(contr_type c, size_type l, size_type m)	{ return m;   }
-	constexpr size_type pn_m(contr_type c, size_type l, size_type m)	{ return m;   }
-	constexpr size_type bn_m(contr_type c, size_type l, size_type m)	{ return 1;   }
-	constexpr size_type lg_m(contr_type c, size_type l, size_type m)	{ return 1;   }
-	constexpr size_type rg_m(contr_type c, size_type l, size_type m)	{ return 1;   }
-	constexpr size_type ln_m(contr_type c, size_type l, size_type m)	{ return 1;   }
-	constexpr size_type in_m(contr_type c, size_type l, size_type m)	{ return m+1; }
+	constexpr size_type stop_m       (contr_type c, size_type l, size_type m)	{ return m;   }
+	constexpr size_type (*pause_m)   (contr_type c, size_type l, size_type m)	= stop_m;
+	constexpr size_type break_m      (contr_type c, size_type l, size_type m)	{ return 1;   }
+	constexpr size_type (*l_goto_m)  (contr_type c, size_type l, size_type m)	= break_m;
+	constexpr size_type (*r_goto_m)  (contr_type c, size_type l, size_type m)	= break_m;
+	constexpr size_type (*assign_m)  (contr_type c, size_type l, size_type m)	= stop_m;
+	constexpr size_type (*save_m)    (contr_type c, size_type l, size_type m)	= stop_m;
+	constexpr size_type (*restore_m) (contr_type c, size_type l, size_type m)	= stop_m;
+	constexpr size_type (*label_m)   (contr_type c, size_type l, size_type m)	= break_m;
+	constexpr size_type instr_m      (contr_type c, size_type l, size_type m)	{ return m+1; }
 
 	constexpr size_type (*next_m)(size_type, contr_type, size_type, size_type, size_type, bool) = next
-		<sn_m, pn_m, bn_m, lg_m, rg_m, ln_m, in_m>;
+	<
+		stop_m, pause_m, break_m, l_goto_m, r_goto_m,
+		assign_m, save_m, restore_m, label_m, instr_m
+	>;
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -206,10 +251,11 @@ namespace register_machine
 // register machine:
 
 /***********************************************************************************************************************/
-
-// apply:
+/***********************************************************************************************************************/
 
 // kernel:
+
+/***********************************************************************************************************************/
 
 	// d  - depth
 	// c  - control
@@ -236,258 +282,6 @@ namespace register_machine
 	}
 
 /***********************************************************************************************************************/
-
-// replace [0-15):
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_0>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_1>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_2>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto R3, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_3>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, R2, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto R3, auto R4, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_4>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, R2, R3, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_5>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, R2, R3, R4, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_6>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, R2, R3, R4, R5, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_7>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, R2, R3, R4, R5, R6, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
-		auto R8, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_8>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, R2, R3, R4, R5, R6, R7, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
-		auto R8, auto R9, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_9>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, R2, R3, R4, R5, R6, R7, R8, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
-		auto R8, auto R9, auto R10, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_10>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
-		auto R8, auto R9, auto R10, auto R11, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_11>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
-		auto R8, auto R9, auto R10, auto R11, auto R12, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_12>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
-		auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_13>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
-		auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto R14, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_14>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-	template
-	<
-		auto d, auto c, auto l, auto m, auto V,
-		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
-		auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto R14, auto R15, auto... Rs
-	>
-	constexpr auto register_machine(void(*)(auto_map<RI::replace_15>*))
-	{
-		return register_machine
-		<
-			d-1, c, next_l(c, l, m), next_m(c, l, m),
-			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, V, Rs...
-
-		>(U_value_V<next_c(c, l, m)>);
-	}
-
-/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
 // predicates:
@@ -497,28 +291,28 @@ namespace register_machine
 // branch:
 
 	template<auto d, auto c, auto l, auto m, auto... Rs>
-	constexpr auto register_machine(void(*)(auto_map<RI::branch>*))
+	constexpr auto register_machine(void(*)(auto_map<RI::u_branch>*))
 	{
 		constexpr instr_type i		= c(l)(m);
-		constexpr size_type label	= at<size_type, Rs...>(U_value_V<i(2)>);
+		constexpr auto test		= at<size_type, Rs...>(U_value_V<i(3)>);
+		constexpr auto a		= at<size_type, Rs...>(U_value_V<i(4)>);
+		constexpr bool is_br		= test(a);
+
+		return register_machine
+			<d-1, c, next_l(c, l, m), next_m(c, l, m), Rs...>(U_value_V<next_c(c, l, m, 0, is_br)>);
+	}
+
+	template<auto d, auto c, auto l, auto m, auto... Rs>
+	constexpr auto register_machine(void(*)(auto_map<RI::b_branch>*))
+	{
+		constexpr instr_type i		= c(l)(m);
 		constexpr auto test		= at<size_type, Rs...>(U_value_V<i(3)>);
 		constexpr auto a1		= at<size_type, Rs...>(U_value_V<i(4)>);
+		constexpr auto a2		= at<size_type, Rs...>(U_value_V<i(5)>);
+		constexpr bool is_br		= test(a1, a2);
 
-		if constexpr (instr_length(i) == 4)
-		{
-			constexpr bool is_br	= test(a1);
-
-			return register_machine
-				<d-1, c, next_l(c, l, m), next_m(c, l, m), Rs...>(U_value_V<next_c(c, l, m, 0, is_br)>);
-		}
-		else
-		{
-			constexpr auto a2	= at<size_type, Rs...>(U_value_V<i(5)>);
-			constexpr bool is_br	= test(a1, a2);
-
-			return register_machine
-				<d-1, c, next_l(c, l, m), next_m(c, l, m), Rs...>(U_value_V<next_c(c, l, m, 0, is_br)>);
-		}
+		return register_machine
+			<d-1, c, next_l(c, l, m), next_m(c, l, m), Rs...>(U_value_V<next_c(c, l, m, 0, is_br)>);
 	}
 
 /***********************************************************************************************************************/
@@ -552,48 +346,21 @@ namespace register_machine
 
 /***********************************************************************************************************************/
 
-// save:
+// assign [0-15):
 
-	template<auto d, auto c, auto l, auto m, auto... Rs>
-	constexpr auto register_machine(void(*)(auto_map<RI::save>*))
-	{
-		constexpr instr_type i		= c(l)(m);
-		constexpr auto r		= at<size_type, Rs...>(U_value_V<i(2)>);
-
-		return register_machine
-			<d-1, c, next_l(c, l, m), next_m(c, l, m), Rs...>(U_value_V<next_c(c, l, m)>);
-	}
-
-		// Need a second version of save which allows us to *insert*.
-		// This better mitigates variadic packs.
+	#include"fast_track/A_assign.hpp"
 
 /***********************************************************************************************************************/
 
-// restore:
+// save [0-15):
 
-//	template<auto d, auto c, auto l, auto m, auto... Rs>
-//	constexpr auto register_machine(void(*)(auto_map<RI::restore>*))
-//	{
-//		constexpr instr_type i		= c(l)(m);
-//		constexpr auto r		= at<size_type, Rs...>(U_value_V<i(2)>);
-
-//		return register_machine
-//			<d-1, c, next_l(c, l, m), next_m(c, l, m), Rs...>(U_value_V<next_c(c, l, m)>);
-//	}
+	#include"fast_track/B_save.hpp"
 
 /***********************************************************************************************************************/
 
-// assign:
+// restore [0-15):
 
-//	template<auto d, auto c, auto l, auto m, auto... Rs>
-//	constexpr auto register_machine(void(*)(auto_map<RI::assign>*))
-//	{
-//		constexpr instr_type i		= c(l)(m);
-//		constexpr auto r		= at<size_type, Rs...>(U_value_V<i(2)>);
-
-//		return register_machine
-//			<d-1, c, next_l(c, l, m), next_m(c, l, m), Rs...>(U_value_V<next_c(c, l, m)>);
-//	}
+	#include"fast_track/C_restore.hpp"
 
 /***********************************************************************************************************************/
 

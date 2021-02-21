@@ -73,12 +73,14 @@ namespace testing
 
 	void print_RI(size_type n)
 	{
-		printf("%s, ",	(n == RI::assign  ) ? "assign"	:
-				(n == RI::branch  ) ? "branch"	:
-				(n == RI::l_goto  ) ? "l_goto"	:
-				(n == RI::r_goto  ) ? "r_goto"	:
-				(n == RI::save    ) ? "save"	:
-				(n == RI::restore ) ? "restore"	: "apply");
+		printf("%s, ",	(n == RI::assign   ) ? "assign"   :
+				(n == RI::u_branch ) ? "u_branch" :
+				(n == RI::b_branch ) ? "b_branch" :
+				(n == RI::l_goto   ) ? "l_goto"   :
+				(n == RI::r_goto   ) ? "r_goto"   :
+				(n == RI::save     ) ? "save"     :
+				(n == RI::restore  ) ? "restore"  :
+				(n == RI::u_apply  ) ? "u_apply"  : "b_apply");
 	}
 
 	void print_next(size_type d, contr_type c, size_type l, size_type m, size_type n = 0, bool is_branch = false)
