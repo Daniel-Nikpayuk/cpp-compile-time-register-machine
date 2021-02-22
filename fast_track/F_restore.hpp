@@ -34,9 +34,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_1>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_1>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, Vs...
@@ -53,9 +53,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_2>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_2>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, Vs...
@@ -72,9 +72,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_3>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_3>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, R2, Vs...
@@ -91,9 +91,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_4>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_4>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, R2, R3, Vs...
@@ -110,9 +110,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_5>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_5>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, R2, R3, R4, Vs...
@@ -129,9 +129,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_6>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_6>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, R2, R3, R4, R5, Vs...
@@ -148,9 +148,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_7>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_7>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, R2, R3, R4, R5, R6, Vs...
@@ -168,9 +168,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_8>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_8>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, R2, R3, R4, R5, R6, R7, Vs...
@@ -188,9 +188,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_9>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_9>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, R2, R3, R4, R5, R6, R7, R8, Vs...
@@ -208,9 +208,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_10>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_10>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, Vs...
@@ -228,9 +228,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_11>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_11>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, Vs...
@@ -248,9 +248,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto R11, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_12>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_12>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, Vs...
@@ -268,9 +268,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto R11, auto R12, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_13>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_13>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, Vs...
@@ -288,9 +288,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_14>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_14>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, Vs...
@@ -308,9 +308,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto R14, auto V, auto... Vs
 	>
-	constexpr auto register_machine(void(*)(auto_map<RI::restore_15>*))
+	constexpr auto machine(void(*)(auto_map<RI::restore_15>*))
 	{
-		return register_machine
+		return machine
 		<
 			d-1, c, l, m,
 			V, R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, Vs...

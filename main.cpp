@@ -42,7 +42,14 @@
 
 	int main(int argc, char *argv[])
 	{
-		constexpr auto result = factorial<5>;
+		constexpr auto result = factorial<1>; // currently returns an alt list.
+	//	printf(result);
+
+	//	constexpr auto result = U_type_T<alt_list<5>>;
+
+		printf("%s\n", V_is_auto_list_U(result) ? "true" : "false");
+		printf("%s\n", V_is_alt_list_U(result) ? "true" : "false");
+
 	//	printf("%d\n", factorial<5>);
 
 		return 0;

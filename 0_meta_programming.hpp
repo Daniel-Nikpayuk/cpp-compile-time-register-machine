@@ -143,14 +143,8 @@ namespace meta_programming
 
 	template<auto> struct auto_map { };
 
-	template<auto V>
-	constexpr auto U_value_V = U_type_T<auto_map<V>>;
-
-//	template<auto V>
-//	using auto_cache_type = void(*)(auto_map<V>*);
-
-//	template<auto V>							// optimized because we know
-//	constexpr auto_cache_type<V> U_value_V = type_map<auto_map<V>*>;	// auto_map<V> is not a reference.
+	template<auto V>					// optimized because we know
+	constexpr auto U_value_V = type_map<auto_map<V>*>;	// auto_map<V> is not a reference.
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -220,127 +214,37 @@ namespace meta_programming
 
 /***********************************************************************************************************************/
 
-// at [0-16):
+// is auto list:
 
-	template
-	<
-		typename T,
-		auto V0, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(0)>*)) { return V0; }
+	template<typename T>
+	constexpr bool V_is_auto_list_U(void(*)(T))			// Unsafe to use directly,
+		{ return false; }
 
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(1)>*)) { return V1; }
+	template<auto... Vs>
+	constexpr bool V_is_auto_list_U(void(*)(auto_list<Vs...>*))	// Use the following instead:
+		{ return true; }
 
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(2)>*)) { return V2; }
+	//
 
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto V3, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(3)>*)) { return V3; }
+	template<typename T>
+	constexpr bool V_is_auto_list_T = V_is_auto_list_U(U_type_T<T>);
 
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto V3, auto V4, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(4)>*)) { return V4; }
+/***********************************************************************************************************************/
 
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(5)>*)) { return V5; }
+// is alt list:
 
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(6)>*)) { return V6; }
+	template<typename T>
+	constexpr bool V_is_alt_list_U(void(*)(T))			// Unsafe to use directly,
+		{ return false; }
 
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(7)>*)) { return V7; }
+	template<auto... Vs>
+	constexpr bool V_is_alt_list_U(void(*)(alt_list<Vs...>*))	// Use the following instead:
+		{ return true; }
 
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
-		auto V8, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(8)>*)) { return V8; }
+	//
 
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
-		auto V8, auto V9, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(9)>*)) { return V9; }
-
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
-		auto V8, auto V9, auto V10, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(10)>*)) { return V10; }
-
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
-		auto V8, auto V9, auto V10, auto V11, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(11)>*)) { return V11; }
-
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
-		auto V8, auto V9, auto V10, auto V11, auto V12, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(12)>*)) { return V12; }
-
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
-		auto V8, auto V9, auto V10, auto V11, auto V12, auto V13, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(13)>*)) { return V13; }
-
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
-		auto V8, auto V9, auto V10, auto V11, auto V12, auto V13, auto V14, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(14)>*)) { return V14; }
-
-	template
-	<
-		typename T,
-		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
-		auto V8, auto V9, auto V10, auto V11, auto V12, auto V13, auto V14, auto V15, auto... Vs
-	>
-	constexpr auto at(void(*)(auto_map<T(15)>*)) { return V15; }
+	template<typename T>
+	constexpr bool V_is_alt_list_T = V_is_alt_list_U(U_type_T<T>);
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
