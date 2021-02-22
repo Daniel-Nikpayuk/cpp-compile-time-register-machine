@@ -58,7 +58,7 @@ namespace register_machine
 
 // at [0-16):
 
-	#include"fast_track/A_at.hpp"
+	#include"subsource/A_at.hpp"
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -82,102 +82,125 @@ namespace register_machine
 		static constexpr size_type b_branch		=  4;
 		static constexpr size_type l_goto		=  5;
 		static constexpr size_type r_goto		=  6;
-		static constexpr size_type assign		=  7;
+		static constexpr size_type l_assign		=  7;
+		static constexpr size_type r_assign		=  8;
 
-		static constexpr size_type save			=  8;
-		static constexpr size_type restore		=  9;
-		static constexpr size_type u_apply		= 10;
-		static constexpr size_type b_apply		= 11;
-
-		// dispatch optimizations require these to be consecutive:, 
-
-		static constexpr size_type assign_0		= 12;
-		static constexpr size_type assign_1		= 13;
-		static constexpr size_type assign_2		= 14;
-		static constexpr size_type assign_3		= 15;
-
-		static constexpr size_type assign_4		= 16;
-		static constexpr size_type assign_5		= 17;
-		static constexpr size_type assign_6		= 18;
-		static constexpr size_type assign_7		= 19;
-
-		static constexpr size_type assign_8		= 20;
-		static constexpr size_type assign_9		= 21;
-		static constexpr size_type assign_10		= 22;
-		static constexpr size_type assign_11		= 23;
-
-		static constexpr size_type assign_12		= 24;
-		static constexpr size_type assign_13		= 25;
-		static constexpr size_type assign_14		= 26;
-		static constexpr size_type assign_15		= 27;
+		static constexpr size_type save			=  9;
+		static constexpr size_type restore		= 10;
+		static constexpr size_type u_apply		= 11;
+		static constexpr size_type b_apply		= 12;
 
 		// dispatch optimizations require these to be consecutive:, 
 
-		static constexpr size_type save_0		= 28;
-		static constexpr size_type save_1		= 29;
-		static constexpr size_type save_2		= 30;
-		static constexpr size_type save_3		= 31;
+		static constexpr size_type l_assign_0		= 13;
+		static constexpr size_type l_assign_1		= 14;
+		static constexpr size_type l_assign_2		= 15;
+		static constexpr size_type l_assign_3		= 16;
 
-		static constexpr size_type save_4		= 32;
-		static constexpr size_type save_5		= 33;
-		static constexpr size_type save_6		= 34;
-		static constexpr size_type save_7		= 35;
+		static constexpr size_type l_assign_4		= 17;
+		static constexpr size_type l_assign_5		= 18;
+		static constexpr size_type l_assign_6		= 19;
+		static constexpr size_type l_assign_7		= 20;
 
-		static constexpr size_type save_8		= 36;
-		static constexpr size_type save_9		= 37;
-		static constexpr size_type save_10		= 38;
-		static constexpr size_type save_11		= 39;
+		static constexpr size_type l_assign_8		= 21;
+		static constexpr size_type l_assign_9		= 22;
+		static constexpr size_type l_assign_10		= 23;
+		static constexpr size_type l_assign_11		= 24;
 
-		static constexpr size_type save_12		= 40;
-		static constexpr size_type save_13		= 41;
-		static constexpr size_type save_14		= 42;
-		static constexpr size_type save_15		= 43;
-
-		// dispatch optimizations require these to be consecutive:, 
-
-		static constexpr size_type replace_0		= 44;
-		static constexpr size_type replace_1		= 45;
-		static constexpr size_type replace_2		= 46;
-		static constexpr size_type replace_3		= 47;
-
-		static constexpr size_type replace_4		= 48;
-		static constexpr size_type replace_5		= 49;
-		static constexpr size_type replace_6		= 50;
-		static constexpr size_type replace_7		= 51;
-
-		static constexpr size_type replace_8		= 52;
-		static constexpr size_type replace_9		= 53;
-		static constexpr size_type replace_10		= 54;
-		static constexpr size_type replace_11		= 55;
-
-		static constexpr size_type replace_12		= 56;
-		static constexpr size_type replace_13		= 57;
-		static constexpr size_type replace_14		= 58;
-		static constexpr size_type replace_15		= 59;
+		static constexpr size_type l_assign_12		= 25;
+		static constexpr size_type l_assign_13		= 26;
+		static constexpr size_type l_assign_14		= 27;
+		static constexpr size_type l_assign_15		= 28;
 
 		// dispatch optimizations require these to be consecutive:, 
 
-		static constexpr size_type restore_0		= 60;
-		static constexpr size_type restore_1		= 61;
-		static constexpr size_type restore_2		= 62;
-		static constexpr size_type restore_3		= 63;
+		static constexpr size_type r_assign_0		= 29;
+		static constexpr size_type r_assign_1		= 30;
+		static constexpr size_type r_assign_2		= 31;
+		static constexpr size_type r_assign_3		= 32;
 
-		static constexpr size_type restore_4		= 64;
-		static constexpr size_type restore_5		= 65;
-		static constexpr size_type restore_6		= 66;
-		static constexpr size_type restore_7		= 67;
+		static constexpr size_type r_assign_4		= 33;
+		static constexpr size_type r_assign_5		= 34;
+		static constexpr size_type r_assign_6		= 35;
+		static constexpr size_type r_assign_7		= 36;
 
-		static constexpr size_type restore_8		= 68;
-		static constexpr size_type restore_9		= 69;
-		static constexpr size_type restore_10		= 70;
-		static constexpr size_type restore_11		= 71;
+		static constexpr size_type r_assign_8		= 37;
+		static constexpr size_type r_assign_9		= 38;
+		static constexpr size_type r_assign_10		= 39;
+		static constexpr size_type r_assign_11		= 40;
 
-		static constexpr size_type restore_12		= 72;
-		static constexpr size_type restore_13		= 73;
-		static constexpr size_type restore_14		= 74;
-		static constexpr size_type restore_15		= 75;
+		static constexpr size_type r_assign_12		= 41;
+		static constexpr size_type r_assign_13		= 42;
+		static constexpr size_type r_assign_14		= 43;
+		static constexpr size_type r_assign_15		= 44;
 
-		static constexpr size_type r_size		= 76;
+		// dispatch optimizations require these to be consecutive:, 
+
+		static constexpr size_type save_0		= 45;
+		static constexpr size_type save_1		= 46;
+		static constexpr size_type save_2		= 47;
+		static constexpr size_type save_3		= 48;
+
+		static constexpr size_type save_4		= 49;
+		static constexpr size_type save_5		= 50;
+		static constexpr size_type save_6		= 51;
+		static constexpr size_type save_7		= 52;
+
+		static constexpr size_type save_8		= 53;
+		static constexpr size_type save_9		= 54;
+		static constexpr size_type save_10		= 55;
+		static constexpr size_type save_11		= 56;
+
+		static constexpr size_type save_12		= 57;
+		static constexpr size_type save_13		= 58;
+		static constexpr size_type save_14		= 59;
+		static constexpr size_type save_15		= 60;
+
+		// dispatch optimizations require these to be consecutive:, 
+
+		static constexpr size_type replace_0		= 61;
+		static constexpr size_type replace_1		= 62;
+		static constexpr size_type replace_2		= 63;
+		static constexpr size_type replace_3		= 64;
+
+		static constexpr size_type replace_4		= 65;
+		static constexpr size_type replace_5		= 66;
+		static constexpr size_type replace_6		= 67;
+		static constexpr size_type replace_7		= 68;
+
+		static constexpr size_type replace_8		= 69;
+		static constexpr size_type replace_9		= 70;
+		static constexpr size_type replace_10		= 71;
+		static constexpr size_type replace_11		= 72;
+
+		static constexpr size_type replace_12		= 73;
+		static constexpr size_type replace_13		= 74;
+		static constexpr size_type replace_14		= 75;
+		static constexpr size_type replace_15		= 76;
+
+		// dispatch optimizations require these to be consecutive:, 
+
+		static constexpr size_type restore_0		= 77;
+		static constexpr size_type restore_1		= 78;
+		static constexpr size_type restore_2		= 79;
+		static constexpr size_type restore_3		= 80;
+
+		static constexpr size_type restore_4		= 81;
+		static constexpr size_type restore_5		= 82;
+		static constexpr size_type restore_6		= 83;
+		static constexpr size_type restore_7		= 84;
+
+		static constexpr size_type restore_8		= 85;
+		static constexpr size_type restore_9		= 86;
+		static constexpr size_type restore_10		= 87;
+		static constexpr size_type restore_11		= 88;
+
+		static constexpr size_type restore_12		= 89;
+		static constexpr size_type restore_13		= 90;
+		static constexpr size_type restore_14		= 91;
+		static constexpr size_type restore_15		= 92;
+
+		static constexpr size_type r_size		= 93;
 	};
 
 /***********************************************************************************************************************/
@@ -219,7 +242,15 @@ namespace register_machine
 		<label_type, f_array<instr_type, f_array<size_type, sizeof...(Vs)>>, Vs...>;
 
 	constexpr size_type contr_length(contr_type c)	{ return c(0)(0)(0); }
-	constexpr size_type reg_size(contr_type c)	{ return c(contr_length(c))(1)(2); }
+
+	//
+
+	constexpr size_type reg_size(contr_type c)
+	{
+		label_type l = c(contr_length(c));
+
+		return l(label_length(l))(2);
+	}
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -269,9 +300,10 @@ namespace register_machine
 		instr_type i = next<stop_c, pause_c,
 			branch_c, l_goto_c, r_goto_c, label_c, instr_c>(d, c, l, m, n, is_br);
 
-		if (i(1) == RI::assign)		return RI::assign_0  + i(2);
-		else if (i(1) == RI::save)	return RI::save_0    + reg_size(c);
-		else if (i(1) == RI::restore)	return RI::restore_0 + reg_size(c);
+		if (i(1) == RI::l_assign)	return RI::l_assign_0 + i(2);
+		else if (i(1) == RI::r_assign)	return RI::r_assign_0 + i(2);
+		else if (i(1) == RI::save)	return RI::save_0     + reg_size(c);
+		else if (i(1) == RI::restore)	return RI::restore_0  + reg_size(c);
 		else				return i(1);
 	}
 
@@ -338,7 +370,7 @@ namespace register_machine
 
 // machine declarations:
 
-	#include"fast_track/B_machine.hpp"
+	#include"subsource/B_machine.hpp"
 
 /***********************************************************************************************************************/
 
@@ -353,15 +385,14 @@ namespace register_machine
 	template<auto d, auto c, auto l, auto m, auto... Rs>
 	constexpr auto machine(void(*)(auto_map<RI::pause>*))
 	{
-		return type_map<alt_list<c, l, m, Rs...>*>;
+		return type_map<alt_list<l, m, Rs...>*>; // temporary for debugging.
+	//	return type_map<alt_list<c, l, m, Rs...>*>;
 	}
 
 	template<auto d, auto c, auto... Rs>
 	constexpr auto machine(void(*)(auto_map<RI::start>*))
 	{
-		constexpr size_type one = 1;
-
-		return machine<d-1, c, one, one, Rs...>(U_value_V<c(1)(1)(1)>);
+		return machine<d-1, c, 1, 1, Rs...>(U_value_V<c(1)(1)(1)>);
 	}
 
 /***********************************************************************************************************************/
@@ -395,7 +426,8 @@ namespace register_machine
 		constexpr bool is_br		= test(a1, a2);
 
 		return machine
-			<d-1, c, next_l(d, c, l, m), next_m(d, c, l, m), Rs...>(U_value_V<next_c(d, c, l, m, 0, is_br)>);
+			<d-1, c, next_l(d, c, l, m, 0, is_br),
+				next_m(d, c, l, m, 0, is_br), Rs...>(U_value_V<next_c(d, c, l, m, 0, is_br)>);
 	}
 
 /***********************************************************************************************************************/
@@ -420,24 +452,29 @@ namespace register_machine
 	template<auto d, auto c, auto l, auto m, auto... Rs>
 	constexpr auto machine(void(*)(auto_map<RI::r_goto>*))
 	{
-		constexpr instr_type i		= c(l)(m);
-		constexpr auto r		= at<Rs...>(U_value_V<i(2)>);
+		constexpr auto r = at<Rs...>(U_value_V<c(l)(m)(2)>);
 
 		return machine
-			<d-1, c, next_l(d, c, l, m), next_m(d, c, l, m), Rs...>(U_value_V<next_c(d, c, l, m, r)>);
+			<d-1, c, next_l(d, c, l, m, r), next_m(d, c, l, m, r), Rs...>(U_value_V<next_c(d, c, l, m, r)>);
 	}
 
 /***********************************************************************************************************************/
 
-// assign [0-16):
+// l_assign [0-16):
 
-	#include"fast_track/C_assign.hpp"
+	#include"subsource/C_l_assign.hpp"
+
+/***********************************************************************************************************************/
+
+// r_assign [0-16):
+
+	#include"subsource/D_r_assign.hpp"
 
 /***********************************************************************************************************************/
 
 // save [0-16):
 
-	#include"fast_track/D_save.hpp"
+	#include"subsource/E_save.hpp"
 
 /***********************************************************************************************************************/
 
@@ -445,13 +482,13 @@ namespace register_machine
 
 		// prerequisite for restore, apply:
 
-	#include"fast_track/E_replace.hpp"
+	#include"subsource/F_replace.hpp"
 
 /***********************************************************************************************************************/
 
 // restore [0-16):
 
-	#include"fast_track/F_restore.hpp"
+	#include"subsource/G_restore.hpp"
 
 /***********************************************************************************************************************/
 
@@ -463,7 +500,7 @@ namespace register_machine
 		constexpr instr_type i		= c(l)(m);
 		constexpr auto op		= at<Rs...>(U_value_V<i(3)>);
 		constexpr auto a		= at<Rs...>(U_value_V<i(4)>);
-		constexpr bool V		= op(a);
+		constexpr auto V		= op(a);
 
 		return machine<d-1, c, l, m, V, Rs...>(U_value_V<size_type(RI::replace_0 + i(2))>);
 	}
@@ -475,7 +512,7 @@ namespace register_machine
 		constexpr auto op		= at<Rs...>(U_value_V<i(3)>);
 		constexpr auto a1		= at<Rs...>(U_value_V<i(4)>);
 		constexpr auto a2		= at<Rs...>(U_value_V<i(5)>);
-		constexpr bool V		= op(a1, a2);
+		constexpr auto V		= op(a1, a2);
 
 		return machine<d-1, c, l, m, V, Rs...>(U_value_V<size_type(RI::replace_0 + i(2))>);
 	}
@@ -484,7 +521,7 @@ namespace register_machine
 
 // fold [2^0-2^9):
 
-//	#include"fast_track/G_fold.hpp"
+//	#include"subsource/H_fold.hpp"
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

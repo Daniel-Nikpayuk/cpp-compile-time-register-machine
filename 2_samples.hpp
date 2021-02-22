@@ -132,7 +132,7 @@ namespace samples
 				instruction < RI::save     , cont                             >,
 				instruction < RI::save     , n                                >,
 				instruction < RI::b_apply  , n         , sub        , n , c_1 >,
-				instruction < RI::assign   , cont      , after_fact           >,
+				instruction < RI::l_assign , cont      , after_fact           >,
 				instruction < RI::l_goto   , fact_loop                        >
 			>,
 
@@ -146,12 +146,13 @@ namespace samples
 
 			label // base case:
 			<
-				instruction < RI::assign , val  , c_1 >,
-				instruction < RI::r_goto , cont       >
+				instruction < RI::r_assign , val  , c_1 >,
+				instruction < RI::r_goto   , cont       >
 			>,
 
 			label // fact done:
 			<
+				instruction < RI::stop   , 7 >,
 				instruction < RI::r_size , 7 >
 			>
 		>;
@@ -164,8 +165,8 @@ namespace samples
 	>;
 
 	template<auto n, size_type depth = 255>
-	constexpr auto factorial = machine<depth, fact_contr, size_type(4), decltype(n)(1), n,
-		equal<decltype(n)>, subtract<decltype(n)>, multiply<decltype(n)>, decltype(n)(1)>(U_value_V<RI::start>);
+	constexpr auto factorial = machine<depth, fact_contr, 4, 1, n,
+		equal<decltype(n)>, subtract<decltype(n)>, multiply<decltype(n)>, 1>(U_value_V<RI::start>);
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

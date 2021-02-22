@@ -21,6 +21,7 @@
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
+/***********************************************************************************************************************/
 
 // core:
 
@@ -33,6 +34,7 @@
 		template<auto d, auto c, auto... Rs>
 		constexpr auto machine(void(*)(auto_map<RI::start>*));
 
+/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
@@ -50,9 +52,11 @@
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
+/***********************************************************************************************************************/
 
 // operators:
 
+/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
 	// goto:
@@ -64,64 +68,65 @@
 		constexpr auto machine(void(*)(auto_map<RI::r_goto>*));
 
 /***********************************************************************************************************************/
+/***********************************************************************************************************************/
 
-	// assign [0-16):
+	// l_assign [0-16):
 
 		template
 		<
 			auto d, auto c, auto l, auto m,
 			auto R0, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_0>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_0>*));
 
 		template
 		<
 			auto d, auto c, auto l, auto m,
 			auto R0, auto R1, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_1>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_1>*));
 
 		template
 		<
 			auto d, auto c, auto l, auto m,
 			auto R0, auto R1, auto R2, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_2>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_2>*));
 
 		template
 		<
 			auto d, auto c, auto l, auto m,
 			auto R0, auto R1, auto R2, auto R3, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_3>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_3>*));
 
 		template
 		<
 			auto d, auto c, auto l, auto m,
 			auto R0, auto R1, auto R2, auto R3, auto R4, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_4>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_4>*));
 
 		template
 		<
 			auto d, auto c, auto l, auto m,
 			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_5>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_5>*));
 
 		template
 		<
 			auto d, auto c, auto l, auto m,
 			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_6>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_6>*));
 
 		template
 		<
 			auto d, auto c, auto l, auto m,
 			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_7>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_7>*));
 
 		template
 		<
@@ -129,7 +134,7 @@
 			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 			auto R8, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_8>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_8>*));
 
 		template
 		<
@@ -137,7 +142,7 @@
 			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 			auto R8, auto R9, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_9>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_9>*));
 
 		template
 		<
@@ -145,7 +150,7 @@
 			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 			auto R8, auto R9, auto R10, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_10>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_10>*));
 
 		template
 		<
@@ -153,7 +158,7 @@
 			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 			auto R8, auto R9, auto R10, auto R11, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_11>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_11>*));
 
 		template
 		<
@@ -161,7 +166,7 @@
 			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 			auto R8, auto R9, auto R10, auto R11, auto R12, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_12>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_12>*));
 
 		template
 		<
@@ -169,7 +174,7 @@
 			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 			auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_13>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_13>*));
 
 		template
 		<
@@ -177,7 +182,7 @@
 			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 			auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto R14, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_14>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_14>*));
 
 		template
 		<
@@ -185,8 +190,133 @@
 			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 			auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto R14, auto R15, auto... Rs
 		>
-		constexpr auto machine(void(*)(auto_map<RI::assign_15>*));
+		constexpr auto machine(void(*)(auto_map<RI::l_assign_15>*));
 
+/***********************************************************************************************************************/
+
+	// r_assign [0-16):
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_0>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_1>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_2>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto R3, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_3>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto R3, auto R4, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_4>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_5>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_6>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_7>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+			auto R8, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_8>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+			auto R8, auto R9, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_9>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+			auto R8, auto R9, auto R10, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_10>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+			auto R8, auto R9, auto R10, auto R11, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_11>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+			auto R8, auto R9, auto R10, auto R11, auto R12, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_12>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+			auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_13>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+			auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto R14, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_14>*));
+
+		template
+		<
+			auto d, auto c, auto l, auto m,
+			auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
+			auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto R14, auto R15, auto... Rs
+		>
+		constexpr auto machine(void(*)(auto_map<RI::r_assign_15>*));
+
+/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
 	// save [0-16):
@@ -310,6 +440,7 @@
 		>
 		constexpr auto machine(void(*)(auto_map<RI::save_15>*));
 
+/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
 	// replace [0-16):
@@ -435,6 +566,7 @@
 		constexpr auto machine(void(*)(auto_map<RI::replace_15>*));
 
 /***********************************************************************************************************************/
+/***********************************************************************************************************************/
 
 	// restore (0-16):
 
@@ -551,6 +683,7 @@
 		>
 		constexpr auto machine(void(*)(auto_map<RI::restore_15>*));
 
+/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
 	// apply:

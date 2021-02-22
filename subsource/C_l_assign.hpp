@@ -28,9 +28,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_0>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_0>*))
 	{
-		constexpr auto V = at<R0, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -49,9 +49,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_1>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_1>*))
 	{
-		constexpr auto V = at<R0, R1, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -70,9 +70,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_2>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_2>*))
 	{
-		constexpr auto V = at<R0, R1, R2, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -91,9 +91,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_3>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_3>*))
 	{
-		constexpr auto V = at<R0, R1, R2, R3, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -112,9 +112,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_4>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_4>*))
 	{
-		constexpr auto V = at<R0, R1, R2, R3, R4, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -133,9 +133,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_5>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_5>*))
 	{
-		constexpr auto V = at<R0, R1, R2, R3, R4, R5, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -154,9 +154,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_6>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_6>*))
 	{
-		constexpr auto V = at<R0, R1, R2, R3, R4, R5, R6, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -175,9 +175,9 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_7>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_7>*))
 	{
-		constexpr auto V = at<R0, R1, R2, R3, R4, R5, R6, R7, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -197,14 +197,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_8>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_8>*))
 	{
-		constexpr auto V = at
-		<
-			R0, R1, R2, R3, R4, R5, R6, R7,
-			R8, Rs...
-
-		>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -224,14 +219,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_9>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_9>*))
 	{
-		constexpr auto V = at
-		<
-			R0, R1, R2, R3, R4, R5, R6, R7,
-			R8, R9, Rs...
-
-		>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -251,14 +241,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_10>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_10>*))
 	{
-		constexpr auto V = at
-		<
-			R0, R1, R2, R3, R4, R5, R6, R7,
-			R8, R9, R10, Rs...
-
-		>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -278,14 +263,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto R11, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_11>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_11>*))
 	{
-		constexpr auto V = at
-		<
-			R0, R1, R2, R3, R4, R5, R6, R7,
-			R8, R9, R10, R11, Rs...
-
-		>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -305,14 +285,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto R11, auto R12, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_12>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_12>*))
 	{
-		constexpr auto V = at
-		<
-			R0, R1, R2, R3, R4, R5, R6, R7,
-			R8, R9, R10, R11, R12, Rs...
-
-		>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -332,14 +307,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_13>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_13>*))
 	{
-		constexpr auto V = at
-		<
-			R0, R1, R2, R3, R4, R5, R6, R7,
-			R8, R9, R10, R11, R12, R13, Rs...
-
-		>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -359,14 +329,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto R14, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_14>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_14>*))
 	{
-		constexpr auto V = at
-		<
-			R0, R1, R2, R3, R4, R5, R6, R7,
-			R8, R9, R10, R11, R12, R13, R14, Rs...
-
-		>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
@@ -386,14 +351,9 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto R14, auto R15, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::assign_15>*))
+	constexpr auto machine(void(*)(auto_map<RI::l_assign_15>*))
 	{
-		constexpr auto V = at
-		<
-			R0, R1, R2, R3, R4, R5, R6, R7,
-			R8, R9, R10, R11, R12, R13, R14, R15, Rs...
-
-		>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V = c(l)(m)(3);
 
 		return machine
 		<
