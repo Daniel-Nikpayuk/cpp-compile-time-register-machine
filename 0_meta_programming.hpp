@@ -144,10 +144,13 @@ namespace meta_programming
 	template<auto> struct auto_map { };
 
 	template<auto V>
-	using auto_cache_type = void(*)(auto_map<V>*);
+	constexpr auto U_value_V = U_type_T<auto_map<V>>;
 
-	template<auto V>							// optimized because we know
-	constexpr auto_cache_type<V> U_value_V = type_map<auto_map<V>*>;	// auto_map<V> is not a reference.
+//	template<auto V>
+//	using auto_cache_type = void(*)(auto_map<V>*);
+
+//	template<auto V>							// optimized because we know
+//	constexpr auto_cache_type<V> U_value_V = type_map<auto_map<V>*>;	// auto_map<V> is not a reference.
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -217,63 +220,63 @@ namespace meta_programming
 
 /***********************************************************************************************************************/
 
-// at [0-15):
+// at [0-16):
 
 	template
 	<
 		typename T,
 		auto V0, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(0)>)) { return V0; }
+	constexpr auto at(void(*)(auto_map<T(0)>*)) { return V0; }
 
 	template
 	<
 		typename T,
 		auto V0, auto V1, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(1)>)) { return V1; }
+	constexpr auto at(void(*)(auto_map<T(1)>*)) { return V1; }
 
 	template
 	<
 		typename T,
 		auto V0, auto V1, auto V2, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(2)>)) { return V2; }
+	constexpr auto at(void(*)(auto_map<T(2)>*)) { return V2; }
 
 	template
 	<
 		typename T,
 		auto V0, auto V1, auto V2, auto V3, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(3)>)) { return V3; }
+	constexpr auto at(void(*)(auto_map<T(3)>*)) { return V3; }
 
 	template
 	<
 		typename T,
 		auto V0, auto V1, auto V2, auto V3, auto V4, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(4)>)) { return V4; }
+	constexpr auto at(void(*)(auto_map<T(4)>*)) { return V4; }
 
 	template
 	<
 		typename T,
 		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(5)>)) { return V5; }
+	constexpr auto at(void(*)(auto_map<T(5)>*)) { return V5; }
 
 	template
 	<
 		typename T,
 		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(6)>)) { return V6; }
+	constexpr auto at(void(*)(auto_map<T(6)>*)) { return V6; }
 
 	template
 	<
 		typename T,
 		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(7)>)) { return V7; }
+	constexpr auto at(void(*)(auto_map<T(7)>*)) { return V7; }
 
 	template
 	<
@@ -281,7 +284,7 @@ namespace meta_programming
 		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
 		auto V8, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(8)>)) { return V8; }
+	constexpr auto at(void(*)(auto_map<T(8)>*)) { return V8; }
 
 	template
 	<
@@ -289,7 +292,7 @@ namespace meta_programming
 		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
 		auto V8, auto V9, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(9)>)) { return V9; }
+	constexpr auto at(void(*)(auto_map<T(9)>*)) { return V9; }
 
 	template
 	<
@@ -297,7 +300,7 @@ namespace meta_programming
 		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
 		auto V8, auto V9, auto V10, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(10)>)) { return V10; }
+	constexpr auto at(void(*)(auto_map<T(10)>*)) { return V10; }
 
 	template
 	<
@@ -305,7 +308,7 @@ namespace meta_programming
 		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
 		auto V8, auto V9, auto V10, auto V11, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(11)>)) { return V11; }
+	constexpr auto at(void(*)(auto_map<T(11)>*)) { return V11; }
 
 	template
 	<
@@ -313,7 +316,7 @@ namespace meta_programming
 		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
 		auto V8, auto V9, auto V10, auto V11, auto V12, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(12)>)) { return V12; }
+	constexpr auto at(void(*)(auto_map<T(12)>*)) { return V12; }
 
 	template
 	<
@@ -321,7 +324,7 @@ namespace meta_programming
 		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
 		auto V8, auto V9, auto V10, auto V11, auto V12, auto V13, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(13)>)) { return V13; }
+	constexpr auto at(void(*)(auto_map<T(13)>*)) { return V13; }
 
 	template
 	<
@@ -329,7 +332,7 @@ namespace meta_programming
 		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
 		auto V8, auto V9, auto V10, auto V11, auto V12, auto V13, auto V14, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(14)>)) { return V14; }
+	constexpr auto at(void(*)(auto_map<T(14)>*)) { return V14; }
 
 	template
 	<
@@ -337,7 +340,72 @@ namespace meta_programming
 		auto V0, auto V1, auto V2, auto V3, auto V4, auto V5, auto V6, auto V7,
 		auto V8, auto V9, auto V10, auto V11, auto V12, auto V13, auto V14, auto V15, auto... Vs
 	>
-	constexpr auto at(void(*)(auto_map<T(15)>)) { return V15; }
+	constexpr auto at(void(*)(auto_map<T(15)>*)) { return V15; }
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// atomic functions:
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// predicates:
+
+/***********************************************************************************************************************/
+
+	template<typename T> constexpr bool equal(T a1, T a2)				{ return (a1 == a2); }
+	template<typename T> constexpr bool not_equal(T a1, T a2)			{ return (a1 != a2); }
+	template<typename T> constexpr bool less_than(T a1, T a2)			{ return (a1 < a2); }
+	template<typename T> constexpr bool less_than_or_equal(T a1, T a2)		{ return (a1 <= a2); }
+	template<typename T> constexpr bool greater_than(T a1, T a2)			{ return (a1 > a2); }
+	template<typename T> constexpr bool greater_than_or_equal(T a1, T a2)		{ return (a1 >= a2); }
+
+	template<typename T, T Val> constexpr bool is_value(T a)			{ return (a == Val); }
+	template<typename T, T Val> constexpr bool not_value(T a)			{ return (a != Val); }
+	template<typename T, T Val> constexpr bool is_less_than(T a)			{ return (a < Val); }
+	template<typename T, T Val> constexpr bool is_less_than_or_equal(T a)		{ return (a <= Val); }
+	template<typename T, T Val> constexpr bool is_greater_than(T a)			{ return (a > Val); }
+	template<typename T, T Val> constexpr bool is_greater_than_or_equal(T a)	{ return (a >= Val); }
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// constants:
+
+/***********************************************************************************************************************/
+
+	template<typename T, T Val> constexpr T constant()				{ return Val; }
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// arithmetic operators:
+
+/***********************************************************************************************************************/
+
+	template<typename T> constexpr T add(T a1, T a2)				{ return a1 + a2; }
+	template<typename T> constexpr T subtract(T a1, T a2)				{ return a1 - a2; }
+	template<typename T> constexpr T multiply(T a1, T a2)				{ return a1 * a2; }
+	template<typename T> constexpr T divide(T a1, T a2)				{ return a1 / a2; }
+	template<typename T> constexpr T modulo(T a1, T a2)				{ return a1 % a2; }
+
+	template<typename T, T Val> constexpr T add_by(T a)				{ return a + Val; }
+	template<typename T, T Val> constexpr T subtract_by(T a)			{ return a - Val; }
+	template<typename T, T Val> constexpr T multiply_by(T a)			{ return a * Val; }
+	template<typename T, T Val> constexpr T divide_by(T a)				{ return a / Val; }
+	template<typename T, T Val> constexpr T modulo_by(T a)				{ return a % Val; }
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// comparative operators:
+
+/***********************************************************************************************************************/
+
+	template<typename T> constexpr T max(T a1, T a2)				{ return a1 > a2 ? a1 : a2; }
+	template<typename T> constexpr T min(T a1, T a2)				{ return a1 < a2 ? a1 : a2; }
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

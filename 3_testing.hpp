@@ -35,6 +35,55 @@ namespace testing
 
 /***********************************************************************************************************************/
 
+	struct RI_v1
+	{
+		enum : size_type
+		{
+			stop = 0   , pause      , start      , u_branch   ,
+			b_branch   , l_goto     , r_goto     , assign     ,
+			save       , restore    , u_apply    , b_apply    ,
+
+		// dispatch optimizations require these to be consecutive:
+
+			assign_0   , assign_1   , assign_2   , assign_3   ,
+			assign_4   , assign_5   , assign_6   , assign_7   ,
+			assign_8   , assign_9   , assign_10  , assign_11  ,
+			assign_12  , assign_13  , assign_14  , assign_15  ,
+
+		// dispatch optimizations require these to be consecutive:
+
+			save_0     , save_1     , save_2     , save_3     ,
+			save_4     , save_5     , save_6     , save_7     ,
+			save_8     , save_9     , save_10    , save_11    ,
+			save_12    , save_13    , save_14    , save_15    ,
+
+		// dispatch optimizations require these to be consecutive:
+
+			replace_0  , replace_1  , replace_2  , replace_3  ,
+			replace_4  , replace_5  , replace_6  , replace_7  ,
+			replace_8  , replace_9  , replace_10 , replace_11 ,
+			replace_12 , replace_13 , replace_14 , replace_15 ,
+
+		// dispatch optimizations require these to be consecutive:
+
+			restore_0  , restore_1  , restore_2  , restore_3  ,
+			restore_4  , restore_5  , restore_6  , restore_7  ,
+			restore_8  , restore_9  , restore_10 , restore_11 ,
+			restore_12 , restore_13 , restore_14 , restore_15 ,
+
+			r_size
+		};
+
+		enum : size_type
+		{
+			fold = r_size + 1     ,
+			fold_2_0 = r_size + 1 , fold_2_1 , fold_2_2 , fold_2_3 , fold_2_4 ,
+			fold_2_5              , fold_2_6 , fold_2_7 , fold_2_8 , fold_2_9
+		};
+	};
+
+/***********************************************************************************************************************/
+
 // next (alternate version):
 
 	template
@@ -97,27 +146,27 @@ namespace testing
 
 	void test_next()
 	{
-		print_next(1, fact_c, 1, 1, 0, true);	// assign  3 1
-		print_next(1, fact_c, 1, 1);		// save    1 2
-		print_next(1, fact_c, 1, 2);		// save    1 3
-		print_next(1, fact_c, 1, 3);		// apply   1 4
-		print_next(1, fact_c, 1, 4);		// assign  1 5
-		print_next(1, fact_c, 1, 5);		// l_goto  1 6
-		print_next(1, fact_c, 1, 6);		// branch  1 1
+		print_next(1, fact_contr, 1, 1, 0, true);	// assign  3 1
+		print_next(1, fact_contr, 1, 1);		// save    1 2
+		print_next(1, fact_contr, 1, 2);		// save    1 3
+		print_next(1, fact_contr, 1, 3);		// apply   1 4
+		print_next(1, fact_contr, 1, 4);		// assign  1 5
+		print_next(1, fact_contr, 1, 5);		// l_goto  1 6
+		print_next(1, fact_contr, 1, 6);		// branch  1 1
 		printf("\n");
 
-		print_next(1, fact_c, 2, 1);		// restore 2 2
-		print_next(1, fact_c, 2, 2);		// apply   2 3
-		print_next(1, fact_c, 2, 3);		// r_goto  2 4
-		print_next(1, fact_c, 2, 4, 1);		// branch  1 1
-		print_next(1, fact_c, 2, 4, 2);		// restore 2 1
-		print_next(1, fact_c, 2, 4, 3);		// assign  3 1
+		print_next(1, fact_contr, 2, 1);		// restore 2 2
+		print_next(1, fact_contr, 2, 2);		// apply   2 3
+		print_next(1, fact_contr, 2, 3);		// r_goto  2 4
+		print_next(1, fact_contr, 2, 4, 1);		// branch  1 1
+		print_next(1, fact_contr, 2, 4, 2);		// restore 2 1
+		print_next(1, fact_contr, 2, 4, 3);		// assign  3 1
 		printf("\n");
 
-		print_next(1, fact_c, 3, 1);		// r_goto  3 2
-		print_next(1, fact_c, 3, 2, 1);		// branch  1 1
-		print_next(1, fact_c, 3, 2, 2);		// restore 2 1
-		print_next(1, fact_c, 3, 2, 3);		// assign  3 1
+		print_next(1, fact_contr, 3, 1);		// r_goto  3 2
+		print_next(1, fact_contr, 3, 2, 1);		// branch  1 1
+		print_next(1, fact_contr, 3, 2, 2);		// restore 2 1
+		print_next(1, fact_contr, 3, 2, 3);		// assign  3 1
 	}
 
 /***********************************************************************************************************************/

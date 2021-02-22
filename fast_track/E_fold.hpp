@@ -17,34 +17,5 @@
 **
 ************************************************************************************************************************/
 
-#include<cstdio>
-
-/***********************************************************************************************************************/
-
-#include"0_meta_programming.hpp"
-#include"1_register_machine.hpp"
-#include"2_samples.hpp"
-#include"3_testing.hpp"
-
-	using namespace meta_programming;
-	using namespace register_machine;
-	using namespace samples;
-	using namespace testing;
-
-/***********************************************************************************************************************/
-
-	using utype = unsigned long;
-	using stype =   signed long;
-
-/***********************************************************************************************************************/
-
-/***********************************************************************************************************************/
-
-	int main(int argc, char *argv[])
-	{
-		constexpr auto result = factorial<5>;
-	//	printf("%d\n", factorial<5>);
-
-		return 0;
-	}
+// fold [2^0-2^9):
 
