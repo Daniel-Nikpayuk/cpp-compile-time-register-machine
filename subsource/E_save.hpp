@@ -28,16 +28,17 @@
 		auto d, auto c, auto l, auto m,
 		auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_0>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(0)>*))
 	{
-		constexpr auto V = at<Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V	= at<Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -49,16 +50,17 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_1>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(1)>*))
 	{
-		constexpr auto V = at<R0, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V	= at<R0, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -70,16 +72,17 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_2>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(2)>*))
 	{
-		constexpr auto V = at<R0, R1, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V	= at<R0, R1, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -91,16 +94,17 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_3>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(3)>*))
 	{
-		constexpr auto V = at<R0, R1, R2, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V	= at<R0, R1, R2, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, R2, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -112,16 +116,17 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_4>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(4)>*))
 	{
-		constexpr auto V = at<R0, R1, R2, R3, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V	= at<R0, R1, R2, R3, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, R2, R3, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -133,16 +138,17 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_5>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(5)>*))
 	{
-		constexpr auto V = at<R0, R1, R2, R3, R4, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V	= at<R0, R1, R2, R3, R4, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, R2, R3, R4, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -154,16 +160,17 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_6>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(6)>*))
 	{
-		constexpr auto V = at<R0, R1, R2, R3, R4, R5, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V	= at<R0, R1, R2, R3, R4, R5, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, R2, R3, R4, R5, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -175,16 +182,17 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_7>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(7)>*))
 	{
-		constexpr auto V = at<R0, R1, R2, R3, R4, R5, R6, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V	= at<R0, R1, R2, R3, R4, R5, R6, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, R2, R3, R4, R5, R6, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -196,16 +204,17 @@
 		auto d, auto c, auto l, auto m,
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_8>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(8)>*))
 	{
-		constexpr auto V = at<R0, R1, R2, R3, R4, R5, R6, R7, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr auto V	= at<R0, R1, R2, R3, R4, R5, R6, R7, Rs...>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, R2, R3, R4, R5, R6, R7, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -218,21 +227,22 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_9>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(9)>*))
 	{
-		constexpr auto V = at
+		constexpr auto V	= at
 		<
 			R0, R1, R2, R3, R4, R5, R6, R7,
 			R8, Rs...
 
 		>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, R2, R3, R4, R5, R6, R7, R8, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -245,21 +255,22 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_10>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(10)>*))
 	{
-		constexpr auto V = at
+		constexpr auto V	= at
 		<
 			R0, R1, R2, R3, R4, R5, R6, R7,
 			R8, R9, Rs...
 
 		>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -272,21 +283,22 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_11>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(11)>*))
 	{
-		constexpr auto V = at
+		constexpr auto V	= at
 		<
 			R0, R1, R2, R3, R4, R5, R6, R7,
 			R8, R9, R10, Rs...
 
 		>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -299,21 +311,22 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto R11, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_12>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(12)>*))
 	{
-		constexpr auto V = at
+		constexpr auto V	= at
 		<
 			R0, R1, R2, R3, R4, R5, R6, R7,
 			R8, R9, R10, R11, Rs...
 
 		>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -326,21 +339,22 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto R11, auto R12, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_13>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(13)>*))
 	{
-		constexpr auto V = at
+		constexpr auto V	= at
 		<
 			R0, R1, R2, R3, R4, R5, R6, R7,
 			R8, R9, R10, R11, R12, Rs...
 
 		>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -353,21 +367,22 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_14>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(14)>*))
 	{
-		constexpr auto V = at
+		constexpr auto V	= at
 		<
 			R0, R1, R2, R3, R4, R5, R6, R7,
 			R8, R9, R10, R11, R12, R13, Rs...
 
 		>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 
 /***********************************************************************************************************************/
@@ -380,20 +395,21 @@
 		auto R0, auto R1, auto R2, auto R3, auto R4, auto R5, auto R6, auto R7,
 		auto R8, auto R9, auto R10, auto R11, auto R12, auto R13, auto R14, auto... Rs
 	>
-	constexpr auto machine(void(*)(auto_map<RI::save_15>*))
+	constexpr auto machine(void(*)(auto_pack<RI::save, index_type(15)>*))
 	{
-		constexpr auto V = at
+		constexpr auto V	= at
 		<
 			R0, R1, R2, R3, R4, R5, R6, R7,
 			R8, R9, R10, R11, R12, R13, R14, Rs...
 
 		>(U_value_V<c(l)(m)(2)>);
+		constexpr instr_type j	= next_i(d, c, l, m);
 
 		return machine
 		<
 			d-1, c, next_l(d, c, l, m), next_m(d, c, l, m),
 			R0, R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13, R14, V, Rs...
 
-		>(U_value_V<next_c(d, c, l, m)>);
+		>(U_pair_V<j(1), next_k(c, j)>);
 	}
 

@@ -31,142 +31,65 @@ namespace samples
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
-// lists:
-
-	// In terms of performance I am working with:
-
-		//   gcc nesting depth:  900
-		// clang nesting depth: 1024
-
-	// The following (non-empty) lists consist of the following numbers:
-
-	//	-2, 0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 12, 223, 1729
-
-	// The numbers are (weakly) mixed, with the exception of
-	// 1729, which occurs exactly 3 times in each list,
-	// and is located at (weakly) random positions.
-
-/***********************************************************************************************************************/
-
-// list 1000:
-
-		// rows:           40
-		// columns:        25
-		// length:       1000
-		// 1729:          704, 862, 887
-		// U_type_T<int>: 299
-
-	using list_1000 = auto_list
-	<
-	     5, 3,  12,  9,    7,     5, 3,  12,  9, 7,     5, 3,   12,  9, 7,     5, 3,  12,  9, 7,     5, 3,  12,  9, 7,
-	    -2, 0, 223, 11,    7,     6, 5,   4,  3, 2,     6, 5,    4,  3, 2,     6, 5,   4,  3, 2,     6, 5,   4,  3, 2,
-	     4, 4,   4,  4,    4,     4, 4,   4,  4, 4,     4, 4,    4,  4, 4,     4, 4,   4,  4, 4,     4, 4,   4,  4, 4,
-	     6, 5,   4,  3,    2,    -2, 0, 223, 11, 7,    -2, 0,  223, 11, 7,    -2, 0, 223, 11, 7,    -2, 0, 223, 11, 7,
-	     1, 3,   6,  3,    1,     1, 3,   6,  3, 1,     1, 3,    6,  3, 1,     1, 3,   6,  3, 1,     1, 3,   6,  3, 1,
-
-	     5, 3,  12,  9,    7,     5, 3,  12,  9, 7,     5, 3,   12,  9, 7,     5, 3,  12,  9, 7,     5, 3,  12,  9, 7,
-	    -2, 0, 223, 11,    7,    -2, 0, 223, 11, 7,    -2, 0,  223, 11, 7,    -2, 0, 223, 11, 7,    -2, 0, 223, 11, 7,
-	     4, 4,   4,  4,    4,     4, 4,   4,  4, 4,     4, 4,    4,  4, 4,     4, 4,   4,  4, 4,     4, 4,   4,  4, 4,
-	     6, 5,   4,  3,    2,     6, 5,   4,  3, 2,     6, 5,    4,  3, 2,     6, 5,   4,  3, 2,     6, 5,   4,  3, 2,
-	     1, 3,   6,  3,    1,     1, 3,   6,  3, 1,     1, 3,    6,  3, 1,     1, 3,   6,  3, 1,     1, 3,   6,  3, 1,
-
-	     5, 3,  12,  9,    7,     5, 3,  12,  9, 7,     5, 3,   12,  9, 7,     5, 3,  12,  9, 7,     5, 3,  12,  9, 7,
-	    -2, 0, 223, 11,    7,     6, 5,   4,  3, 2,     6, 5,    4,  3, 2,     6, 5,   4,  3, 2,     6, 5,   4,  3, U_type_T<int>,
-	     4, 4,   4,  4,    4,     4, 4,   4,  4, 4,     4, 4,    4,  4, 4,     4, 4,   4,  4, 4,     4, 4,   4,  4, 4,
-	     6, 5,   4,  3,    2,    -2, 0, 223, 11, 7,    -2, 0,  223, 11, 7,    -2, 0, 223, 11, 7,    -2, 0, 223, 11, 7,
-	     1, 3,   6,  3,    1,     1, 3,   6,  3, 1,     1, 3,    6,  3, 1,     1, 3,   6,  3, 1,     1, 3,   6,  3, 1,
-
-	     5, 3,  12,  9,    7,     5, 3,  12,  9, 7,     5, 3,   12,  9, 7,     5, 3,  12,  9, 7,     5, 3,  12,  9, 7,
-	    -2, 0, 223, 11,    7,    -2, 0, 223, 11, 7,    -2, 0,  223, 11, 7,    -2, 0, 223, 11, 7,    -2, 0, 223, 11, 7,
-	     4, 4,   4,  4,    4,     4, 4,   4,  4, 4,     4, 4,    4,  4, 4,     4, 4,   4,  4, 4,     4, 4,   4,  4, 4,
-	     6, 5,   4,  3,    2,     6, 5,   4,  3, 2,     6, 5,    4,  3, 2,     6, 5,   4,  3, 2,     6, 5,   4,  3, 2,
-	     1, 3,   6,  3,    1,     1, 3,   6,  3, 1,     1, 3,    6,  3, 1,     1, 3,   6,  3, 1,     1, 3,   6,  3, 1,
-
-	     5, 3,  12,  9,    7,     5, 3,  12,  9, 7,     5, 3,   12,  9, 7,     5, 3,  12,  9, 7,     5, 3,  12,  9, 7,
-	    -2, 0, 223, 11,    7,     6, 5,   4,  3, 2,     6, 5,    4,  3, 2,     6, 5,   4,  3, 2,     6, 5,   4,  3, 2,
-	     4, 4,   4,  4,    4,     4, 4,   4,  4, 4,     4, 4,    4,  4, 4,     4, 4,   4,  4, 4,     4, 4,   4,  4, 4,
-	     6, 5,   4,  3,    2,    -2, 0, 223, 11, 7,    -2, 0,  223, 11, 7,    -2, 0, 223, 11, 7,    -2, 0, 223, 11, 7,
-	     1, 3,   6,  3,    1,     1, 3,   6,  3, 1,     1, 3,    6,  3, 1,     1, 3,   6,  3, 1,     1, 3,   6,  3, 1,
-
-	     5, 3,  12,  9,    7,     5, 3,  12,  9, 7,     5, 3,   12,  9, 7,     5, 3,  12,  9, 7,     5, 3,  12,  9, 7,
-	    -2, 0, 223, 11,    7,    -2, 0, 223, 11, 7,    -2, 0,  223, 11, 7,    -2, 0, 223, 11, 7,    -2, 0, 223, 11, 7,
-	     4, 4,   4,  4,    4,     4, 4,   4,  4, 4,     4, 4,    4,  4, 4,     4, 4,   4,  4, 4,     4, 4,   4,  4, 4,
-	     6, 5,   4,  3, 1729,     6, 5,   4,  3, 2,     6, 5,    4,  3, 2,     6, 5,   4,  3, 2,     6, 5,   4,  3, 2,
-	     1, 3,   6,  3,    1,     1, 3,   6,  3, 1,     1, 3,    6,  3, 1,     1, 3,   6,  3, 1,     1, 3,   6,  3, 1,
-
-	     5, 3,  12,  9,    7,     5, 3,  12,  9, 7,     5, 3,   12,  9, 7,     5, 3,  12,  9, 7,     5, 3,  12,  9, 7,
-	    -2, 0, 223, 11,    7,     6, 5,   4,  3, 2,     6, 5,    4,  3, 2,     6, 5,   4,  3, 2,     6, 5,   4,  3, 2,
-	     4, 4,   4,  4,    4,     4, 4,   4,  4, 4,     4, 4,    4,  4, 4,     4, 4,   4,  4, 4,     4, 4,   4,  4, 4,
-	     6, 5,   4,  3,    2,    -2, 0, 223, 11, 7,    -2, 0,  223, 11, 7,    -2, 0, 223, 11, 7,    -2, 0, 223, 11, 7,
-	     1, 3,   6,  3,    1,     1, 3,   6,  3, 1,     1, 3, 1729,  3, 1,     1, 3,   6,  3, 1,     1, 3,   6,  3, 1,
-
-	     5, 3,  12,  9,    7,     5, 3,  12,  9, 7,     5, 3, 1729,  9, 7,     5, 3,  12,  9, 7,     5, 3,  12,  9, 7,
-	    -2, 0, 223, 11,    7,    -2, 0, 223, 11, 7,    -2, 0,  223, 11, 7,    -2, 0, 223, 11, 7,    -2, 0, 223, 11, 7,
-	     4, 4,   4,  4,    4,     4, 4,   4,  4, 4,     4, 4,    4,  4, 4,     4, 4,   4,  4, 4,     4, 4,   4,  4, 4,
-	     6, 5,   4,  3,    2,     6, 5,   4,  3, 2,     6, 5,    4,  3, 2,     6, 5,   4,  3, 2,     6, 5,   4,  3, 2,
-	     1, 3,   6,  3,    1,     1, 3,   6,  3, 1,     1, 3,    6,  3, 1,     1, 3,   6,  3, 1,     1, 3,   6,  3, 1
-	>;
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
 // factorial:
 
 /***********************************************************************************************************************/
 
-	struct factorial_struct
-	{
-		template
-		<
-			size_type cont, size_type val, size_type n,
-				size_type eq, size_type sub, size_type mult, size_type c_1,
-
-			size_type fact_loop, size_type after_fact, size_type base_case, size_type fact_done
-		>
-		static constexpr auto result	= controller
-		<
-			label // fact loop:
-			<
-				instruction < RI::b_branch , base_case , eq         , n , c_1 >,
-				instruction < RI::save     , cont                             >,
-				instruction < RI::save     , n                                >,
-				instruction < RI::b_apply  , n         , sub        , n , c_1 >,
-				instruction < RI::l_assign , cont      , after_fact           >,
-				instruction < RI::l_goto   , fact_loop                        >
-			>,
-
-			label // after fact:
-			<
-				instruction < RI::restore  , n                     >,
-				instruction < RI::restore  , cont                  >,
-				instruction < RI::b_apply  , val  , mult , n , val >,
-				instruction < RI::r_goto   , cont                  >
-			>,
-
-			label // base case:
-			<
-				instruction < RI::r_assign , val  , c_1 >,
-				instruction < RI::r_goto   , cont       >
-			>,
-
-			label // fact done:
-			<
-				instruction < RI::stop   , 7 >,
-				instruction < RI::r_size , 7 >
-			>
-		>;
-	};
-
-	constexpr auto fact_contr = factorial_struct::template result
+	template
 	<
-		0, 1, 2, 3, 4, 5, 6,
-		1, 2, 3, 4
+		// registers:
+
+			index_type cont		= 0,
+			index_type val		= 1,
+			index_type n		= 2,
+			index_type eq		= 3,
+			index_type sub		= 4,
+			index_type mult		= 5,
+			index_type c_1		= 6,
+
+		// labels:
+
+			index_type fact_loop	= 1,
+			index_type after_fact	= 2,
+			index_type base_case	= 3,
+			index_type fact_done	= 4
+	>
+	static constexpr auto fact_contr = controller
+	<
+		label // fact loop:
+		<
+			instruction < RI::b_branch , base_case , eq         , n , c_1 >,
+			instruction < RI::save     , cont                             >,
+			instruction < RI::save     , n                                >,
+			instruction < RI::b_apply  , n         , sub        , n , c_1 >,
+			instruction < RI::l_assign , cont      , after_fact           >,
+			instruction < RI::l_goto   , fact_loop                        >
+		>,
+
+		label // after fact:
+		<
+			instruction < RI::restore  , n                     >,
+			instruction < RI::restore  , cont                  >,
+			instruction < RI::b_apply  , val  , mult , n , val >,
+			instruction < RI::r_goto   , cont                  >
+		>,
+
+		label // base case:
+		<
+			instruction < RI::r_assign , val  , c_1 >,
+			instruction < RI::r_goto   , cont       >
+		>,
+
+		label // fact done:
+		<
+			instruction < RI::stop       >,
+			instruction < RI::r_size , 7 >
+		>
 	>;
 
-	template<auto n, size_type depth = 255>
-	constexpr auto factorial = machine<depth, fact_contr, 4, 1, n,
-		equal<decltype(n)>, subtract<decltype(n)>, multiply<decltype(n)>, 1>(U_value_V<RI::start>);
+	template<auto n, depth_type depth = 500>
+	constexpr auto factorial = list_at<1>(machine<depth, fact_contr<>, 4, 1, n,
+		equal<decltype(n)>, subtract<decltype(n)>, multiply<decltype(n)>, 1>(U_pair_V<RI::start, index_type(0)>));
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

@@ -31,27 +31,13 @@ namespace testing
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
-// temporary list operators:
-
-/***********************************************************************************************************************/
-
-	template<template<auto...> class ListName, auto V0, auto V1, auto... Vs>
-	constexpr auto list_at1(void(*)(ListName<V0, V1, Vs...>*))
-	{
-		return V1;
-	}
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
 // experimental alternatives:
 
 /***********************************************************************************************************************/
 
 	struct RI_v1
 	{
-		enum : size_type
+		enum : index_type
 		{
 			stop = 0   , pause      , start      , u_branch   ,
 			b_branch   , l_goto     , r_goto     , assign     ,
@@ -88,7 +74,7 @@ namespace testing
 			r_size
 		};
 
-		enum : size_type
+		enum : index_type
 		{
 			fold = r_size + 1     ,
 			fold_2_0 = r_size + 1 , fold_2_1 , fold_2_2 , fold_2_3 , fold_2_4 ,
@@ -105,7 +91,7 @@ namespace testing
 		auto stop_next, auto pause_next, auto branch_next,
 		auto l_goto_next, auto r_goto_next, auto label_next, auto instr_next
 	>
-	constexpr size_type next_v1(size_type d, contr_type c, size_type l, size_type m, size_type n = 0, bool is_branch = false)
+	constexpr index_type next_v1(depth_type d, contr_type c, index_type l, index_type m, index_type n = 0, bool is_branch = false)
 	{
 		bool d_break		= !bool(d);
 		bool c_break		= !d_break && (l == contr_length(c));
@@ -138,7 +124,7 @@ namespace testing
 
 // register instruction:
 
-	void print_RI(size_type n)
+	void print_RI(index_type n)
 	{
 		printf("%s, ",	(n == RI::l_assign ) ? "l_assign" :
 				(n == RI::r_assign ) ? "r_assign" :
@@ -151,9 +137,9 @@ namespace testing
 				(n == RI::u_apply  ) ? "u_apply"  : "b_apply");
 	}
 
-	void print_next(size_type d, contr_type c, size_type l, size_type m, size_type n = 0, bool is_branch = false)
+	void print_next(depth_type d, contr_type c, index_type l, index_type m, index_type n = 0, bool is_branch = false)
 	{
-		print_RI(next_c(d, c, l, m, n, is_branch));
+		print_RI(next_i(d, c, l, m, n, is_branch)(1));
 		printf("%u, %u\n", next_l(d, c, l, m, n, is_branch), next_m(d, c, l, m, n, is_branch));
 	}
 
@@ -165,28 +151,63 @@ namespace testing
 
 	void test_next()
 	{
-		print_next(1, fact_contr, 1, 1, 0, true);	// assign  3 1
-		print_next(1, fact_contr, 1, 1);		// save    1 2
-		print_next(1, fact_contr, 1, 2);		// save    1 3
-		print_next(1, fact_contr, 1, 3);		// apply   1 4
-		print_next(1, fact_contr, 1, 4);		// assign  1 5
-		print_next(1, fact_contr, 1, 5);		// l_goto  1 6
-		print_next(1, fact_contr, 1, 6);		// branch  1 1
+		print_next(1, fact_contr<>, 1, 1, 0, true);	// assign  3 1
+		print_next(1, fact_contr<>, 1, 1);		// save    1 2
+		print_next(1, fact_contr<>, 1, 2);		// save    1 3
+		print_next(1, fact_contr<>, 1, 3);		// apply   1 4
+		print_next(1, fact_contr<>, 1, 4);		// assign  1 5
+		print_next(1, fact_contr<>, 1, 5);		// l_goto  1 6
+		print_next(1, fact_contr<>, 1, 6);		// branch  1 1
 		printf("\n");
 
-		print_next(1, fact_contr, 2, 1);		// restore 2 2
-		print_next(1, fact_contr, 2, 2);		// apply   2 3
-		print_next(1, fact_contr, 2, 3);		// r_goto  2 4
-		print_next(1, fact_contr, 2, 4, 1);		// branch  1 1
-		print_next(1, fact_contr, 2, 4, 2);		// restore 2 1
-		print_next(1, fact_contr, 2, 4, 3);		// assign  3 1
+		print_next(1, fact_contr<>, 2, 1);		// restore 2 2
+		print_next(1, fact_contr<>, 2, 2);		// apply   2 3
+		print_next(1, fact_contr<>, 2, 3);		// r_goto  2 4
+		print_next(1, fact_contr<>, 2, 4, 1);		// branch  1 1
+		print_next(1, fact_contr<>, 2, 4, 2);		// restore 2 1
+		print_next(1, fact_contr<>, 2, 4, 3);		// assign  3 1
 		printf("\n");
 
-		print_next(1, fact_contr, 3, 1);		// r_goto  3 2
-		print_next(1, fact_contr, 3, 2, 1);		// branch  1 1
-		print_next(1, fact_contr, 3, 2, 2);		// restore 2 1
-		print_next(1, fact_contr, 3, 2, 3);		// assign  3 1
+		print_next(1, fact_contr<>, 3, 1);		// r_goto  3 2
+		print_next(1, fact_contr<>, 3, 2, 1);		// branch  1 1
+		print_next(1, fact_contr<>, 3, 2, 2);		// restore 2 1
+		print_next(1, fact_contr<>, 3, 2, 3);		// assign  3 1
 	}
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// debugging (tracing?):
+
+/***********************************************************************************************************************/
+
+	// restore, apply require 2 nesting depths. <-- the compilation error "between" suggests just one decrement.
+	// n = 5
+	// depth:
+
+	// branch   1    - c 1 1 4 1 5 ... 
+	// save     2    - c 1 2 4 1 5 ... 4
+	// save     3    - c 1 3 4 1 5 ... 5 4
+	// b_apply  4,5  - c 1 4 4 1 4 ... 5 4
+	// assign   6    - c 1 5 2 1 4 ... 5 4
+	// l_goto   7    - c 1 6 2 1 4 ... 5 4
+
+	// branch   8    - c 1 1 2 1 4 ... 5 4
+	// save     9    - c 1 2 2 1 4 ... 2 5 4
+	// save    10    - c 1 3 2 1 4 ... 4 2 5 4
+	// b_apply 11,12 - c 1 4 2 1 3 ... 4 2 5 4
+	// assign  13    - c 1 5 2 1 3 ... 4 2 5 4
+	// l_goto  14    - c 1 6 2 1 3 ... 4 2 5 4
+
+/***********************************************************************************************************************/
+
+	// n = 1
+	// depth:
+
+	// branch   1    - c 1 1 4 1 1 ... 
+	// r_assign 2    - c 3 1 4 1 1 ... 
+	// r_goto   3    - c 3 2 4 1 1 ... 
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

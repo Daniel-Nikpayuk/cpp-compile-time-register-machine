@@ -140,11 +140,58 @@ namespace meta_programming
 	using T_fast_type_U = decltype(type_map_to_cache(TMap)());
 
 /***********************************************************************************************************************/
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
 
-	template<auto> struct auto_map { };
+// variadic:
 
-	template<auto V>					// optimized because we know
-	constexpr auto U_value_V = type_map<auto_map<V>*>;	// auto_map<V> is not a reference.
+/***********************************************************************************************************************/
+
+	template<auto...> struct auto_pack				{ };
+	template<auto...> struct alt_pack				{ };
+
+	template<auto V> using auto_map					= auto_pack<V>;
+	template<auto V1, auto V2> using auto_pair			= auto_pack<V1, V2>;
+
+	template<auto V>						// optimized because we know
+	constexpr auto U_value_V = type_map<auto_pack<V>*>;		// auto_pack<V> is not a reference.
+
+	template<auto V1, auto V2>					// optimized because we know
+	constexpr auto U_pair_V = type_map<auto_pack<V1, V2>*>;		// auto_pack<V1, V2> is not a reference.
+
+/***********************************************************************************************************************/
+
+// is auto list:
+
+	template<typename T>
+	constexpr bool V_is_auto_pack_U(void(*)(T))			// Unsafe to use directly,
+		{ return false; }
+
+	template<auto... Vs>
+	constexpr bool V_is_auto_pack_U(void(*)(auto_pack<Vs...>*))	// Use the following instead:
+		{ return true; }
+
+	//
+
+	template<typename T>
+	constexpr bool V_is_auto_pack_T = V_is_auto_pack_U(U_type_T<T>);
+
+/***********************************************************************************************************************/
+
+// is alt list:
+
+	template<typename T>
+	constexpr bool V_is_alt_pack_U(void(*)(T))			// Unsafe to use directly,
+		{ return false; }
+
+	template<auto... Vs>
+	constexpr bool V_is_alt_pack_U(void(*)(alt_pack<Vs...>*))	// Use the following instead:
+		{ return true; }
+
+	//
+
+	template<typename T>
+	constexpr bool V_is_alt_pack_T = V_is_alt_pack_U(U_type_T<T>);
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -173,10 +220,10 @@ namespace meta_programming
 	//
 
 	template<typename T1, typename T2>
-	constexpr bool V_equal_TxT = V_is_equal_UxU(U_type_T<T1>, U_type_T<T2>);
+	constexpr bool V_equal_TxT = V_is_equal_UxU(type_map<type_cache<T1>>, type_map<type_cache<T2>>);
 
 	template<typename T1, typename T2>
-	constexpr bool V_not_equal_TxT = ! V_is_equal_UxU(U_type_T<T1>, U_type_T<T2>);
+	constexpr bool V_not_equal_TxT = ! V_is_equal_UxU(type_map<type_cache<T1>>, type_map<type_cache<T2>>);
 
 	//
 
@@ -198,53 +245,8 @@ namespace meta_programming
 
 	//
 
-	template<typename T> constexpr bool V_equals_void		= V_equal_UxU<U_type_T<T>, U_void>;
-	template<typename T> constexpr bool V_equals_char_ptr		= V_equal_UxU<U_type_T<T>, U_char_ptr>;
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
-// variadic:
-
-/***********************************************************************************************************************/
-
-	template<auto...> struct auto_list	{ };
-	template<auto...> struct alt_list	{ };
-
-/***********************************************************************************************************************/
-
-// is auto list:
-
-	template<typename T>
-	constexpr bool V_is_auto_list_U(void(*)(T))			// Unsafe to use directly,
-		{ return false; }
-
-	template<auto... Vs>
-	constexpr bool V_is_auto_list_U(void(*)(auto_list<Vs...>*))	// Use the following instead:
-		{ return true; }
-
-	//
-
-	template<typename T>
-	constexpr bool V_is_auto_list_T = V_is_auto_list_U(U_type_T<T>);
-
-/***********************************************************************************************************************/
-
-// is alt list:
-
-	template<typename T>
-	constexpr bool V_is_alt_list_U(void(*)(T))			// Unsafe to use directly,
-		{ return false; }
-
-	template<auto... Vs>
-	constexpr bool V_is_alt_list_U(void(*)(alt_list<Vs...>*))	// Use the following instead:
-		{ return true; }
-
-	//
-
-	template<typename T>
-	constexpr bool V_is_alt_list_T = V_is_alt_list_U(U_type_T<T>);
+	template<typename T> constexpr bool V_equals_void		= V_equal_TxT<T, void>;
+	template<typename T> constexpr bool V_equals_char_ptr		= V_equal_TxT<T, char*>;
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
