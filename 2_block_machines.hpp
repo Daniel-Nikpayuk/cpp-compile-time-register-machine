@@ -402,6 +402,9 @@ namespace machine_space
 
 // trampoline:
 
+		// total nesting depth	= d + d-1 + d-2 + ... + 2 + 1
+		//			= d(d+1)/2
+
 	template<auto d, typename T>
 	constexpr auto machine_trampoline(T v) { return v; }
 
@@ -415,7 +418,7 @@ namespace machine_space
 		{
 			using n = T_type_U<un>;
 
-			return machine_trampoline<d>(MACHINE(n, c, d, i, j)(Hs...));
+			return machine_trampoline<d-1>(MACHINE(n, c, d, i, j)(Hs...));
 		}
 
 	template<auto d, auto RPack, auto... Hs>
