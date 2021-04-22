@@ -86,6 +86,36 @@
 
 /***********************************************************************************************************************/
 
+// block operation values:
+
+#undef _2_9_op_Vs
+#undef _2_8_op_Vs
+#undef _2_7_op_Vs
+#undef _2_6_op_Vs
+#undef _2_5_op_Vs
+#undef _2_4_op_Vs
+#undef _2_3_op_Vs
+#undef _2_2_op_Vs
+#undef _2_1_op_Vs
+#undef _2_0_op_Vs
+
+/***********************************************************************************************************************/
+
+// block operations:
+
+#undef _2_9_ops
+#undef _2_8_ops
+#undef _2_7_ops
+#undef _2_6_ops
+#undef _2_5_ops
+#undef _2_4_ops
+#undef _2_3_ops
+#undef _2_2_ops
+#undef _2_1_ops
+#undef _2_0_ops
+
+/***********************************************************************************************************************/
+
 // block values:
 
 #undef _2_9_Vs
@@ -113,6 +143,21 @@
 #undef _2_2_auto_Vs
 #undef _2_1_auto_Vs
 #undef _2_0_auto_Vs
+
+/***********************************************************************************************************************/
+
+// upper operation values:
+
+#undef _upper_512_op_Vs
+#undef _upper_256_op_Vs
+#undef _upper_128_op_Vs
+#undef _upper_64_op_Vs
+#undef _upper_32_op_Vs
+#undef _upper_16_op_Vs
+#undef _upper_8_op_Vs
+#undef _upper_4_op_Vs
+#undef _upper_2_op_Vs
+#undef _upper_1_op_Vs
 
 /***********************************************************************************************************************/
 
@@ -150,6 +195,9 @@
 // machine:
 
 #undef MACHINE
+#undef FIXED_HEAP_ARGS
+#undef FIXED_HEAP_SIG_ARGS
+#undef FIXED_HEAP_PARAMS
 #undef CONTR_PARAMS
 
 /***********************************************************************************************************************/

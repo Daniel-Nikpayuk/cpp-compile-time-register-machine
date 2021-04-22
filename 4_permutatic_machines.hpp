@@ -34,15 +34,6 @@ namespace machine_space
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
-// internals:
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
 // atomics:
 
 /***********************************************************************************************************************/
@@ -63,15 +54,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
-			typename Heap0, typename Heap1, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
 			constexpr auto nj = copy_sn_to_h0_locus<n::pos(c, i, j)>; // single call
 			constexpr auto un = U_type_T<n>;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, U_pack_Vs<un, c, i, j>, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
 	};
 
@@ -99,15 +90,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
-			typename Heap0, typename Heap1, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
 			constexpr auto nj = move_sn_to_h0_locus<n::pos(c, i, j)>; // single call
 			constexpr auto un = U_type_T<n>;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, U_pack_Vs<un, c, i, j>, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
 	};
 
@@ -135,15 +126,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
-			typename Heap0, typename Heap1, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
 			constexpr auto nj = erase_sn_locus<n::pos(c, i, j)>; // single call
 			constexpr auto un = U_type_T<n>;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, U_pack_Vs<un, c, i, j>, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
 	};
 
@@ -171,15 +162,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
-			typename Heap0, typename Heap1, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
 			constexpr auto nj = insert_h0_to_sn_locus<n::pos(c, i, j)>; // single call(s)
 			constexpr auto un = U_type_T<n>;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, U_pack_Vs<un, c, i, j>, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
 	};
 
@@ -207,15 +198,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
-			typename Heap0, typename Heap1, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
 			constexpr auto nj = replace_h0_to_sn_locus<n::pos(c, i, j)>; // single call(s)
 			constexpr auto un = U_type_T<n>;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, U_pack_Vs<un, c, i, j>, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
 	};
 
@@ -243,15 +234,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
-			typename Heap0, typename Heap1, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
 			constexpr auto nj = apply1_replace_h0_to_sn_locus<n::pos(c, i, j)>; // single call(s)
 			constexpr auto un = U_type_T<n>;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, U_pack_Vs<un, c, i, j>, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
 	};
 
@@ -279,15 +270,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
-			typename Heap0, typename Heap1, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
 			constexpr auto nj = apply2_replace_h0_to_sn_locus<n::pos(c, i, j)>; // single call(s)
 			constexpr auto un = U_type_T<n>;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, U_pack_Vs<un, c, i, j>, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
 	};
 

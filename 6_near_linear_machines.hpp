@@ -34,15 +34,6 @@ namespace machine_space
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
-// internals:
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
 // atomics:
 
 /***********************************************************************************************************************/
@@ -70,15 +61,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
-			typename Heap0, typename Heap1, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
 			constexpr auto nc = call_contr<n::appl(c, i, j)>;
 			constexpr auto un = U_type_T<n>;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, U_pack_Vs<un, c, i, j>, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
 	};
 
@@ -95,15 +86,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
-			typename Heap0, typename Heap1, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
 			constexpr auto nc = jump_contr<n::pred(c, i, j), n::appl2(c, i, j), n::appl1(c, i, j)>;
 			constexpr auto un = U_type_T<n>;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, U_pack_Vs<un, c, i, j>, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
 	};
 
@@ -120,15 +111,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
-			typename Heap0, typename Heap1, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
 			constexpr auto nc = jump_contr<n::pred(c, i, j), n::appl1(c, i, j), n::appl2(c, i, j)>;
 			constexpr auto un = U_type_T<n>;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, U_pack_Vs<un, c, i, j>, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
 	};
 
@@ -302,41 +293,6 @@ namespace machine_space
 // externals:
 
 /***********************************************************************************************************************/
-
-// (pair) factorial:
-
-	template
-	<
-		// registers:
-
-			index_type n		= 0,
-			index_type p		= 1,
-
-			index_type eq		= 2,
-			index_type sub		= 3,
-			index_type mult		= 4,
-
-			index_type zero		= 5,
-			index_type one		= 6
-	>
-	constexpr auto pair_fact_contr = n_controller
-	<
-		n_stem  < n_test<eq, n, zero>		, n_break<p>	, n_apply<p, mult, n, p>	>,
-		n_lift  < n_apply<n, sub, n, one>							>,
-
-		n_cycle
-	>;
-
-	template<auto n, depth_type d = 500>
-	constexpr auto n_factorial = machine_trampoline<d>
-	(
-		machine_start
-		<
-			ND, pair_fact_contr<>, d, zero, zero, n, decltype(n)(1),
-				equal<decltype(n)>, subtract<decltype(n)>,
-					multiply<decltype(n)>, decltype(n)(0), decltype(n)(1)
-		>()
-	);
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

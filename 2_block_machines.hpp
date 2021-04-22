@@ -48,7 +48,7 @@ namespace machine_space
 	template<>
 	struct machine<MN::first>
 	{
-		template<typename n, auto c, auto d, auto i, auto j, auto V0, auto... Vs, typename... Heaps>
+		template<CONTR_PARAMS, auto V0, auto... Vs, typename... Heaps>
 		static constexpr auto result(Heaps... Hs)
 		{
 			return V0;
@@ -62,7 +62,7 @@ namespace machine_space
 	template<>
 	struct machine<MN::rest>
 	{
-		template<typename n, auto c, auto d, auto i, auto j, auto V0, auto... Vs, typename... Heaps>
+		template<CONTR_PARAMS, auto V0, auto... Vs, typename... Heaps>
 		static constexpr auto result(Heaps... Hs)
 		{
 			return U_pack_Vs<Vs...>;
@@ -76,7 +76,7 @@ namespace machine_space
 	template<>
 	struct machine<MN::pack>
 	{
-		template<typename n, auto c, auto d, auto i, auto j, auto... Vs, typename... Heaps>
+		template<CONTR_PARAMS, auto... Vs, typename... Heaps>
 		static constexpr auto result(Heaps... Hs)
 		{
 			return U_pack_Vs<Vs...>;
@@ -95,7 +95,7 @@ namespace machine_space
 	template<>
 	struct machine<MN::depth>
 	{
-		template<typename n, auto c, auto d, auto i, auto j, auto... Vs, typename... Heaps>
+		template<CONTR_PARAMS, auto... Vs, typename... Heaps>
 		static constexpr auto result(Heaps... Hs)
 		{
 			return d;
@@ -109,7 +109,7 @@ namespace machine_space
 	template<>
 	struct machine<MN::dump>
 	{
-		template<typename n, auto c, auto d, auto i, auto j, auto... Vs, typename... Heaps>
+		template<CONTR_PARAMS, auto... Vs, typename... Heaps>
 		static constexpr auto result(Heaps... Hs)
 		{
 			constexpr auto un = U_type_T<n>;
@@ -131,7 +131,7 @@ namespace machine_space
 	template<>
 	struct machine<MN::pause>
 	{
-		template<typename n, auto c, auto d, auto i, auto j, auto... Vs, typename... Heaps>
+		template<CONTR_PARAMS, auto... Vs, typename... Heaps>
 		static constexpr auto result(Heaps... Hs)
 		{
 			constexpr auto un = U_type_T<n>;
@@ -150,20 +150,14 @@ namespace machine_space
 	{
 		template
 		<
-			// stack:
-
-				typename n, auto c, auto d, auto i, auto j, auto... Vs,
-
-			// heaps:
-
-				typename Heap0, typename Heap1,
-				auto un, auto nc, auto ni, auto nj, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, auto un, auto nc, auto ni, auto nj, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, void(*H2)(auto_pack<un, nc, ni, nj>*), Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, void(*H2)(auto_pack<un, nc, ni, nj>*), Heaps... Hs)
 		{
 			using nn = T_type_U<un>;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, Hs...);
 		}
 	};
 
@@ -201,6 +195,21 @@ namespace machine_space
 	define_block_machine_push(7);
 	define_block_machine_push(8);
 	define_block_machine_push(9);
+
+/***********************************************************************************************************************/
+
+// fold (2^N):
+
+	define_block_machine_fold(0);
+	define_block_machine_fold(1);
+	define_block_machine_fold(2);
+	define_block_machine_fold(3);
+	define_block_machine_fold(4);
+	define_block_machine_fold(5);
+	define_block_machine_fold(6);
+	define_block_machine_fold(7);
+	define_block_machine_fold(8);
+//	define_block_machine_fold(9); // clang: bracket nesting level exceeded maximum of 256
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -390,20 +399,7 @@ namespace machine_space
 
 /***********************************************************************************************************************/
 
-// start:
-
-	template<typename n, auto c, auto d, auto i, auto j, auto... Vs, typename... Heaps>
-	constexpr auto machine_start()
-	{
-		return MACHINE(n, c, d, i, j)(U_pack_Vs<>, U_pack_Vs<>);
-	}
-
-/***********************************************************************************************************************/
-
 // trampoline:
-
-		// total nesting depth	= d + d-1 + d-2 + ... + 2 + 1
-		//			= d(d+1)/2
 
 	template<auto d, typename T>
 	constexpr auto machine_trampoline(T v) { return v; }
@@ -418,13 +414,23 @@ namespace machine_space
 		{
 			using n = T_type_U<un>;
 
-			return machine_trampoline<d-1>(MACHINE(n, c, d, i, j)(Hs...));
+			return machine_trampoline<d-2>(MACHINE(n, c, d, i, j)(Hs...));
 		}
 
 	template<auto d, auto RPack, auto... Hs>
 	constexpr auto machine_trampoline(void(*)(alt_pack<RPack, Hs...>*))
 	{
 		return trampoline_next<d>(RPack, Hs...);
+	}
+
+/***********************************************************************************************************************/
+
+// start:
+
+	template<CONTR_PARAMS, auto... Vs, typename... Heaps>
+	constexpr auto machine_start()
+	{
+		return MACHINE(n, c, d, i, j)(U_pack_Vs<>, U_pack_Vs<>);
 	}
 
 /***********************************************************************************************************************/

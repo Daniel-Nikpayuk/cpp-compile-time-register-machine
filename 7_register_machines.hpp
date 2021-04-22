@@ -61,7 +61,7 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
+			CONTR_PARAMS, auto... Vs,
 			auto... Ws, typename Heap1, typename... Heaps
 		>
 		static constexpr auto result(void(*H0)(auto_pack<Ws...>*), Heap1 H1, Heaps... Hs)
@@ -86,7 +86,7 @@ namespace machine_space
 	template<>
 	struct machine<MN::branch>
 	{
-		template<typename n, auto c, auto d, auto i, auto j, bool V0, auto... Vs, typename... Heaps>
+		template<CONTR_PARAMS, bool V0, auto... Vs, typename... Heaps>
 		static constexpr auto result(Heaps... Hs)
 		{
 			constexpr auto ni = V0 ? n::pos(c, i, j) : i;
@@ -112,15 +112,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto V0, auto... Vs,
-			typename Heap0, typename Heap1, auto un, auto nc, typename... Heaps
+			CONTR_PARAMS, auto V0, auto... Vs,
+			FIXED_HEAP_PARAMS, auto un, auto nc, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, void(*)(auto_pack<un, nc>*), Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, void(*)(auto_pack<un, nc>*), Heaps... Hs)
 		{
 			using nn		= T_type_U<un>;
 			constexpr auto ni	= V0;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, Hs...);
 		}
 	};
 
@@ -138,15 +138,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
-			typename Heap0, typename Heap1, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
 			constexpr auto nc = insert_contr<zero, n::pos(c, i, j), pass>; // single call(s)
 			constexpr auto un = U_type_T<n>;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, U_pack_Vs<un, c>, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c>, Hs...);
 		}
 	};
 
@@ -163,15 +163,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
-			typename Heap0, typename Heap1, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
 			constexpr auto nc = insert_contr<n::reg_size(c, i, j), n::pos(c, i, j)>; // single call(s)
 			constexpr auto un = U_type_T<n>;
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, U_pack_Vs<un, c, i, j>, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
 	};
 
@@ -197,15 +197,15 @@ namespace machine_space
 
 		template
 		<
-			typename n, auto c, auto d, auto i, auto j, auto... Vs,
-			typename Heap0, typename Heap1, typename... Heaps
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
 		>
-		static constexpr auto result(Heap0 H0, Heap1 H1, Heaps... Hs)
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
 			constexpr auto un = U_type_T<n>;
 			constexpr auto nc = restore<n::pos(c, i, j), n::reg_size(c, i, j)>; // single call(s)
 
-			return MACHINE(nn, nc, d, ni, nj)(H0, H1, U_pack_Vs<un, c, i, j>, Hs...);
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
 	};
 
@@ -432,71 +432,6 @@ namespace machine_space
 // externals:
 
 /***********************************************************************************************************************/
-
-	template
-	<
-		// registers:
-
-			index_type val		= 0,
-			index_type n		= 1,
-			index_type eq		= 2,
-			index_type sub		= 3,
-			index_type mult		= 4,
-			index_type c_1		= 5,
-			index_type cont		= 6,
-
-		// labels:
-
-			index_type fact_loop	= 1,
-			index_type after_fact	= 2,
-			index_type base_case	= 3,
-			index_type fact_done	= 4
-	>
-	constexpr auto fact_contr = r_controller
-	<
-		r_label // fact loop:
-		<
-			r_test       < eq        , n          , c_1       >,
-			r_branch     < base_case                          >,
-			r_save       < cont                               >,
-			r_save       < n                                  >,
-			r_apply      < n         , sub        , n   , c_1 >,
-			r_assign     < cont      , after_fact             >,
-			r_goto_contr < fact_loop                          >
-		>,
-
-		r_label // after fact:
-		<
-			r_restore    < n                     >,
-			r_restore    < cont                  >,
-			r_apply      < val  , mult , n , val >,
-			r_goto_regtr < cont                  >
-		>,
-
-		r_label // base case:
-		<
-			r_replace    < val  , c_1 >,
-			r_goto_regtr < cont       >
-		>,
-
-		r_label // fact done:
-		<
-			r_stop     < val   >,
-			r_reg_size < seven >
-		>
-	>;
-
-/***********************************************************************************************************************/
-
-	template<auto n, depth_type d = 500>
-	constexpr auto r_factorial = machine_trampoline<d>
-	(
-		machine_start
-		<
-			RD, fact_contr<>, d, one, zero, decltype(n)(1), n,
-			equal<decltype(n)>, subtract<decltype(n)>, multiply<decltype(n)>, decltype(n)(1), four
-		>()
-	);
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
