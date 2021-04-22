@@ -127,9 +127,6 @@ namespace machine_space
 
 // fold:
 
-		// clang: bracket nesting level maximum is 256
-		//        won't work for pos > 255.
-
 	template<>
 	struct machine<MN::fold>
 	{

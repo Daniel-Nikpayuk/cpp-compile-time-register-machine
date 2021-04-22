@@ -209,7 +209,38 @@ namespace machine_space
 	define_block_machine_fold(6);
 	define_block_machine_fold(7);
 	define_block_machine_fold(8);
-//	define_block_machine_fold(9); // clang: bracket nesting level exceeded maximum of 256
+//	define_block_machine_fold(9); // clang: bracket nesting level defaults to a maximum of 256
+															\
+	template<>
+	struct machine<MN::fold_2_n, nine>
+	{
+		template
+		<
+			CONTR_PARAMS, auto op, auto val, _2_9_auto_Vs, auto... Vs,
+			typename... Heaps
+		>
+		static constexpr auto result(Heaps... Hs)
+		{
+			constexpr auto val1 = _2_8_ops  val,  _2_8_op_Vs;
+
+			return machine
+			<
+				n::next_name(c, d, i, j),
+				n::next_note(c, d, i, j)
+
+			>::template result
+			<
+				n, c,
+
+				n::next_depth(d),
+				n::next_index1(c, d, i, j),
+				n::next_index2(c, d, i, j),
+
+				op, _2_8_ops  val1,  _upper_512_op_Vs, Vs...
+
+			>(Hs...);
+		}
+	};
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
