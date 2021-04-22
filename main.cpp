@@ -2,17 +2,17 @@
 **
 ** Copyright 2021 Daniel Nikpayuk, Inuit Nunangat, The Inuit Nation
 **
-** This file is part of cpp_compile_time_register_machine.
+** This file is part of cpp_near_linear_function_space.
 **
-** cpp_compile_time_register_machine is free software: you can redistribute it and/or modify it under the terms
+** cpp_near_linear_function_space is free software: you can redistribute it and/or modify it under the terms
 ** of the GNU General Public License as published by the Free Software Foundation, either version 3
 ** of the License, or (at your option) any later version.
 **
-** cpp_compile_time_register_machine is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+** cpp_near_linear_function_space is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 ** without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ** See the GNU General Public License for more details.
 **
-** You should have received a copy of the GNU General Public License along with cpp_compile_time_register_machine.
+** You should have received a copy of the GNU General Public License along with cpp_near_linear_function_space.
 ** If not, see <http://www.gnu.org/licenses/>.
 **
 ************************************************************************************************************************/
@@ -21,51 +21,62 @@
 
 /***********************************************************************************************************************/
 
-#include"0_meta_programming.hpp"
-#include"1_register_machine.hpp"
-#include"2_samples.hpp"
-#include"3_testing.hpp"
+#include"include.h"
 
 	using namespace meta_programming;
-	using namespace register_machine;
-	using namespace samples;
-	using namespace testing;
+	using namespace machine_space;
+
+#include"case-studies/0_lists.hpp"
 
 /***********************************************************************************************************************/
 
-	using utype = unsigned long;
-	using stype =   signed long;
+	using utype = unsigned long long;
+	using stype =   signed long long;
 
 /***********************************************************************************************************************/
 
-	// 1. still need to decide on a depth decrement policy.
-	// 2. still need to add register macros.
-
-/***********************************************************************************************************************/
+	using list_5 = auto_pack<3, add<int>, 9, 12, 0>;
 
 	int main(int argc, char *argv[])
 	{
-		constexpr auto n	= 5;
-		constexpr auto result	= factorial<n>;
-
-		printf("factorial(%d): %d\n", n, result);
-
-//			gcc compile time:		gcc run time:
-//			                        	
-//      		                     		factorial(5): 120
-//      		                        	
-//			real	0m1.283s        	real	0m0.002s
-//			user	0m1.169s        	user	0m0.002s
-//			sys	0m0.113s        	sys	0m0.000s
-//			                        	
-//			clang compile time:     	clang run time:
-//			                        	
-//      		                        	factorial(5): 120
-//      		                        	
-//			real	0m3.683s        	real	0m0.001s
-//			user	0m3.384s        	user	0m0.002s
-//			sys	0m0.109s        	sys	0m0.000s
+		printf("%llu\n", r_factorial<utype(20)>);
 
 		return 0;
 	}
+
+	//	printf("%llu\n", n_factorial<utype(5)>);
+
+//			gcc compile time:		gcc run time:
+//			                                
+//			                                120
+//			                                
+//			real	0m0.662s                real	0m0.002s
+//			user	0m0.602s                user	0m0.001s
+//			sys	0m0.060s                sys	0m0.000s
+//			                                
+//			clang compile time:             clang run time:
+//			                                
+//			                                120
+//			                                
+//			real	0m0.776s                real	0m0.001s
+//			user	0m0.702s                user	0m0.001s
+//			sys	0m0.057s                sys	0m0.000s
+
+	//	printf("%llu\n", n_factorial<utype(20)>);
+
+//			gcc compile time:		gcc run time:
+//			                                
+//			                                2432902008176640000
+//			                                
+//			real	0m1.066s                real	0m0.002s
+//			user	0m0.938s                user	0m0.001s
+//			sys	0m0.101s                sys	0m0.000s
+//			                                
+//			clang compile time:             clang run time:
+//			                                
+//			                                2432902008176640000
+//			                                
+//			real	0m1.463s                real	0m0.001s
+//			user	0m1.343s                user	0m0.001s
+//			sys	0m0.100s                sys	0m0.000s
 

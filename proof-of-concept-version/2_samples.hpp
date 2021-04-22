@@ -54,7 +54,7 @@ namespace samples
 			index_type base_case	= 3,
 			index_type fact_done	= 4
 	>
-	static constexpr auto fact_contr = controller
+	constexpr auto fact_contr = controller
 	<
 		label // fact loop:
 		<
