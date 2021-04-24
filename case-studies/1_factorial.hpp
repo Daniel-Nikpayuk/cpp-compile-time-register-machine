@@ -43,22 +43,36 @@
 	>
 	constexpr auto pair_fact_contr = n_controller
 	<
-		n_stem  < n_test<eq, n, zero>		, n_break<p>	, n_apply<p, mult, n, p>	>,
-		n_lift  < n_apply<n, sub, n, one>							>,
+		n_stem  < n_test<eq, n, zero>     , n_break<p> , n_apply<p, mult, n, p> >,
+		n_lift  < n_apply<n, sub, n, one>                                       >,
 
 		n_cycle
 	>;
 
-	template<auto n, depth_type d = 500>
-	constexpr auto n_factorial = machine_trampoline<d>
-	(
-		machine_start
+	template<auto n, auto d>
+	constexpr auto f_n_factorial()
+	{
+		using n_type = decltype(n);
+
+		constexpr n_type p		= 1;
+		constexpr auto eq_op		= equal<n_type>;
+		constexpr auto sub_op		= subtract<n_type>;
+		constexpr auto mult_op		= multiply<n_type>;
+		constexpr n_type c_0		= 0;
+		constexpr n_type c_1		= 1;
+
+		constexpr index_type i		= zero;
+		constexpr index_type j		= zero;
+
+		return machine_start
 		<
-			ND, pair_fact_contr<>, d, zero, zero, n, decltype(n)(1),
-				equal<decltype(n)>, subtract<decltype(n)>,
-					multiply<decltype(n)>, decltype(n)(0), decltype(n)(1)
-		>()
-	);
+			ND, pair_fact_contr<>, d, i, j,
+			n, p, eq_op, sub_op, mult_op, c_0, c_1
+		>();
+	}
+
+	template<auto n, depth_type d = 500>
+	constexpr auto n_factorial = f_n_factorial<n, d>();
 
 /***********************************************************************************************************************/
 
@@ -155,22 +169,37 @@
 
 		r_label // fact done:
 		<
-			r_stop     < val   >,
-			r_reg_size < seven >
+			r_stop       < val   >,
+			r_reg_size   < seven >
 		>
 	>;
 
 /***********************************************************************************************************************/
 
-	template<auto n, depth_type d = 500>
-	constexpr auto r_factorial = machine_trampoline<d>
-	(
-		machine_start
+	template<auto n, auto d>
+	constexpr auto f_r_factorial()
+	{
+		using n_type = decltype(n);
+
+		constexpr n_type val		= 1;
+		constexpr auto eq_op		= equal<n_type>;
+		constexpr auto sub_op		= subtract<n_type>;
+		constexpr auto mult_op		= multiply<n_type>;
+		constexpr n_type c_1		= 1;
+		constexpr index_type cont	= 4;
+
+		constexpr index_type i		= one;
+		constexpr index_type j		= zero;
+
+		return machine_start
 		<
-			RD, fact_contr<>, d, one, zero, decltype(n)(1), n,
-			equal<decltype(n)>, subtract<decltype(n)>, multiply<decltype(n)>, decltype(n)(1), four
-		>()
-	);
+			RD, fact_contr<>, d, i, j,
+			val, n, eq_op, sub_op, mult_op, c_1, cont
+		>();
+	}
+
+	template<auto n, depth_type d = 500>
+	constexpr auto r_factorial = f_r_factorial<n, d>();
 
 /***********************************************************************************************************************/
 

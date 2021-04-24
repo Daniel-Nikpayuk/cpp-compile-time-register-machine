@@ -177,101 +177,103 @@ namespace machine_space
 				static constexpr index_type pop_2_n			=  7;
 				static constexpr index_type push_2_n			=  8;
 				static constexpr index_type fold_2_n			=  9;
+				static constexpr index_type roll_2_n			= 10;
 
 				// stack -> heap:
 
-				static constexpr index_type move_2_n_s_to_h0		= 10;
-				static constexpr index_type move_2_n_s_to_h1		= 11;
+				static constexpr index_type move_2_n_s_to_h0		= 11;
+				static constexpr index_type move_2_n_s_to_h1		= 12;
 
 		// variadic:
 
 			// halters:
 
-				static constexpr index_type stop			= 12;
+				static constexpr index_type stop			= 13;
 
 			// passers:
 
 				// stack -> stack:
 
-				static constexpr index_type pop				= 13;
-				static constexpr index_type push			= 14;
-				static constexpr index_type fold			= 15;
+				static constexpr index_type pop				= 14;
+				static constexpr index_type push			= 15;
+				static constexpr index_type fold			= 16;
+				static constexpr index_type roll			= 17;
 
 				// stack -> heap:
 
-				static constexpr index_type copy_s0_to_h0		= 16;
+				static constexpr index_type copy_s0_to_h0		= 18;
 
-				static constexpr index_type move_s_to_h0		= 17;
-				static constexpr index_type move_s_to_h1		= 18;
+				static constexpr index_type move_s_to_h0		= 19;
+				static constexpr index_type move_s_to_h1		= 20;
 
 				// heap -> stack:
 
-				static constexpr index_type copy_h0_to_sf		= 19;
-				static constexpr index_type copy_h1_to_sf		= 20;
+				static constexpr index_type copy_h0_to_sf		= 21;
+				static constexpr index_type copy_h1_to_sf		= 22;
 
-				static constexpr index_type move_h0_to_sf		= 21;
-				static constexpr index_type move_h1_to_sf		= 22;
+				static constexpr index_type move_h0_to_sf		= 23;
+				static constexpr index_type move_h1_to_sf		= 24;
 
-				static constexpr index_type apply1_move_h0_to_sf	= 23;
-				static constexpr index_type apply2_move_h0_to_sf	= 24;
+				static constexpr index_type apply1_move_h0_to_sf	= 25;
+				static constexpr index_type apply2_move_h0_to_sf	= 26;
 
 		// permutatic:
 
 			// passers:
 
-				static constexpr index_type copy_sn_to_h0		= 25;
-				static constexpr index_type move_sn_to_h0		= 26;
+				static constexpr index_type copy_sn_to_h0		= 27;
+				static constexpr index_type move_sn_to_h0		= 28;
 
-				static constexpr index_type erase_sn			= 27;
-				static constexpr index_type insert_h0_to_sn		= 28;
-				static constexpr index_type replace_h0_to_sn		= 29;
+				static constexpr index_type erase_sn			= 29;
+				static constexpr index_type insert_h0_to_sn		= 30;
+				static constexpr index_type replace_h0_to_sn		= 31;
 
-				static constexpr index_type apply1_replace_h0_to_sn	= 30;
-				static constexpr index_type apply2_replace_h0_to_sn	= 31;
+				static constexpr index_type apply1_replace_h0_to_sn	= 32;
+				static constexpr index_type apply2_replace_h0_to_sn	= 33;
 
 		// distributic:
 
 			// passers:
 
-				static constexpr index_type erase			= 32;
-				static constexpr index_type insert			= 33;
-				static constexpr index_type replace			= 34;
+				static constexpr index_type erase			= 34;
+				static constexpr index_type insert			= 35;
+				static constexpr index_type replace			= 36;
 
-				static constexpr index_type apply			= 35;
-				static constexpr index_type test			= 36;
-				static constexpr index_type jump			= 37;
+				static constexpr index_type apply			= 37;
+				static constexpr index_type test			= 38;
+				static constexpr index_type jump			= 39;
 
 		// near linear:
 
 			// halters:
 
-				static constexpr index_type halt			= 38;
+				static constexpr index_type halt			= 40;
 
 			// passers:
 
-				static constexpr index_type lift			= 39;
-				static constexpr index_type stem			= 40;
-				static constexpr index_type costem			= 41;
-				static constexpr index_type cycle			= 42;
+				static constexpr index_type lift			= 41;
+				static constexpr index_type stem			= 42;
+				static constexpr index_type costem			= 43;
+				static constexpr index_type cycle			= 44;
 
 		// register:
 
 			// passers:
 
-				static constexpr index_type assign			= 43;
+				static constexpr index_type assign			= 45;
 
-				static constexpr index_type branch			= 44;
-				static constexpr index_type go_to_s0			= 45;
-				static constexpr index_type go_to			= 46;
+				static constexpr index_type branch			= 46;
+				static constexpr index_type go_to_s0			= 47;
+				static constexpr index_type go_to			= 48;
 
-				static constexpr index_type save			= 47;
-				static constexpr index_type restore			= 48;
+				static constexpr index_type save			= 49;
+				static constexpr index_type restore			= 50;
 
 		// reflection:
 
 			// sizes:
 
-				static constexpr index_type reg_size			= 49;
+				static constexpr index_type reg_size			= 51;
 	};
 
 /***********************************************************************************************************************/
@@ -316,6 +318,7 @@ namespace machine_space
 
 			static constexpr index_type length(ma_type a) { return a(size); }
 			static constexpr index_type arity(index_type args) { return (args == 1) ? unary : binary; }
+			static constexpr index_type patch(depth_type pos) { return (pos < eight) ? pos+1 : zero; }
 	};
 
 		// pack length is stored as the initial value.

@@ -199,7 +199,7 @@ namespace machine_space
 		template<na_type N>
 		constexpr np_type n_lift = n_continuation<NP::lift, N>;
 
-		template<na_type P, na_type B, na_type N> // doesn't verify P is a test.
+		template<na_type P, na_type B, na_type N>
 		constexpr np_type n_stem = n_continuation<NP::stem, P, B, N>;
 
 		template<na_type B>

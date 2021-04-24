@@ -26,7 +26,9 @@
 	using namespace meta_programming;
 	using namespace machine_space;
 
-#include"case-studies/0_lists.hpp"
+#include"case-studies/unit_lists.hpp"
+#include"case-studies/1_factorial.hpp"
+#include"case-studies/2_fibonacci.hpp"
 
 /***********************************************************************************************************************/
 
@@ -37,6 +39,12 @@
 
 	int main(int argc, char *argv[])
 	{
+	//	printf("%llu\n", r_fibonacci<utype(13)>);
+		printf("%llu\n", r_factorial<utype(5)>);
+
+	//	0 1 2 3 4 5 6  7
+	//	0 1 1 2 3 5 8 13
+
 		return 0;
 	}
 

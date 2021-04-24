@@ -17,7 +17,7 @@
 **
 ************************************************************************************************************************/
 
-// define macros:
+// define parameter macros:
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -32,51 +32,6 @@
 	#define _1_comma												\
 															\
 		,
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
-// machine:
-
-/***********************************************************************************************************************/
-
-	#define CONTR_PARAMS												\
-															\
-		typename n, auto c, auto d, auto i, auto j								\
-
-/***********************************************************************************************************************/
-
-	#define FIXED_HEAP_PARAMS											\
-															\
-		typename Heap0, typename Heap1
-
-	#define FIXED_HEAP_SIG_ARGS											\
-															\
-		Heap0 H0, Heap1 H1
-
-	#define FIXED_HEAP_ARGS												\
-															\
-		H0, H1
-
-/***********************************************************************************************************************/
-
-	#define MACHINE(N, C, D, I, J)	 										\
-															\
-		machine													\
-		<													\
-			N::next_name(C, D, I, J),									\
-			N::next_note(C, D, I, J)									\
-															\
-		>::template result											\
-		<													\
-			N, C,												\
-															\
-			N::next_depth(D),										\
-			N::next_index1(C, D, I, J),									\
-			N::next_index2(C, D, I, J),									\
-															\
-			Vs...												\
-		>
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -370,6 +325,111 @@
 
 /***********************************************************************************************************************/
 
+// upper action values:
+
+	#define _upper_1_act_Vs												\
+															\
+		  V0>
+
+	#define _upper_2_act_Vs												\
+															\
+		  V1>
+
+	#define _upper_4_act_Vs												\
+															\
+		  V2>,   V3>
+
+	#define _upper_8_act_Vs												\
+															\
+		  V4>,   V5>,   V6>,   V7>
+
+	#define _upper_16_act_Vs											\
+															\
+		  V8>,   V9>,  V10>,  V11>,  V12>,  V13>,  V14>,  V15>
+
+	#define _upper_32_act_Vs											\
+															\
+		 V16>,  V17>,  V18>,  V19>,  V20>,  V21>,  V22>,  V23>,							\
+		 V24>,  V25>,  V26>,  V27>,  V28>,  V29>,  V30>,  V31>
+
+	#define _upper_64_act_Vs											\
+															\
+		 V32>,  V33>,  V34>,  V35>,  V36>,  V37>,  V38>,  V39>,							\
+		 V40>,  V41>,  V42>,  V43>,  V44>,  V45>,  V46>,  V47>,							\
+		 V48>,  V49>,  V50>,  V51>,  V52>,  V53>,  V54>,  V55>,							\
+		 V56>,  V57>,  V58>,  V59>,  V60>,  V61>,  V62>,  V63>
+
+	#define _upper_128_act_Vs											\
+															\
+		 V64>,  V65>,  V66>,  V67>,  V68>,  V69>,  V70>,  V71>,							\
+		 V72>,  V73>,  V74>,  V75>,  V76>,  V77>,  V78>,  V79>,							\
+		 V80>,  V81>,  V82>,  V83>,  V84>,  V85>,  V86>,  V87>,							\
+		 V88>,  V89>,  V90>,  V91>,  V92>,  V93>,  V94>,  V95>,							\
+		 V96>,  V97>,  V98>,  V99>, V100>, V101>, V102>, V103>,							\
+		V104>, V105>, V106>, V107>, V108>, V109>, V110>, V111>,							\
+		V112>, V113>, V114>, V115>, V116>, V117>, V118>, V119>,							\
+		V120>, V121>, V122>, V123>, V124>, V125>, V126>, V127>
+
+	#define _upper_256_act_Vs											\
+															\
+		V128>, V129>, V130>, V131>, V132>, V133>, V134>, V135>,							\
+		V136>, V137>, V138>, V139>, V140>, V141>, V142>, V143>,							\
+		V144>, V145>, V146>, V147>, V148>, V149>, V150>, V151>,							\
+		V152>, V153>, V154>, V155>, V156>, V157>, V158>, V159>,							\
+		V160>, V161>, V162>, V163>, V164>, V165>, V166>, V167>,							\
+		V168>, V169>, V170>, V171>, V172>, V173>, V174>, V175>,							\
+		V176>, V177>, V178>, V179>, V180>, V181>, V182>, V183>,							\
+		V184>, V185>, V186>, V187>, V188>, V189>, V190>, V191>,							\
+															\
+		V192>, V193>, V194>, V195>, V196>, V197>, V198>, V199>,							\
+		V200>, V201>, V202>, V203>, V204>, V205>, V206>, V207>,							\
+		V208>, V209>, V210>, V211>, V212>, V213>, V214>, V215>,							\
+		V216>, V217>, V218>, V219>, V220>, V221>, V222>, V223>,							\
+		V224>, V225>, V226>, V227>, V228>, V229>, V230>, V231>,							\
+		V232>, V233>, V234>, V235>, V236>, V237>, V238>, V239>,							\
+		V240>, V241>, V242>, V243>, V244>, V245>, V246>, V247>,							\
+		V248>, V249>, V250>, V251>, V252>, V253>, V254>, V255>
+
+	#define _upper_512_act_Vs											\
+															\
+		V256>, V257>, V258>, V259>, V260>, V261>, V262>, V263>,							\
+		V264>, V265>, V266>, V267>, V268>, V269>, V270>, V271>,							\
+		V272>, V273>, V274>, V275>, V276>, V277>, V278>, V279>,							\
+		V280>, V281>, V282>, V283>, V284>, V285>, V286>, V287>,							\
+		V288>, V289>, V290>, V291>, V292>, V293>, V294>, V295>,							\
+		V296>, V297>, V298>, V299>, V300>, V301>, V302>, V303>,							\
+		V304>, V305>, V306>, V307>, V308>, V309>, V310>, V311>,							\
+		V312>, V313>, V314>, V315>, V316>, V317>, V318>, V319>,							\
+															\
+		V320>, V321>, V322>, V323>, V324>, V325>, V326>, V327>,							\
+		V328>, V329>, V330>, V331>, V332>, V333>, V334>, V335>,							\
+		V336>, V337>, V338>, V339>, V340>, V341>, V342>, V343>,							\
+		V344>, V345>, V346>, V347>, V348>, V349>, V350>, V351>,							\
+		V352>, V353>, V354>, V355>, V356>, V357>, V358>, V359>,							\
+		V360>, V361>, V362>, V363>, V364>, V365>, V366>, V367>,							\
+		V368>, V369>, V370>, V371>, V372>, V373>, V374>, V375>,							\
+		V376>, V377>, V378>, V379>, V380>, V381>, V382>, V383>,							\
+															\
+		V384>, V385>, V386>, V387>, V388>, V389>, V390>, V391>,							\
+		V392>, V393>, V394>, V395>, V396>, V397>, V398>, V399>,							\
+		V400>, V401>, V402>, V403>, V404>, V405>, V406>, V407>,							\
+		V408>, V409>, V410>, V411>, V412>, V413>, V414>, V415>,							\
+		V416>, V417>, V418>, V419>, V420>, V421>, V422>, V423>,							\
+		V424>, V425>, V426>, V427>, V428>, V429>, V430>, V431>,							\
+		V432>, V433>, V434>, V435>, V436>, V437>, V438>, V439>,							\
+		V440>, V441>, V442>, V443>, V444>, V445>, V446>, V447>,							\
+															\
+		V448>, V449>, V450>, V451>, V452>, V453>, V454>, V455>,							\
+		V456>, V457>, V458>, V459>, V460>, V461>, V462>, V463>,							\
+		V464>, V465>, V466>, V467>, V468>, V469>, V470>, V471>,							\
+		V472>, V473>, V474>, V475>, V476>, V477>, V478>, V479>,							\
+		V480>, V481>, V482>, V483>, V484>, V485>, V486>, V487>,							\
+		V488>, V489>, V490>, V491>, V492>, V493>, V494>, V495>,							\
+		V496>, V497>, V498>, V499>, V500>, V501>, V502>, V503>,							\
+		V504>, V505>, V506>, V507>, V508>, V509>, V510>, V511>
+
+/***********************************************************************************************************************/
+
 // block auto:
 
 	#define _2_0_auto_Vs												\
@@ -512,6 +572,50 @@
 
 /***********************************************************************************************************************/
 
+// block actions:
+
+	#define _2_0_acts												\
+															\
+		act::template result<
+
+	#define _2_1_acts												\
+															\
+		_2_0_acts _2_0_acts
+
+	#define _2_2_acts												\
+															\
+		_2_1_acts _2_1_acts
+
+	#define _2_3_acts												\
+															\
+		_2_2_acts _2_2_acts
+
+	#define _2_4_acts												\
+															\
+		_2_3_acts _2_3_acts
+
+	#define _2_5_acts												\
+															\
+		_2_4_acts _2_4_acts
+
+	#define _2_6_acts												\
+															\
+		_2_5_acts _2_5_acts
+
+	#define _2_7_acts												\
+															\
+		_2_6_acts _2_6_acts
+
+	#define _2_8_acts												\
+															\
+		_2_7_acts _2_7_acts
+
+	#define _2_9_acts												\
+															\
+		_2_8_acts _2_8_acts
+
+/***********************************************************************************************************************/
+
 // block operation values:
 
 	#define _2_0_op_Vs												\
@@ -561,121 +665,52 @@
 
 /***********************************************************************************************************************/
 
-// pop (2^N):
+// block action values:
 
-	#define define_block_machine_pop(N)										\
+	#define _2_0_act_Vs												\
 															\
-		template<>												\
-		struct machine<MN::pop_2_n, N>										\
-		{													\
-			template<CONTR_PARAMS, _2_ ## N ## _auto_Vs, auto... Vs, typename... Heaps>			\
-			static constexpr auto result(Heaps... Hs)							\
-			{												\
-				return MACHINE(n, c, d, i, j)(Hs...);							\
-			}												\
-		}
+		_upper_1_act_Vs
 
-/***********************************************************************************************************************/
+	#define _2_1_act_Vs												\
+															\
+		_upper_1_act_Vs, _upper_2_act_Vs
 
-// push (2^N):
+	#define _2_2_act_Vs												\
+															\
+		_upper_1_act_Vs, _upper_2_act_Vs, _upper_4_act_Vs
 
-	#define define_block_machine_push(N)										\
+	#define _2_3_act_Vs												\
 															\
-		template<>												\
-		struct machine<MN::push_2_n, N>										\
-		{													\
-			template<CONTR_PARAMS, _2_ ## N ## _auto_Vs, auto... Vs, typename... Heaps>			\
-			static constexpr auto result(Heaps... Hs)							\
-			{												\
-				return machine										\
-				<											\
-					n::next_name(c, d, i, j),							\
-					n::next_note(c, d, i, j)							\
-															\
-				>::template result									\
-				<											\
-					n, c,										\
-															\
-					n::next_depth(d),								\
-					n::next_index1(c, d, i, j),							\
-					n::next_index2(c, d, i, j),							\
-															\
-					Vs..., _2_ ## N ## _Vs								\
-															\
-				>(Hs...);										\
-			}												\
-		}
+		_upper_1_act_Vs, _upper_2_act_Vs, _upper_4_act_Vs, _upper_8_act_Vs
 
-/***********************************************************************************************************************/
-
-// fold (2^N):
-
-	#define define_block_machine_fold(N)										\
+	#define _2_4_act_Vs												\
 															\
-		template<>												\
-		struct machine<MN::fold_2_n, N>										\
-		{													\
-			template											\
-			<												\
-				CONTR_PARAMS, auto op, auto val, _2_ ## N ## _auto_Vs, auto... Vs,			\
-				typename... Heaps									\
-			>												\
-			static constexpr auto result(Heaps... Hs)							\
-			{												\
-				return machine										\
-				<											\
-					n::next_name(c, d, i, j),							\
-					n::next_note(c, d, i, j)							\
-															\
-				>::template result									\
-				<											\
-					n, c,										\
-															\
-					n::next_depth(d),								\
-					n::next_index1(c, d, i, j),							\
-					n::next_index2(c, d, i, j),							\
-															\
-					op, _2_ ## N ## _ops  val,  _2_ ## N ## _op_Vs, Vs...				\
-															\
-				>(Hs...);										\
-			}												\
-		}
+		_upper_1_act_Vs, _upper_2_act_Vs, _upper_4_act_Vs, _upper_8_act_Vs, _upper_16_act_Vs
 
-/***********************************************************************************************************************/
-
-// move stack to heap zero (2^N):
-
-	#define define_block_machine_move_stack_to_heap_zero(N)								\
+	#define _2_5_act_Vs												\
 															\
-		template<>												\
-		struct machine<MN::move_2_n_s_to_h0, N>									\
-		{													\
-			template<CONTR_PARAMS, _2_ ## N ## _auto_Vs, auto... Vs, auto... Ws, typename... Heaps>		\
-			static constexpr auto result(void(*H0)(auto_pack<Ws...>*), Heaps... Hs)				\
-			{												\
-				return MACHINE(n, c, d, i, j)(U_pack_Vs<Ws..., _2_ ## N ## _Vs>, Hs...);		\
-			}												\
-		}
+		_upper_1_act_Vs, _upper_2_act_Vs, _upper_4_act_Vs, _upper_8_act_Vs, _upper_16_act_Vs,			\
+		_upper_32_act_Vs
 
-/***********************************************************************************************************************/
-
-// move stack to heap one (2^N):
-
-	#define define_block_machine_move_stack_to_heap_one(N)								\
+	#define _2_6_act_Vs												\
 															\
-		template<>												\
-		struct machine<MN::move_2_n_s_to_h1, N>									\
-		{													\
-			template											\
-			<												\
-				CONTR_PARAMS, _2_ ## N ## _auto_Vs, auto... Vs,						\
-				typename Heap0, auto... Ws, typename... Heaps						\
-			>												\
-			static constexpr auto result(Heap0 H0, void(*H1)(auto_pack<Ws...>*), Heaps... Hs)		\
-			{												\
-				return MACHINE(n, c, d, i, j)(H0, U_pack_Vs<Ws..., _2_ ## N ## _Vs>, Hs...);		\
-			}												\
-		}
+		_upper_1_act_Vs, _upper_2_act_Vs, _upper_4_act_Vs, _upper_8_act_Vs, _upper_16_act_Vs,			\
+		_upper_32_act_Vs, _upper_64_act_Vs
+
+	#define _2_7_act_Vs												\
+															\
+		_upper_1_act_Vs, _upper_2_act_Vs, _upper_4_act_Vs, _upper_8_act_Vs, _upper_16_act_Vs,			\
+		_upper_32_act_Vs, _upper_64_act_Vs, _upper_128_act_Vs
+
+	#define _2_8_act_Vs												\
+															\
+		_upper_1_act_Vs, _upper_2_act_Vs, _upper_4_act_Vs, _upper_8_act_Vs, _upper_16_act_Vs,			\
+		_upper_32_act_Vs, _upper_64_act_Vs, _upper_128_act_Vs, _upper_256_act_Vs
+
+	#define _2_9_act_Vs												\
+															\
+		_upper_1_act_Vs, _upper_2_act_Vs, _upper_4_act_Vs, _upper_8_act_Vs, _upper_16_act_Vs,			\
+		_upper_32_act_Vs, _upper_64_act_Vs, _upper_128_act_Vs, _upper_256_act_Vs, _upper_512_act_Vs
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -761,235 +796,6 @@
 	#define _8_fast_Vs												\
 															\
 		V0, V1, V2, V3, V4, V5, V6, V7
-
-/***********************************************************************************************************************/
-
-// (fast) copy stack position to heap zero:
-
-	#define define_permutatic_machine_copy_stack_position_to_heap_zero(S, N)					\
-															\
-		template<>												\
-		struct machine<MN::copy_sn_to_h0, S>									\
-		{													\
-			template<CONTR_PARAMS, _ ## S ## _fast_auto_Vs, auto... Vs, auto... Ws, typename... Heaps>	\
-			static constexpr auto result(void(*H0)(auto_pack<Ws...>*), Heaps... Hs)				\
-			{												\
-				return machine										\
-				<											\
-					n::next_name(c, d, i, j),							\
-					n::next_note(c, d, i, j)							\
-															\
-				>::template result									\
-				<											\
-					n, c,										\
-															\
-					n::next_depth(d),								\
-					n::next_index1(c, d, i, j),							\
-					n::next_index2(c, d, i, j),							\
-															\
-					_ ## S ## _fast_Vs, Vs...							\
-															\
-				>(U_pack_Vs<Ws..., V ## N>, Hs...);							\
-			}												\
-		}
-
-/***********************************************************************************************************************/
-
-// (fast) move stack position to heap zero:
-
-	#define define_permutatic_machine_move_stack_position_to_heap_zero(S, N, C)					\
-															\
-		template<>												\
-		struct machine<MN::move_sn_to_h0, S>									\
-		{													\
-			template<CONTR_PARAMS, _ ## S ## _fast_auto_Vs, auto... Vs, auto... Ws, typename... Heaps>	\
-			static constexpr auto result(void(*H0)(auto_pack<Ws...>*), Heaps... Hs)				\
-			{												\
-				return machine										\
-				<											\
-					n::next_name(c, d, i, j),							\
-					n::next_note(c, d, i, j)							\
-															\
-				>::template result									\
-				<											\
-					n, c,										\
-															\
-					n::next_depth(d),								\
-					n::next_index1(c, d, i, j),							\
-					n::next_index2(c, d, i, j),							\
-															\
-					_ ## N ## _fast_Vs  _ ## C ## _comma  Vs...					\
-															\
-				>(U_pack_Vs<Ws..., V ## N>, Hs...);							\
-			}												\
-		}
-
-/***********************************************************************************************************************/
-
-// (fast) erase stack position:
-
-	#define define_permutatic_machine_erase_stack_position(S, N, C)							\
-															\
-		template<>												\
-		struct machine<MN::erase_sn, S>										\
-		{													\
-			template<CONTR_PARAMS, _ ## S ## _fast_auto_Vs, auto... Vs, typename... Heaps>			\
-			static constexpr auto result(Heaps... Hs)							\
-			{												\
-				return machine										\
-				<											\
-					n::next_name(c, d, i, j),							\
-					n::next_note(c, d, i, j)							\
-															\
-				>::template result									\
-				<											\
-					n, c,										\
-															\
-					n::next_depth(d),								\
-					n::next_index1(c, d, i, j),							\
-					n::next_index2(c, d, i, j),							\
-															\
-					_ ## N ## _fast_Vs  _ ## C ## _comma  Vs...					\
-															\
-				>(Hs...);										\
-			}												\
-		}
-
-/***********************************************************************************************************************/
-
-// (fast) insert heap zero to stack position:
-
-	#define define_permutatic_machine_insert_heap_zero_to_stack_position(S, N, C)					\
-															\
-		template<>												\
-		struct machine<MN::insert_h0_to_sn, S>									\
-		{													\
-			template											\
-			<												\
-				CONTR_PARAMS, _ ## N ## _fast_auto_Vs  _ ## C ## _comma  auto... Vs,			\
-				auto... Ws, typename... Heaps								\
-			>												\
-			static constexpr auto result(void(*H0)(auto_pack<Ws...>*), Heaps... Hs)				\
-			{												\
-				return machine										\
-				<											\
-					n::next_name(c, d, i, j),							\
-					n::next_note(c, d, i, j)							\
-															\
-				>::template result									\
-				<											\
-					n, c,										\
-															\
-					n::next_depth(d),								\
-					n::next_index1(c, d, i, j),							\
-					n::next_index2(c, d, i, j),							\
-															\
-					_ ## N ## _fast_Vs  _ ## C ## _comma  Ws..., Vs...				\
-															\
-				>(U_pack_Vs<>, Hs...);									\
-			}												\
-		}
-
-/***********************************************************************************************************************/
-
-// replace heap zero to stack position:
-
-	#define define_permutatic_machine_replace_heap_zero_to_stack_position(S, N, C)					\
-															\
-		template<>												\
-		struct machine<MN::replace_h0_to_sn, S>									\
-		{													\
-			template<CONTR_PARAMS, _ ## S ## _fast_auto_Vs, auto... Vs, auto... Ws, typename... Heaps>	\
-			static constexpr auto result(void(*H0)(auto_pack<Ws...>*), Heaps... Hs)				\
-			{												\
-				return machine										\
-				<											\
-					n::next_name(c, d, i, j),							\
-					n::next_note(c, d, i, j)							\
-															\
-				>::template result									\
-				<											\
-					n, c,										\
-															\
-					n::next_depth(d),								\
-					n::next_index1(c, d, i, j),							\
-					n::next_index2(c, d, i, j),							\
-															\
-					_ ## N ## _fast_Vs  _ ## C ## _comma  Ws..., Vs...				\
-															\
-				>(U_pack_Vs<>, Hs...);									\
-			}												\
-		}
-
-/***********************************************************************************************************************/
-
-// unary apply replace heap zero to stack position:
-
-	#define define_permutatic_machine_unary_apply_replace_heap_zero_to_stack_position(S, N, C)			\
-															\
-		template<>												\
-		struct machine<MN::apply1_replace_h0_to_sn, S>								\
-		{													\
-			template											\
-			<												\
-				CONTR_PARAMS, _ ## S ## _fast_auto_Vs, auto... Vs,					\
-				auto op, auto arg, typename... Heaps							\
-			>												\
-			static constexpr auto result(void(*H0)(auto_pack<op, arg>*), Heaps... Hs)			\
-			{												\
-				return machine										\
-				<											\
-					n::next_name(c, d, i, j),							\
-					n::next_note(c, d, i, j)							\
-															\
-				>::template result									\
-				<											\
-					n, c,										\
-															\
-					n::next_depth(d),								\
-					n::next_index1(c, d, i, j),							\
-					n::next_index2(c, d, i, j),							\
-															\
-					_ ## N ## _fast_Vs  _ ## C ## _comma  op(arg), Vs...				\
-															\
-				>(U_pack_Vs<>, Hs...);									\
-			}												\
-		}
-
-/***********************************************************************************************************************/
-
-// binary apply replace heap zero to stack position:
-
-	#define define_permutatic_machine_binary_apply_replace_heap_zero_to_stack_position(S, N, C)			\
-															\
-		template<>												\
-		struct machine<MN::apply2_replace_h0_to_sn, S>								\
-		{													\
-			template											\
-			<												\
-				CONTR_PARAMS, _ ## S ## _fast_auto_Vs, auto... Vs,					\
-				auto op, auto arg1, auto arg2, typename... Heaps					\
-			>												\
-			static constexpr auto result(void(*H0)(auto_pack<op, arg1, arg2>*), Heaps... Hs)		\
-			{												\
-				return machine										\
-				<											\
-					n::next_name(c, d, i, j),							\
-					n::next_note(c, d, i, j)							\
-															\
-				>::template result									\
-				<											\
-					n, c,										\
-															\
-					n::next_depth(d),								\
-					n::next_index1(c, d, i, j),							\
-					n::next_index2(c, d, i, j),							\
-															\
-					_ ## N ## _fast_Vs  _ ## C ## _comma  op(arg1, arg2), Vs...			\
-															\
-				>(U_pack_Vs<>, Hs...);									\
-			}												\
-		}
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

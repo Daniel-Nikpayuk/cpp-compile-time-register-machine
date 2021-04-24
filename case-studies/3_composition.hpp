@@ -17,38 +17,87 @@
 **
 ************************************************************************************************************************/
 
-#ifndef INCLUDE_H
-#define INCLUDE_H
+// fibonacci:
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
-// meta programming:
-
-	#include"source/0_meta_programming.hpp"
+// register (naive) fibonacci:
 
 /***********************************************************************************************************************/
 
-// machine-space:
+	template
+	<
+		// registers:
 
-	#include"source/1_machine_declarations.hpp"
+			index_type val		= 0,
+			index_type n		= 1,
+			index_type eq		= 2,
+			index_type sub		= 3,
+			index_type mult		= 4,
+			index_type c_1		= 5,
+			index_type cont		= 6,
 
-	#include"source/define_parameter_macros.hpp"
-	#include"source/define_machine_macros.hpp"
+		// labels:
 
-		#include"source/2_block_machines.hpp"
-		#include"source/3_variadic_machines.hpp"
-		#include"source/4_permutatic_machines.hpp"
-		#include"source/5_distributic_machines.hpp"
-		#include"source/6_near_linear_machines.hpp"
-		#include"source/7_register_machines.hpp"
+			index_type fact_loop	= 1,
+			index_type after_fact	= 2,
+			index_type base_case	= 3,
+			index_type fact_done	= 4
+	>
+	constexpr auto fib_contr = r_controller
+	<
+		r_label // fact loop:
+		<
+			r_test       < eq        , n          , c_1       >,
+			r_branch     < base_case                          >,
+			r_save       < cont                               >,
+			r_save       < n                                  >,
+			r_apply      < n         , sub        , n   , c_1 >,
+			r_assign     < cont      , after_fact             >,
+			r_goto_contr < fact_loop                          >
+		>,
 
-	#include"source/undef_all_macros.hpp"
+		r_label // after fact:
+		<
+			r_restore    < n                     >,
+			r_restore    < cont                  >,
+			r_apply      < val  , mult , n , val >,
+			r_goto_regtr < cont                  >
+		>,
+
+		r_label // base case:
+		<
+			r_replace    < val  , c_1 >,
+			r_goto_regtr < cont       >
+		>,
+
+		r_label // fact done:
+		<
+			r_stop     < val   >,
+			r_reg_size < seven >
+		>
+	>;
+
+/***********************************************************************************************************************/
+
+	template<auto n, depth_type d = 500>
+	constexpr auto r_fibonacci = machine_start
+	<
+		RD, fib_contr<>, d, one, zero, decltype(n)(1), n,
+		equal<decltype(n)>, subtract<decltype(n)>, multiply<decltype(n)>, decltype(n)(1), four
+	>();
+
+/***********************************************************************************************************************/
+
+// perf:
+
+	//	printf("%llu\n", r_fibonacci<utype(5)>);
+
+	//	printf("%llu\n", r_fibonacci<utype(20)>);
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
-
-#endif
 

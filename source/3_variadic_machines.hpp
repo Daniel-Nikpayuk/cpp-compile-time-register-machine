@@ -151,6 +151,33 @@ namespace machine_space
 	};
 
 /***********************************************************************************************************************/
+
+// roll:
+
+	template<>
+	struct machine<MN::roll>
+	{
+		using nn			= BD;
+		static constexpr auto nc	= roll_contr<>;
+
+		template
+		<
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
+		>
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
+		{
+			constexpr depth_type pos	= n::pos(c, i, j);
+			constexpr depth_type nj		= block_max_index2(pos);
+			constexpr depth_type ni		= pos + nj;
+
+			constexpr auto un		= U_type_T<n>;
+
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
+		}
+	};
+
+/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
 // passers (stack to heap):
@@ -558,13 +585,13 @@ namespace machine_space
 	template<index_type cont = MN::pass>
 	constexpr auto erase_sn_contr = v_controller
 	<
-		MN::move_s_to_h0, MN::pop, MN::move_h0_to_sf, cont
+		MN::move_s_to_h0, MN::pop_2_n, MN::move_h0_to_sf, cont
 	>;
 
-	template<depth_type pos, depth_type num = one>
+	template<depth_type pos>
 	constexpr auto erase_sn_locus = v_locus
 	<
-		pos, num, zero, zero
+		pos, zero, zero, zero
 	>;
 
 /***********************************************************************************************************************/
@@ -590,13 +617,13 @@ namespace machine_space
 	template<index_type cont = MN::pass>
 	constexpr auto replace_h0_to_sn_contr = v_controller
 	<
-		MN::move_s_to_h1, MN::pop, MN::move_h0_to_sf, MN::move_h1_to_sf, cont
+		MN::move_s_to_h1, MN::pop_2_n, MN::move_h0_to_sf, MN::move_h1_to_sf, cont
 	>;
 
 	template<depth_type pos>
 	constexpr auto replace_h0_to_sn_locus = v_locus
 	<
-		pos, one, zero, zero, zero
+		pos, zero, zero, zero, zero
 	>;
 
 /***********************************************************************************************************************/
@@ -606,13 +633,13 @@ namespace machine_space
 	template<index_type cont = MN::pass>
 	constexpr auto apply1_replace_h0_to_sn_contr = v_controller
 	<
-		MN::move_s_to_h1, MN::pop, MN::apply1_move_h0_to_sf, MN::move_h1_to_sf, cont
+		MN::move_s_to_h1, MN::pop_2_n, MN::apply1_move_h0_to_sf, MN::move_h1_to_sf, cont
 	>;
 
 	template<depth_type pos>
 	constexpr auto apply1_replace_h0_to_sn_locus = v_locus
 	<
-		pos, one, zero, zero, zero
+		pos, zero, zero, zero, zero
 	>;
 
 /***********************************************************************************************************************/
@@ -622,13 +649,13 @@ namespace machine_space
 	template<index_type cont = MN::pass>
 	constexpr auto apply2_replace_h0_to_sn_contr = v_controller
 	<
-		MN::move_s_to_h1, MN::pop, MN::apply2_move_h0_to_sf, MN::move_h1_to_sf, cont
+		MN::move_s_to_h1, MN::pop_2_n, MN::apply2_move_h0_to_sf, MN::move_h1_to_sf, cont
 	>;
 
 	template<depth_type pos>
 	constexpr auto apply2_replace_h0_to_sn_locus = v_locus
 	<
-		pos, one, zero, zero, zero
+		pos, zero, zero, zero, zero
 	>;
 
 /***********************************************************************************************************************/

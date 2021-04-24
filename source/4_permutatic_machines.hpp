@@ -328,27 +328,29 @@ namespace machine_space
 		//
 
 		template<depth_type pos>
-		constexpr pa_type p_copy_sn_to_h0 = p_application<MN::copy_sn_to_h0, zero, pos>;
+		constexpr pa_type p_copy_sn_to_h0 = p_application<MN::copy_sn_to_h0, PA::patch(pos), pos>;
 
 		template<depth_type pos>
-		constexpr pa_type p_move_sn_to_h0 = p_application<MN::move_sn_to_h0, zero, pos>;
+		constexpr pa_type p_move_sn_to_h0 = p_application<MN::move_sn_to_h0, PA::patch(pos), pos>;
 
 		template<depth_type pos>
-		constexpr pa_type p_erase_sn = p_application<MN::erase_sn, zero, pos>;
+		constexpr pa_type p_erase_sn = p_application<MN::erase_sn, PA::patch(pos), pos>;
 
 		template<depth_type pos>
-		constexpr pa_type p_insert_h0_to_sn = p_application<MN::insert_h0_to_sn, zero, pos>;
+		constexpr pa_type p_insert_h0_to_sn = p_application<MN::insert_h0_to_sn, PA::patch(pos), pos>;
 
 		template<depth_type pos>
-		constexpr pa_type p_replace_h0_to_sn = p_application<MN::replace_h0_to_sn, zero, pos>;
+		constexpr pa_type p_replace_h0_to_sn = p_application<MN::replace_h0_to_sn, PA::patch(pos), pos>;
 
 		//
 
 		template<depth_type pos>
-		constexpr pa_type p_apply1_replace_h0_to_sn = p_application<MN::apply1_replace_h0_to_sn, zero, pos>;
+		constexpr pa_type p_apply1_replace_h0_to_sn =
+			p_application<MN::apply1_replace_h0_to_sn, PA::patch(pos), pos>;
 
 		template<depth_type pos>
-		constexpr pa_type p_apply2_replace_h0_to_sn = p_application<MN::apply2_replace_h0_to_sn, zero, pos>;
+		constexpr pa_type p_apply2_replace_h0_to_sn =
+			p_application<MN::apply2_replace_h0_to_sn, PA::patch(pos), pos>;
 
 /***********************************************************************************************************************/
 
@@ -385,18 +387,6 @@ namespace machine_space
 			static constexpr index_type note (pc_type c, index_type i, index_type) { return c(i)(PA::note); }
 			static constexpr index_type pos  (pc_type c, index_type i, index_type) { return c(i)(PA::pos ); }
 
-		// predicates:
-
-			static constexpr bool is_permutatic(index_type name)
-			{
-				return	(name == MN::copy_sn_to_h0)		||
-					(name == MN::erase_sn)			||
-					(name == MN::insert_h0_to_sn)		||
-					(name == MN::replace_h0_to_sn)		||
-					(name == MN::apply1_replace_h0_to_sn)	||
-					(name == MN::apply2_replace_h0_to_sn)	;
-			}
-
 		// iterators:
 
 			// name:
@@ -412,16 +402,7 @@ namespace machine_space
 				static constexpr index_type next_note(pc_type c, depth_type d, index_type i, index_type)
 				{
 					if (d == 0) return zero;
-
-					pa_type a = c(i+1);
-
-					if (is_permutatic(a(PA::name)))
-					{
-						depth_type pos = a(PA::pos);
-
-						return (pos < eight) ? pos+1 : zero;
-					}
-					else return a(PA::note);
+					else return c(i+1)(PA::note);
 				}
 
 			// depth:
@@ -537,7 +518,7 @@ namespace machine_space
 	}
 
 	template<auto d, auto pos, auto... Vs>
-	constexpr auto pack_erase = machine_trampoline<d>(f_pack_erase<d, pos, Vs...>());
+	constexpr auto pack_erase = f_pack_erase<d, pos, Vs...>();
 
 /***********************************************************************************************************************/
 
@@ -568,7 +549,7 @@ namespace machine_space
 	}
 
 	template<auto d, auto pos, auto obj, auto... Vs>
-	constexpr auto pack_insert = machine_trampoline<d>(f_pack_insert<d, pos, obj, Vs...>());
+	constexpr auto pack_insert = f_pack_insert<d, pos, obj, Vs...>();
 
 /***********************************************************************************************************************/
 
@@ -599,7 +580,7 @@ namespace machine_space
 	}
 
 	template<auto d, auto pos, auto obj, auto... Vs>
-	constexpr auto pack_replace = machine_trampoline<d>(f_pack_replace<d, pos, obj, Vs...>());
+	constexpr auto pack_replace = f_pack_replace<d, pos, obj, Vs...>();
 
 /***********************************************************************************************************************/
 
@@ -630,7 +611,7 @@ namespace machine_space
 	}
 
 	template<auto d, auto pos, auto op, auto arg, auto... Vs>
-	constexpr auto pack_apply1 = machine_trampoline<d>(f_pack_apply1<d, pos, op, arg, Vs...>());
+	constexpr auto pack_apply1 = f_pack_apply1<d, pos, op, arg, Vs...>();
 
 /***********************************************************************************************************************/
 
@@ -661,7 +642,7 @@ namespace machine_space
 	}
 
 	template<auto d, auto pos, auto op, auto arg1, auto arg2, auto... Vs>
-	constexpr auto pack_apply2 = machine_trampoline<d>(f_pack_apply2<d, pos, op, arg1, arg2, Vs...>());
+	constexpr auto pack_apply2 = f_pack_apply2<d, pos, op, arg1, arg2, Vs...>();
 
 /***********************************************************************************************************************/
 

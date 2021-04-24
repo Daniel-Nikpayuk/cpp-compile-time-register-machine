@@ -210,18 +210,14 @@ namespace machine_space
 	define_block_machine_fold(7);
 	define_block_machine_fold(8);
 //	define_block_machine_fold(9); // clang: bracket nesting level defaults to a maximum of 256
-															\
+
 	template<>
 	struct machine<MN::fold_2_n, nine>
 	{
-		template
-		<
-			CONTR_PARAMS, auto op, auto val, _2_9_auto_Vs, auto... Vs,
-			typename... Heaps
-		>
-		static constexpr auto result(Heaps... Hs)
+		template<CONTR_PARAMS, auto V, _2_9_auto_Vs, auto... Vs, auto op, typename... Heaps>
+		static constexpr auto result(void(*H0)(auto_pack<op>*), Heaps... Hs)
 		{
-			constexpr auto val1 = _2_8_ops  val,  _2_8_op_Vs;
+			constexpr auto val = _2_8_ops  V,  _2_8_op_Vs;
 
 			return machine
 			<
@@ -236,11 +232,26 @@ namespace machine_space
 				n::next_index1(c, d, i, j),
 				n::next_index2(c, d, i, j),
 
-				op, _2_8_ops  val1,  _upper_512_op_Vs, Vs...
+				_2_8_ops  val,  _upper_512_op_Vs, Vs...
 
-			>(Hs...);
+			>(H0, Hs...);
 		}
 	};
+
+/***********************************************************************************************************************/
+
+// roll (2^N):
+
+	define_block_machine_roll(0);
+	define_block_machine_roll(1);
+	define_block_machine_roll(2);
+	define_block_machine_roll(3);
+	define_block_machine_roll(4);
+	define_block_machine_roll(5);
+	define_block_machine_roll(6);
+	define_block_machine_roll(7);
+	define_block_machine_roll(8);
+	define_block_machine_roll(9);
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -410,6 +421,13 @@ namespace machine_space
 
 /***********************************************************************************************************************/
 
+// roll:
+
+	template<index_type cont = MN::pass>
+	constexpr auto roll_contr = b_controller<MN::roll_2_n, cont>;
+
+/***********************************************************************************************************************/
+
 // pop stack to heap zero:
 
 	template<index_type cont = MN::pass>
@@ -461,7 +479,7 @@ namespace machine_space
 	template<CONTR_PARAMS, auto... Vs, typename... Heaps>
 	constexpr auto machine_start()
 	{
-		return MACHINE(n, c, d, i, j)(U_pack_Vs<>, U_pack_Vs<>);
+		return machine_trampoline<d>(MACHINE(n, c, d, i, j)(U_pack_Vs<>, U_pack_Vs<>));
 	}
 
 /***********************************************************************************************************************/
@@ -479,7 +497,7 @@ namespace machine_space
 	}
 
 	template<auto d, auto n, auto... Vs>
-	constexpr auto pack_at = machine_trampoline<d>(f_pack_at<d, n, Vs...>());
+	constexpr auto pack_at = f_pack_at<d, n, Vs...>();
 
 /***********************************************************************************************************************/
 

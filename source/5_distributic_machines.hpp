@@ -135,9 +135,11 @@ namespace machine_space
 		>
 		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
-			constexpr auto nc = apply1_replace_contr // single call(s)
-						<n::pos(c, i, j), n::op(c, i, j), n::arg(c, i, j)>;
-			constexpr auto un = U_type_T<n>;
+			constexpr auto nc	= apply1_replace_contr // single call(s)
+						<
+							n::pos(c, i, j), n::op(c, i, j), n::arg(c, i, j)
+						>;
+			constexpr auto un	= U_type_T<n>;
 
 			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
@@ -161,9 +163,12 @@ namespace machine_space
 		>
 		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
-			constexpr auto nc = apply2_replace_contr // single call(s)
-						<n::pos(c, i, j), n::op(c, i, j), n::arg1(c, i, j), n::arg2(c, i, j)>;
-			constexpr auto un = U_type_T<n>;
+			constexpr auto nc	= apply2_replace_contr // single call(s)
+						<
+							n::pos(c, i, j), n::op(c, i, j),
+							n::arg1(c, i, j), n::arg2(c, i, j)
+						>;
+			constexpr auto un	= U_type_T<n>;
 
 			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
 		}
@@ -188,9 +193,11 @@ namespace machine_space
 		>
 		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
-			constexpr auto nc = apply1_replace_contr // single call(s)
-						<zero, n::test(c, i, j) + 1, n::input(c, i, j) + 1>;
-			constexpr auto un = U_type_T<n>;
+			constexpr auto nc	= apply1_replace_contr // single call(s)
+						<
+							zero, n::test(c, i, j) + 1, n::input(c, i, j) + 1
+						>;
+			constexpr auto un	= U_type_T<n>;
 
 			return machine
 			<
@@ -229,10 +236,12 @@ namespace machine_space
 		>
 		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
-			constexpr auto nc = apply2_replace_contr // single call(s)
-						<zero, n::test(c, i, j) + 1,
-						n::input1(c, i, j) + 1, n::input2(c, i, j) + 1>;
-			constexpr auto un = U_type_T<n>;
+			constexpr auto nc	= apply2_replace_contr // single call(s)
+						<
+							zero, n::test(c, i, j) + 1,
+							n::input1(c, i, j) + 1, n::input2(c, i, j) + 1
+						>;
+			constexpr auto un	= U_type_T<n>;
 
 			return machine
 			<
@@ -471,8 +480,7 @@ namespace machine_space
 	}
 
 	template<auto d, auto pos, auto op, auto arg1, auto arg2, auto... Vs>
-	constexpr auto pack_apply2_then_return =
-		machine_trampoline<d>(f_pack_apply2_then_return<d, pos, op, arg1, arg2, Vs...>());
+	constexpr auto pack_apply2_then_return = f_pack_apply2_then_return<d, pos, op, arg1, arg2, Vs...>();
 
 /***********************************************************************************************************************/
 
