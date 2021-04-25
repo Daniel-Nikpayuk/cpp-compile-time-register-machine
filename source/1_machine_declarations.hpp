@@ -381,6 +381,127 @@ namespace machine_space
 	};
 
 /***********************************************************************************************************************/
+
+// syntactic sugar:
+
+	// generic:
+
+	template<index_type Name, index_type Note, index_type... Args>
+	constexpr ma_type call = m_application<Name, Note, Args...>;
+
+	// abstract:
+
+	template<index_type Note = zero>
+	constexpr ma_type _id = m_application<MN::id, Note>;
+
+	// block:
+
+	template<index_type Note = zero>
+	constexpr ma_type pack = m_application<MN::pack, zero>;
+
+	template<index_type Note = zero>
+	constexpr ma_type dump = m_application<MN::dump, zero>;
+
+	template<index_type Note = zero>
+	constexpr ma_type pass = m_application<MN::pass, Note>;
+
+	template<index_type Pos>
+	constexpr ma_type _break = m_application<MN::stop, zero, Pos>;
+
+	template<depth_type pos>
+	constexpr ma_type copy_sn_to_h0 = m_application<MN::copy_sn_to_h0, MA::patch(pos), pos>;
+
+	template<depth_type pos>
+	constexpr ma_type move_sn_to_h0 = m_application<MN::move_sn_to_h0, MA::patch(pos), pos>;
+
+	// variadic:
+
+	template<index_type Pos>
+	constexpr ma_type stop = m_application<MN::stop, zero, Pos>;
+
+	template<index_type Pos>
+	constexpr ma_type pop = m_application<MN::pop, zero, Pos>;
+
+	// permutatic:
+
+	template<depth_type pos>
+	constexpr ma_type erase_sn = m_application<MN::erase_sn, MA::patch(pos), pos>;
+
+	template<index_type Pos>
+	constexpr ma_type rotate_sn = m_application<MN::rotate_sn, zero, Pos>;
+
+	template<depth_type pos>
+	constexpr ma_type insert_h0_to_sn = m_application<MN::insert_h0_to_sn, MA::patch(pos), pos>;
+
+	template<depth_type pos>
+	constexpr ma_type replace_h0_to_sn = m_application<MN::replace_h0_to_sn, MA::patch(pos), pos>;
+
+	template<depth_type pos>
+	constexpr ma_type apply1_replace_h0_to_sn = m_application<MN::apply1_replace_h0_to_sn, MA::patch(pos), pos>;
+
+	template<depth_type pos>
+	constexpr ma_type apply2_replace_h0_to_sn = m_application<MN::apply2_replace_h0_to_sn, MA::patch(pos), pos>;
+
+	template<depth_type pos>
+	constexpr ma_type compel1_replace_h0_to_sn = m_application<MN::compel1_replace_h0_to_sn, MA::patch(pos), pos>;
+
+	template<depth_type pos>
+	constexpr ma_type compel2_replace_h0_to_sn = m_application<MN::compel2_replace_h0_to_sn, MA::patch(pos), pos>;
+
+	// distributic:
+
+	template<index_type Pos>
+	constexpr ma_type erase = m_application<MN::erase, zero, Pos>;
+
+	template<index_type Pos, index_type Obj>
+	constexpr ma_type insert = m_application<MN::insert, zero, Pos, Obj>;
+
+	template<index_type Pos, index_type Obj>
+	constexpr ma_type replace = m_application<MN::replace, zero, Pos, Obj>;
+
+	template<index_type Pos, index_type Op, index_type... Args>
+	constexpr ma_type apply = m_application<MN::apply, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
+
+	template<index_type Pos, index_type Op, index_type... Args>
+	constexpr ma_type compel = m_application<MN::compel, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
+
+	template<index_type Op, index_type... Args>
+	constexpr ma_type test = m_application<MN::test, MA::arity(sizeof...(Args)), Op, Args...>;
+
+	template<index_type Op, index_type... Args>
+	constexpr ma_type check = m_application<MN::check, MA::arity(sizeof...(Args)), Op, Args...>;
+
+	template<index_type Note = zero>
+	constexpr ma_type jump = m_application<MN::jump, Note>;
+
+	// near linear:
+
+	// register:
+
+	template<index_type Pos, index_type Obj>
+	constexpr ma_type assign = m_application<MN::assign, zero, Pos, Obj>;
+
+	template<index_type Pos>
+	constexpr ma_type branch = m_application<MN::branch, zero, Pos>;
+
+	template<index_type Pos>
+	constexpr ma_type goto_contr = m_application<MN::go_to, MD::contr, Pos>;
+
+	template<index_type Pos>
+	constexpr ma_type goto_regtr = m_application<MN::go_to, MD::regtr, Pos>;
+
+	template<index_type Pos>
+	constexpr ma_type save = m_application<MN::save, zero, Pos>;
+
+	template<index_type Pos>
+	constexpr ma_type restore = m_application<MN::restore, zero, Pos>;
+
+	//
+
+	template<index_type Num>
+	constexpr ma_type reg_size = m_application<MN::reg_size, zero, Num>;
+
+/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 

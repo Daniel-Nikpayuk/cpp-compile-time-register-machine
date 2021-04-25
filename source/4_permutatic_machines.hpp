@@ -417,57 +417,6 @@ namespace machine_space
 		using pa_type	= ma_type;
 		using PA	= MA;
 
-		template<index_type... Vs>
-		constexpr pa_type p_application = m_application<Vs...>;
-
-	// syntactic sugar:
-
-		template<index_type Name, index_type Note, index_type... Args>
-		constexpr pa_type p_call = p_application<Name, Note, Args...>;
-
-		constexpr pa_type p_pack = p_application<MN::pack, zero>;
-
-		template<index_type Pos>
-		constexpr pa_type p_stop = p_application<MN::stop, zero, Pos>;
-
-		template<index_type note = zero>
-		constexpr pa_type p_pass = p_application<MN::pass, note>;
-
-		//
-
-		template<depth_type pos>
-		constexpr pa_type p_copy_sn_to_h0 = p_application<MN::copy_sn_to_h0, PA::patch(pos), pos>;
-
-		template<depth_type pos>
-		constexpr pa_type p_move_sn_to_h0 = p_application<MN::move_sn_to_h0, PA::patch(pos), pos>;
-
-		template<depth_type pos>
-		constexpr pa_type p_erase_sn = p_application<MN::erase_sn, PA::patch(pos), pos>;
-
-		template<depth_type pos>
-		constexpr pa_type p_insert_h0_to_sn = p_application<MN::insert_h0_to_sn, PA::patch(pos), pos>;
-
-		template<depth_type pos>
-		constexpr pa_type p_replace_h0_to_sn = p_application<MN::replace_h0_to_sn, PA::patch(pos), pos>;
-
-		//
-
-		template<depth_type pos>
-		constexpr pa_type p_apply1_replace_h0_to_sn =
-			p_application<MN::apply1_replace_h0_to_sn, PA::patch(pos), pos>;
-
-		template<depth_type pos>
-		constexpr pa_type p_apply2_replace_h0_to_sn =
-			p_application<MN::apply2_replace_h0_to_sn, PA::patch(pos), pos>;
-
-		template<depth_type pos>
-		constexpr pa_type p_compel1_replace_h0_to_sn =
-			p_application<MN::compel1_replace_h0_to_sn, PA::patch(pos), pos>;
-
-		template<depth_type pos>
-		constexpr pa_type p_compel2_replace_h0_to_sn =
-			p_application<MN::compel2_replace_h0_to_sn, PA::patch(pos), pos>;
-
 /***********************************************************************************************************************/
 
 // controller:
@@ -549,10 +498,10 @@ namespace machine_space
 
 // erase:
 
-	template<depth_type pos, pa_type cont = p_pass<>>
+	template<depth_type pos, pa_type cont = pass<>>
 	constexpr auto erase_contr = p_controller
 	<
-		p_erase_sn<pos>,
+		erase_sn<pos>,
 
 		cont
 	>;
@@ -561,11 +510,11 @@ namespace machine_space
 
 // insert:
 
-	template<depth_type pos, depth_type obj, pa_type cont = p_pass<>>
+	template<depth_type pos, depth_type obj, pa_type cont = pass<>>
 	constexpr auto insert_contr = p_controller
 	<
-		p_copy_sn_to_h0<obj>,
-		p_insert_h0_to_sn<pos>,
+		copy_sn_to_h0<obj>,
+		insert_h0_to_sn<pos>,
 
 		cont
 	>;
@@ -574,11 +523,11 @@ namespace machine_space
 
 // replace:
 
-	template<depth_type pos, depth_type obj, pa_type cont = p_pass<>>
+	template<depth_type pos, depth_type obj, pa_type cont = pass<>>
 	constexpr auto replace_contr = p_controller
 	<
-		p_copy_sn_to_h0<obj>,
-		p_replace_h0_to_sn<pos>,
+		copy_sn_to_h0<obj>,
+		replace_h0_to_sn<pos>,
 
 		cont
 	>;
@@ -587,12 +536,12 @@ namespace machine_space
 
 // unary apply replace:
 
-	template<depth_type pos, depth_type op, depth_type arg, pa_type cont = p_pass<>>
+	template<depth_type pos, depth_type op, depth_type arg, pa_type cont = pass<>>
 	constexpr auto apply1_replace_contr = p_controller
 	<
-		p_copy_sn_to_h0<op>,
-		p_copy_sn_to_h0<arg>,
-		p_apply1_replace_h0_to_sn<pos>,
+		copy_sn_to_h0<op>,
+		copy_sn_to_h0<arg>,
+		apply1_replace_h0_to_sn<pos>,
 
 		cont
 	>;
@@ -601,13 +550,13 @@ namespace machine_space
 
 // binary apply replace:
 
-	template<depth_type pos, depth_type op, depth_type arg1, depth_type arg2, pa_type cont = p_pass<>>
+	template<depth_type pos, depth_type op, depth_type arg1, depth_type arg2, pa_type cont = pass<>>
 	constexpr auto apply2_replace_contr = p_controller
 	<
-		p_copy_sn_to_h0<op>,
-		p_copy_sn_to_h0<arg1>,
-		p_copy_sn_to_h0<arg2>,
-		p_apply2_replace_h0_to_sn<pos>,
+		copy_sn_to_h0<op>,
+		copy_sn_to_h0<arg1>,
+		copy_sn_to_h0<arg2>,
+		apply2_replace_h0_to_sn<pos>,
 
 		cont
 	>;
@@ -616,12 +565,12 @@ namespace machine_space
 
 // unary compel replace:
 
-	template<depth_type pos, depth_type op, depth_type arg, pa_type cont = p_pass<>>
+	template<depth_type pos, depth_type op, depth_type arg, pa_type cont = pass<>>
 	constexpr auto compel1_replace_contr = p_controller
 	<
-		p_copy_sn_to_h0<op>,
-		p_copy_sn_to_h0<arg>,
-		p_compel1_replace_h0_to_sn<pos>,
+		copy_sn_to_h0<op>,
+		copy_sn_to_h0<arg>,
+		compel1_replace_h0_to_sn<pos>,
 
 		cont
 	>;
@@ -630,13 +579,13 @@ namespace machine_space
 
 // binary compel replace:
 
-	template<depth_type pos, depth_type op, depth_type arg1, depth_type arg2, pa_type cont = p_pass<>>
+	template<depth_type pos, depth_type op, depth_type arg1, depth_type arg2, pa_type cont = pass<>>
 	constexpr auto compel2_replace_contr = p_controller
 	<
-		p_copy_sn_to_h0<op>,
-		p_copy_sn_to_h0<arg1>,
-		p_copy_sn_to_h0<arg2>,
-		p_compel2_replace_h0_to_sn<pos>,
+		copy_sn_to_h0<op>,
+		copy_sn_to_h0<arg1>,
+		copy_sn_to_h0<arg2>,
+		compel2_replace_h0_to_sn<pos>,
 
 		cont
 	>;
@@ -654,7 +603,7 @@ namespace machine_space
 	template<auto d, auto pos, auto... Vs>
 	constexpr auto f_pack_erase()
 	{
-		constexpr auto c = erase_contr<pos, p_pack>;
+		constexpr auto c = erase_contr<pos, pack<>>;
 		constexpr auto i = zero;
 		constexpr auto j = zero;
 
@@ -671,7 +620,7 @@ namespace machine_space
 	template<auto d, auto pos, auto obj, auto... Vs>
 	constexpr auto f_pack_insert()
 	{
-		constexpr auto c = insert_contr<pos, obj, p_pack>;
+		constexpr auto c = insert_contr<pos, obj, pack<>>;
 		constexpr auto i = zero;
 		constexpr auto j = zero;
 
@@ -688,7 +637,7 @@ namespace machine_space
 	template<auto d, auto pos, auto obj, auto... Vs>
 	constexpr auto f_pack_replace()
 	{
-		constexpr auto c = replace_contr<pos, obj, p_pack>;
+		constexpr auto c = replace_contr<pos, obj, pack<>>;
 		constexpr auto i = zero;
 		constexpr auto j = zero;
 

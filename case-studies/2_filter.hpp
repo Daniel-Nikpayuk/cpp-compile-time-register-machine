@@ -69,7 +69,7 @@
 			index_type n		= 0,
 
 			index_type eq		= 1,
-			index_type test		= 2,
+			index_type cond		= 2,
 			index_type sub		= 3,
 
 			index_type c_0		= 4,
@@ -87,27 +87,27 @@
 	<
 		r_label // is loop end:
 		<
-			r_test       < eq          , n   , c_0        >,
-			r_branch     < return_pack                    >,
-			r_check      < test        , val              >,
-			r_branch     < pop_value                      >,
-			r_rotate_sn  < val                            >,
-			r_apply      < n           , sub , n    , c_1 >,
-			r_goto_contr < is_loop_end                    >
+			test       < eq          , n   , c_0       >,
+			branch     < return_pack                   >,
+			check      < cond        , val             >,
+			branch     < pop_value                     >,
+			rotate_sn  < val                           >,
+			apply      < n           , sub , n   , c_1 >,
+			goto_contr < is_loop_end                   >
 		>,
 
 		r_label // pop value:
 		<
-			r_erase      < val                           >,
-			r_apply      < n           , sub , n   , c_1 >,
-			r_goto_contr < is_loop_end                   >
+			erase      < val                         >,
+			apply      < n           , sub , n , c_1 >,
+			goto_contr < is_loop_end                 >
 		>,
 
 		r_label // return pack:
 		<
-			r_pop        < six >,
+			pop        < six >,
 
-			r_pack
+			pack       <     >
 		>
 	>;
 
@@ -193,9 +193,9 @@
 		{
 			constexpr auto c	= p_controller
 						<
-							p_move_sn_to_h0<zero>,
-							p_call<MN::roll_s0, zero>,
-							p_stop<zero>
+							move_sn_to_h0<zero>,
+							call<MN::roll_s0, zero>,
+							stop<zero>
 						>;
 			constexpr auto i	= zero;
 			constexpr auto j	= zero;

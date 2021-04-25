@@ -43,8 +43,8 @@
 	>
 	constexpr auto pair_fact_contr = n_controller
 	<
-		n_stem  < n_test<eq, n, zero>     , n_break<p> , n_apply<p, mult, n, p> >,
-		n_lift  < n_apply<n, sub, n, one>                                       >,
+		n_stem  < test<eq, n, zero>     , _break<p> , apply<p, mult, n, p> >,
+		n_lift  < apply<n, sub, n, one>                                    >,
 
 		n_cycle
 	>;
@@ -144,33 +144,33 @@
 	<
 		r_label // fact loop:
 		<
-			r_test       < eq        , n          , c_1       >,
-			r_branch     < base_case                          >,
-			r_save       < cont                               >,
-			r_save       < n                                  >,
-			r_apply      < n         , sub        , n   , c_1 >,
-			r_assign     < cont      , after_fact             >,
-			r_goto_contr < fact_loop                          >
+			test       < eq        , n          , c_1       >,
+			branch     < base_case                          >,
+			save       < cont                               >,
+			save       < n                                  >,
+			apply      < n         , sub        , n   , c_1 >,
+			assign     < cont      , after_fact             >,
+			goto_contr < fact_loop                          >
 		>,
 
 		r_label // after fact:
 		<
-			r_restore    < n                     >,
-			r_restore    < cont                  >,
-			r_apply      < val  , mult , n , val >,
-			r_goto_regtr < cont                  >
+			restore    < n                     >,
+			restore    < cont                  >,
+			apply      < val  , mult , n , val >,
+			goto_regtr < cont                  >
 		>,
 
 		r_label // base case:
 		<
-			r_replace    < val  , c_1 >,
-			r_goto_regtr < cont       >
+			replace    < val  , c_1 >,
+			goto_regtr < cont       >
 		>,
 
 		r_label // fact done:
 		<
-			r_stop       < val   >,
-			r_reg_size   < seven >
+			stop       < val   >,
+			reg_size   < seven >
 		>
 	>;
 

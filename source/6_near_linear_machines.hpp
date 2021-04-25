@@ -144,49 +144,6 @@ namespace machine_space
 		using na_type	= ma_type;
 		using NA	= MA;
 
-		template<index_type Name, index_type Note, index_type... Vs>
-		constexpr na_type n_application = m_application<Name, Note, Vs...>;
-
-	// syntactic sugar:
-
-		template<index_type Note = zero>
-		constexpr na_type n_id = n_application<MN::id, Note>;
-
-		constexpr na_type n_pack = n_application<MN::pack, zero>;
-
-		template<index_type Note = zero>
-		constexpr na_type n_pass = n_application<MN::pass, Note>;
-
-		//
-
-		template<index_type Op, index_type... Args>
-		constexpr na_type n_test = n_application<MN::test, MA::arity(sizeof...(Args)), Op, Args...>;
-
-		template<index_type Op, index_type... Args>
-		constexpr na_type n_check = n_application<MN::check, MA::arity(sizeof...(Args)), Op, Args...>;
-
-		template<index_type Pos>
-		constexpr na_type n_break = n_application<MN::stop, zero, Pos>;
-
-		//
-
-		template<index_type Pos>
-		constexpr na_type n_erase = n_application<MN::erase, zero, Pos>;
-
-		template<index_type Pos, index_type Obj>
-		constexpr na_type n_insert = n_application<MN::insert, zero, Pos, Obj>;
-
-		template<index_type Pos, index_type Obj>
-		constexpr na_type n_replace = n_application<MN::replace, zero, Pos, Obj>;
-
-		//
-
-		template<index_type Pos, index_type Op, index_type... Args>
-		constexpr na_type n_apply = n_application<MN::apply, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
-
-		template<index_type Pos, index_type Op, index_type... Args>
-		constexpr na_type n_compel = n_application<MN::compel, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
-
 /***********************************************************************************************************************/
 
 // continuation passing functors:
@@ -208,10 +165,10 @@ namespace machine_space
 
 		// constants:
 
-			static constexpr na_type lift			= n_application<MN::lift, zero>;
-			static constexpr na_type stem			= n_application<MN::stem, zero>;
-			static constexpr na_type halt			= n_application<MN::halt, zero>;
-			static constexpr na_type cycle			= n_application<MN::cycle, zero>;
+			static constexpr na_type lift			= m_application<MN::lift, zero>;
+			static constexpr na_type stem			= m_application<MN::stem, zero>;
+			static constexpr na_type halt			= m_application<MN::halt, zero>;
+			static constexpr na_type cycle			= m_application<MN::cycle, zero>;
 
 		// procedures:
 

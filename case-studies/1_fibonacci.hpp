@@ -52,45 +52,45 @@
 	<
 		r_label // fib loop:
 		<
-			r_test       < less_than        , n          , c_2       >,
-			r_branch     < immediate_answer                          >,
-			r_save       < cont                                      >,
-			r_assign     < cont             , after_fib_n_1          >,
-			r_save       < n                                         >,
-			r_apply      < n                , sub        , n   , c_1 >,
-			r_goto_contr < fib_loop                                  >
+			test       < less_than        , n          , c_2       >,
+			branch     < immediate_answer                          >,
+			save       < cont                                      >,
+			assign     < cont             , after_fib_n_1          >,
+			save       < n                                         >,
+			apply      < n                , sub        , n   , c_1 >,
+			goto_contr < fib_loop                                  >
 		>,
 
 		r_label // after fib n 1:
 		<
-			r_restore    < n                     >,
-			r_restore    < cont                  >,
-			r_apply      < n    , sub , n , c_2  >,
-			r_save       < cont                  >,
-			r_assign     < cont , after_fib_n_2  >,
-			r_save       < val                   >,
-			r_goto_contr < fib_loop              >
+			restore    < n                     >,
+			restore    < cont                  >,
+			apply      < n    , sub , n , c_2  >,
+			save       < cont                  >,
+			assign     < cont , after_fib_n_2  >,
+			save       < val                   >,
+			goto_contr < fib_loop              >
 		>,
 
 		r_label // after fib n 2:
 		<
-			r_replace    < n    , val           >,
-			r_restore    < val                  >,
-			r_restore    < cont                 >,
-			r_apply      < val  , add , val , n >,
-			r_goto_regtr < cont                 >
+			replace    < n    , val           >,
+			restore    < val                  >,
+			restore    < cont                 >,
+			apply      < val  , add , val , n >,
+			goto_regtr < cont                 >
 		>,
 
 		r_label // immediate answer:
 		<
-			r_replace    < val  , n >,
-			r_goto_regtr < cont     >
+			replace    < val  , n >,
+			goto_regtr < cont     >
 		>,
 
 		r_label // fib done:
 		<
-			r_stop       < val       >,
-			r_reg_size   < eight     >
+			stop       < val       >,
+			reg_size   < eight     >
 		>
 	>;
 

@@ -25,8 +25,9 @@
 
 	using namespace machine_space;
 
-//#include"testing/unit_lists.hpp"
-//#include"case-studies/0_factorial.hpp"
+#include"testing/unit_lists.hpp"
+#include"case-studies/0_factorial.hpp"
+//#include"case-studies/1_fibonacci.hpp"
 #include"case-studies/2_filter.hpp"
 
 /***********************************************************************************************************************/
@@ -40,7 +41,7 @@
 	constexpr T square(T x) { return x*x; }
 
 //	constexpr auto func = do_compose<square<int>, square<int>, multiply_by<int, 2>, add_by<int, 1>>;
-	constexpr auto func = n_safe_compose<add_by<int, 1>, multiply_by<int, 2>, _id_, square<int>>;
+//	constexpr auto func = n_safe_compose<add_by<int, 1>, multiply_by<int, 2>, _id_, square<int>>;
 
 /***********************************************************************************************************************/
 

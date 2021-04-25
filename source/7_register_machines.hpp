@@ -134,7 +134,7 @@ namespace machine_space
 		using nn			= PD;
 		static constexpr auto ni	= zero;
 		static constexpr auto nj	= zero;
-		static constexpr auto pass	= p_call<MN::go_to_s0, zero>;
+		static constexpr auto pass	= call<MN::go_to_s0, zero>;
 
 		template
 		<
@@ -186,11 +186,11 @@ namespace machine_space
 		static constexpr auto ni	= zero;
 		static constexpr auto nj	= zero;
 
-		template<depth_type pos, depth_type obj, pa_type cont = p_pass<>>
+		template<depth_type pos, depth_type obj, pa_type cont = pass<>>
 		static constexpr auto restore = p_controller
 		<
-			p_move_sn_to_h0<obj>,
-			p_replace_h0_to_sn<pos>,
+			move_sn_to_h0<obj>,
+			replace_h0_to_sn<pos>,
 
 			cont
 		>;
@@ -224,69 +224,6 @@ namespace machine_space
 
 		using ra_type	= ma_type;
 		using RA	= MA;
-
-		template<index_type Name, index_type Note, index_type... Vs>
-		constexpr ra_type r_application = m_application<Name, Note, Vs...>;
-
-	// syntactic sugar:
-
-		constexpr ra_type r_dump = r_application<MN::dump, zero>;
-		constexpr ra_type r_pack = r_application<MN::pack, zero>;
-
-		template<index_type Pos>
-		constexpr ra_type r_rotate_sn = r_application<MN::rotate_sn, zero, Pos>;
-
-		template<index_type Op, index_type... Args>
-		constexpr ra_type r_test = r_application<MN::test, MA::arity(sizeof...(Args)), Op, Args...>;
-
-		template<index_type Op, index_type... Args>
-		constexpr ra_type r_check = r_application<MN::check, MA::arity(sizeof...(Args)), Op, Args...>;
-
-		template<index_type Pos, index_type Op, index_type... Args>
-		constexpr ra_type r_apply = r_application<MN::apply, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
-
-		template<index_type Pos, index_type Op, index_type... Args>
-		constexpr ra_type r_compel = r_application<MN::compel, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
-
-		//
-
-		template<index_type Pos>
-		constexpr ra_type r_pop = r_application<MN::pop, zero, Pos>;
-
-		template<index_type Pos>
-		constexpr ra_type r_erase = r_application<MN::erase, zero, Pos>;
-
-		template<index_type Pos, index_type Obj>
-		constexpr ra_type r_insert = r_application<MN::insert, zero, Pos, Obj>;
-
-		template<index_type Pos, index_type Obj>
-		constexpr ra_type r_replace = r_application<MN::replace, zero, Pos, Obj>;
-
-		//
-
-		template<index_type Pos, index_type Obj>
-		constexpr ra_type r_assign = r_application<MN::assign, zero, Pos, Obj>;
-
-		template<index_type Pos>
-		constexpr ra_type r_branch = r_application<MN::branch, zero, Pos>;
-
-		template<index_type Pos>
-		constexpr ra_type r_save = r_application<MN::save, zero, Pos>;
-
-		template<index_type Pos>
-		constexpr ra_type r_restore = r_application<MN::restore, zero, Pos>;
-
-		template<index_type Pos>
-		constexpr ra_type r_goto_contr = r_application<MN::go_to, MD::contr, Pos>;
-
-		template<index_type Pos>
-		constexpr ra_type r_goto_regtr = r_application<MN::go_to, MD::regtr, Pos>;
-
-		template<index_type Pos>
-		constexpr ra_type r_stop = r_application<MN::stop, zero, Pos>;
-
-		template<index_type Num>
-		constexpr ra_type r_reg_size = r_application<MN::reg_size, zero, Num>;
 
 /***********************************************************************************************************************/
 

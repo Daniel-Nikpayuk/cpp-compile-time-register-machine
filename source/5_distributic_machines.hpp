@@ -470,49 +470,6 @@ namespace machine_space
 		using da_type	= ma_type;
 		using DA	= MA;
 
-		template<index_type... Vs>
-		constexpr da_type d_application = m_application<Vs...>;
-
-	// syntactic sugar:
-
-		template<index_type Name, index_type Note, index_type... Args>
-		constexpr da_type d_call = d_application<Name, Note, Args...>;
-
-		constexpr da_type d_pack = d_application<MN::pack, zero>;
-
-		template<index_type Pos>
-		constexpr da_type d_stop = d_application<MN::stop, zero, Pos>;
-
-		template<index_type note = zero>
-		constexpr da_type d_pass = d_application<MN::pass, note>;
-
-		//
-
-		template<index_type Pos>
-		constexpr da_type d_erase = d_application<MN::erase, zero, Pos>;
-
-		template<index_type Pos, index_type Obj>
-		constexpr da_type d_insert = d_application<MN::insert, zero, Pos, Obj>;
-
-		template<index_type Pos, index_type Obj>
-		constexpr da_type d_replace = d_application<MN::replace, zero, Pos, Obj>;
-
-		//
-
-		template<index_type Pos, index_type Op, index_type... Args>
-		constexpr da_type d_apply = d_application<MN::apply, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
-
-		template<index_type Pos, index_type Op, index_type... Args>
-		constexpr da_type d_compel = d_application<MN::compel, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
-
-		template<index_type Op, index_type... Args>
-		constexpr da_type d_test = d_application<MN::test, MA::arity(sizeof...(Args)), Op, Args...>;
-
-		template<index_type Op, index_type... Args>
-		constexpr da_type d_check = d_application<MN::check, MA::arity(sizeof...(Args)), Op, Args...>;
-
-		constexpr da_type d_jump = d_application<MN::jump, zero>;
-
 /***********************************************************************************************************************/
 
 // controller:
@@ -606,15 +563,15 @@ namespace machine_space
 
 // call:
 
-	template<da_type appl, da_type cont = d_pass<>>
+	template<da_type appl, da_type cont = pass<>>
 	constexpr auto call_contr = d_controller<appl, cont>;
 
 /***********************************************************************************************************************/
 
 // jump:
 
-	template<da_type test, da_type ante, da_type conse, da_type cont = d_pass<>>
-	constexpr auto jump_contr = d_controller<test, d_jump, ante, cont, conse, cont>;
+	template<da_type test, da_type ante, da_type conse, da_type cont = pass<>>
+	constexpr auto jump_contr = d_controller<test, jump<>, ante, cont, conse, cont>;
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
