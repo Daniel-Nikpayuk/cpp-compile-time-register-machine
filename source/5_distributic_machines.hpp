@@ -177,6 +177,64 @@ namespace machine_space
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
+// unary compel:
+
+	template<>
+	struct machine<MN::compel, MA::unary>
+	{
+		using nn			= PD;
+		static constexpr auto ni	= zero;
+		static constexpr auto nj	= zero;
+
+		template
+		<
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
+		>
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
+		{
+			constexpr auto nc	= compel1_replace_contr // single call(s)
+						<
+							n::pos(c, i, j), n::op(c, i, j), n::arg(c, i, j)
+						>;
+			constexpr auto un	= U_type_T<n>;
+
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
+		}
+	};
+
+/***********************************************************************************************************************/
+
+// binary compel:
+
+	template<>
+	struct machine<MN::compel, MA::binary>
+	{
+		using nn			= PD;
+		static constexpr auto ni	= zero;
+		static constexpr auto nj	= zero;
+
+		template
+		<
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
+		>
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
+		{
+			constexpr auto nc	= compel2_replace_contr // single call(s)
+						<
+							n::pos(c, i, j), n::op(c, i, j),
+							n::arg1(c, i, j), n::arg2(c, i, j)
+						>;
+			constexpr auto un	= U_type_T<n>;
+
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
+		}
+	};
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
 // unary test:
 
 	template<>
@@ -195,7 +253,7 @@ namespace machine_space
 		{
 			constexpr auto nc	= apply1_replace_contr // single call(s)
 						<
-							zero, n::test(c, i, j) + 1, n::input(c, i, j) + 1
+							zero, n::pred(c, i, j) + 1, n::input(c, i, j) + 1
 						>;
 			constexpr auto un	= U_type_T<n>;
 
@@ -238,7 +296,95 @@ namespace machine_space
 		{
 			constexpr auto nc	= apply2_replace_contr // single call(s)
 						<
-							zero, n::test(c, i, j) + 1,
+							zero, n::pred(c, i, j) + 1,
+							n::input1(c, i, j) + 1, n::input2(c, i, j) + 1
+						>;
+			constexpr auto un	= U_type_T<n>;
+
+			return machine
+			<
+				nn::next_name(nc, d, ni, nj),
+				nn::next_note(nc, d, ni, nj)
+
+			>::template result
+			<
+				nn, nc,
+
+				nn::next_depth(d),
+				nn::next_index1(nc, d, ni, nj),
+				nn::next_index2(nc, d, ni, nj),
+
+				false, Vs...
+
+			>(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
+		}
+	};
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// unary check:
+
+	template<>
+	struct machine<MN::check, MA::unary>
+	{
+		using nn			= PD;
+		static constexpr auto ni	= zero;
+		static constexpr auto nj	= zero;
+
+		template
+		<
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
+		>
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
+		{
+			constexpr auto nc	= compel1_replace_contr // single call(s)
+						<
+							zero, n::pred(c, i, j) + 1, n::input(c, i, j) + 1
+						>;
+			constexpr auto un	= U_type_T<n>;
+
+			return machine
+			<
+				nn::next_name(nc, d, ni, nj),
+				nn::next_note(nc, d, ni, nj)
+
+			>::template result
+			<
+				nn, nc,
+
+				nn::next_depth(d),
+				nn::next_index1(nc, d, ni, nj),
+				nn::next_index2(nc, d, ni, nj),
+
+				false, Vs...
+
+			>(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
+		}
+	};
+
+/***********************************************************************************************************************/
+
+// binary check:
+
+	template<>
+	struct machine<MN::check, MA::binary>
+	{
+		using nn			= PD;
+		static constexpr auto ni	= zero;
+		static constexpr auto nj	= zero;
+
+		template
+		<
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
+		>
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
+		{
+			constexpr auto nc	= compel2_replace_contr // single call(s)
+						<
+							zero, n::pred(c, i, j) + 1,
 							n::input1(c, i, j) + 1, n::input2(c, i, j) + 1
 						>;
 			constexpr auto un	= U_type_T<n>;
@@ -342,11 +488,28 @@ namespace machine_space
 
 		//
 
+		template<index_type Pos>
+		constexpr da_type d_erase = d_application<MN::erase, zero, Pos>;
+
+		template<index_type Pos, index_type Obj>
+		constexpr da_type d_insert = d_application<MN::insert, zero, Pos, Obj>;
+
+		template<index_type Pos, index_type Obj>
+		constexpr da_type d_replace = d_application<MN::replace, zero, Pos, Obj>;
+
+		//
+
 		template<index_type Pos, index_type Op, index_type... Args>
 		constexpr da_type d_apply = d_application<MN::apply, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
 
+		template<index_type Pos, index_type Op, index_type... Args>
+		constexpr da_type d_compel = d_application<MN::compel, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
+
 		template<index_type Op, index_type... Args>
 		constexpr da_type d_test = d_application<MN::test, MA::arity(sizeof...(Args)), Op, Args...>;
+
+		template<index_type Op, index_type... Args>
+		constexpr da_type d_check = d_application<MN::check, MA::arity(sizeof...(Args)), Op, Args...>;
 
 		constexpr da_type d_jump = d_application<MN::jump, zero>;
 
@@ -392,7 +555,7 @@ namespace machine_space
 			static constexpr index_type arg1   (dc_type c, index_type i, index_type) { return c(i)(DA::arg1  ); }
 			static constexpr index_type arg2   (dc_type c, index_type i, index_type) { return c(i)(DA::arg2  ); }
 
-			static constexpr index_type test   (dc_type c, index_type i, index_type) { return c(i)(DA::test  ); }
+			static constexpr index_type pred   (dc_type c, index_type i, index_type) { return c(i)(DA::pred  ); }
 			static constexpr index_type input  (dc_type c, index_type i, index_type) { return c(i)(DA::input ); }
 			static constexpr index_type input1 (dc_type c, index_type i, index_type) { return c(i)(DA::input1); }
 			static constexpr index_type input2 (dc_type c, index_type i, index_type) { return c(i)(DA::input2); }
@@ -460,40 +623,6 @@ namespace machine_space
 // externals:
 
 /***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
-// pack apply:
-
-	template<auto d, auto pos, auto op, auto arg1, auto arg2, auto... Vs>
-	constexpr auto f_pack_apply2_then_return()
-	{
-		constexpr auto c = call_contr
-		<
-			d_apply<pos, op, arg1, arg2>,
-			d_stop<pos>
-		>;
-
-		constexpr auto i = zero;
-		constexpr auto j = zero;
-
-		return machine_start<DD, c, d, i, j, Vs...>();
-	}
-
-	template<auto d, auto pos, auto op, auto arg1, auto arg2, auto... Vs>
-	constexpr auto pack_apply2_then_return = f_pack_apply2_then_return<d, pos, op, arg1, arg2, Vs...>();
-
-/***********************************************************************************************************************/
-
-// list apply:
-
-	template<depth_type d, index_type pos, index_type op, index_type arg1, index_type arg2, auto... Vs>
-	constexpr auto f_list_apply2_then_return(void(*)(auto_pack<Vs...>*))
-	{
-		return pack_apply2_then_return<d, pos, op, arg1, arg2, Vs...>;
-	}
-
-	template<typename List, index_type pos, index_type op, index_type arg1, index_type arg2, depth_type depth = 500>
-	constexpr auto list_apply2_then_return = f_list_apply2_then_return<depth, pos, op, arg1, arg2>(U_type_T<List>);
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

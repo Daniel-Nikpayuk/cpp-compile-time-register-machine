@@ -151,6 +151,42 @@ namespace machine_space
 
 /***********************************************************************************************************************/
 
+// rotate stack position:
+
+	template<>
+	struct machine<MN::rotate_sn>
+	{
+		using nn			= VD;
+		static constexpr auto nc	= rotate_sn_contr<>;
+		static constexpr auto ni	= zero;
+
+		template
+		<
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
+		>
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
+		{
+			constexpr auto nj = rotate_sn_locus<n::pos(c, i, j)>; // single call
+			constexpr auto un = U_type_T<n>;
+
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
+		}
+	};
+
+	// optimizations:
+
+		define_permutatic_machine_rotate_stack_position(1, 0, 0);
+		define_permutatic_machine_rotate_stack_position(2, 1, 1);
+		define_permutatic_machine_rotate_stack_position(3, 2, 1);
+		define_permutatic_machine_rotate_stack_position(4, 3, 1);
+		define_permutatic_machine_rotate_stack_position(5, 4, 1);
+		define_permutatic_machine_rotate_stack_position(6, 5, 1);
+		define_permutatic_machine_rotate_stack_position(7, 6, 1);
+		define_permutatic_machine_rotate_stack_position(8, 7, 1);
+
+/***********************************************************************************************************************/
+
 // insert heap zero to stack position:
 
 	template<>
@@ -294,6 +330,78 @@ namespace machine_space
 		define_permutatic_machine_binary_apply_replace_heap_zero_to_stack_position(8, 7, 1);
 
 /***********************************************************************************************************************/
+
+// unary compel replace heap zero to stack position:
+
+	template<>
+	struct machine<MN::compel1_replace_h0_to_sn>
+	{
+		using nn			= VD;
+		static constexpr auto nc	= compel1_replace_h0_to_sn_contr<>;
+		static constexpr auto ni	= zero;
+
+		template
+		<
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
+		>
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
+		{
+			constexpr auto nj = compel1_replace_h0_to_sn_locus<n::pos(c, i, j)>; // single call(s)
+			constexpr auto un = U_type_T<n>;
+
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
+		}
+	};
+
+	// optimizations:
+
+		define_permutatic_machine_unary_compel_replace_heap_zero_to_stack_position(1, 0, 0);
+		define_permutatic_machine_unary_compel_replace_heap_zero_to_stack_position(2, 1, 1);
+		define_permutatic_machine_unary_compel_replace_heap_zero_to_stack_position(3, 2, 1);
+		define_permutatic_machine_unary_compel_replace_heap_zero_to_stack_position(4, 3, 1);
+		define_permutatic_machine_unary_compel_replace_heap_zero_to_stack_position(5, 4, 1);
+		define_permutatic_machine_unary_compel_replace_heap_zero_to_stack_position(6, 5, 1);
+		define_permutatic_machine_unary_compel_replace_heap_zero_to_stack_position(7, 6, 1);
+		define_permutatic_machine_unary_compel_replace_heap_zero_to_stack_position(8, 7, 1);
+
+/***********************************************************************************************************************/
+
+// binary compel replace heap zero to stack position:
+
+	template<>
+	struct machine<MN::compel2_replace_h0_to_sn>
+	{
+		using nn			= VD;
+		static constexpr auto nc	= compel2_replace_h0_to_sn_contr<>;
+		static constexpr auto ni	= zero;
+
+		template
+		<
+			CONTR_PARAMS, auto... Vs,
+			FIXED_HEAP_PARAMS, typename... Heaps
+		>
+		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
+		{
+			constexpr auto nj = compel2_replace_h0_to_sn_locus<n::pos(c, i, j)>; // single call(s)
+			constexpr auto un = U_type_T<n>;
+
+			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
+		}
+	};
+
+	// optimizations:
+
+		define_permutatic_machine_binary_compel_replace_heap_zero_to_stack_position(1, 0, 0);
+		define_permutatic_machine_binary_compel_replace_heap_zero_to_stack_position(2, 1, 1);
+		define_permutatic_machine_binary_compel_replace_heap_zero_to_stack_position(3, 2, 1);
+		define_permutatic_machine_binary_compel_replace_heap_zero_to_stack_position(4, 3, 1);
+		define_permutatic_machine_binary_compel_replace_heap_zero_to_stack_position(5, 4, 1);
+		define_permutatic_machine_binary_compel_replace_heap_zero_to_stack_position(6, 5, 1);
+		define_permutatic_machine_binary_compel_replace_heap_zero_to_stack_position(7, 6, 1);
+		define_permutatic_machine_binary_compel_replace_heap_zero_to_stack_position(8, 7, 1);
+
+/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
@@ -351,6 +459,14 @@ namespace machine_space
 		template<depth_type pos>
 		constexpr pa_type p_apply2_replace_h0_to_sn =
 			p_application<MN::apply2_replace_h0_to_sn, PA::patch(pos), pos>;
+
+		template<depth_type pos>
+		constexpr pa_type p_compel1_replace_h0_to_sn =
+			p_application<MN::compel1_replace_h0_to_sn, PA::patch(pos), pos>;
+
+		template<depth_type pos>
+		constexpr pa_type p_compel2_replace_h0_to_sn =
+			p_application<MN::compel2_replace_h0_to_sn, PA::patch(pos), pos>;
 
 /***********************************************************************************************************************/
 
@@ -497,12 +613,40 @@ namespace machine_space
 	>;
 
 /***********************************************************************************************************************/
+
+// unary compel replace:
+
+	template<depth_type pos, depth_type op, depth_type arg, pa_type cont = p_pass<>>
+	constexpr auto compel1_replace_contr = p_controller
+	<
+		p_copy_sn_to_h0<op>,
+		p_copy_sn_to_h0<arg>,
+		p_compel1_replace_h0_to_sn<pos>,
+
+		cont
+	>;
+
+/***********************************************************************************************************************/
+
+// binary compel replace:
+
+	template<depth_type pos, depth_type op, depth_type arg1, depth_type arg2, pa_type cont = p_pass<>>
+	constexpr auto compel2_replace_contr = p_controller
+	<
+		p_copy_sn_to_h0<op>,
+		p_copy_sn_to_h0<arg1>,
+		p_copy_sn_to_h0<arg2>,
+		p_compel2_replace_h0_to_sn<pos>,
+
+		cont
+	>;
+
+/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
 // externals:
 
-/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
 // pack erase:
@@ -522,20 +666,6 @@ namespace machine_space
 
 /***********************************************************************************************************************/
 
-// list erase:
-
-	template<depth_type d, index_type pos, auto... Vs>
-	constexpr auto f_list_erase(void(*)(auto_pack<Vs...>*))
-	{
-		return pack_erase<d, pos, Vs...>;
-	}
-
-	template<typename List, index_type pos, depth_type depth = 500>
-	constexpr auto list_erase = f_list_erase<depth, pos>(U_type_T<List>);
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
 // pack insert:
 
 	template<auto d, auto pos, auto obj, auto... Vs>
@@ -553,20 +683,6 @@ namespace machine_space
 
 /***********************************************************************************************************************/
 
-// list insert:
-
-	template<depth_type d, index_type pos, index_type obj, auto... Vs>
-	constexpr auto f_list_insert(void(*)(auto_pack<Vs...>*))
-	{
-		return pack_insert<d, pos, obj, Vs...>;
-	}
-
-	template<typename List, index_type pos, index_type obj, depth_type depth = 500>
-	constexpr auto list_insert = f_list_insert<depth, pos, obj>(U_type_T<List>);
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
 // pack replace:
 
 	template<auto d, auto pos, auto obj, auto... Vs>
@@ -581,81 +697,6 @@ namespace machine_space
 
 	template<auto d, auto pos, auto obj, auto... Vs>
 	constexpr auto pack_replace = f_pack_replace<d, pos, obj, Vs...>();
-
-/***********************************************************************************************************************/
-
-// list replace:
-
-	template<depth_type d, index_type pos, index_type obj, auto... Vs>
-	constexpr auto f_list_replace(void(*)(auto_pack<Vs...>*))
-	{
-		return pack_replace<d, pos, obj, Vs...>;
-	}
-
-	template<typename List, index_type pos, index_type obj, depth_type depth = 500>
-	constexpr auto list_replace = f_list_replace<depth, pos, obj>(U_type_T<List>);
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
-// pack apply1:
-
-	template<auto d, auto pos, auto op, auto arg, auto... Vs>
-	constexpr auto f_pack_apply1()
-	{
-		constexpr auto c = apply1_replace_contr<pos, op, arg, p_pack>;
-		constexpr auto i = zero;
-		constexpr auto j = zero;
-
-		return machine_start<PD, c, d, i, j, Vs...>();
-	}
-
-	template<auto d, auto pos, auto op, auto arg, auto... Vs>
-	constexpr auto pack_apply1 = f_pack_apply1<d, pos, op, arg, Vs...>();
-
-/***********************************************************************************************************************/
-
-// list apply1:
-
-	template<depth_type d, index_type pos, index_type op, index_type arg, auto... Vs>
-	constexpr auto f_list_apply1(void(*)(auto_pack<Vs...>*))
-	{
-		return pack_apply1<d, pos, op, arg, Vs...>;
-	}
-
-	template<typename List, index_type pos, index_type op, index_type arg, depth_type depth = 500>
-	constexpr auto list_apply1 = f_list_apply1<depth, pos, op, arg>(U_type_T<List>);
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
-// pack apply2:
-
-	template<auto d, auto pos, auto op, auto arg1, auto arg2, auto... Vs>
-	constexpr auto f_pack_apply2()
-	{
-		constexpr auto c = apply2_replace_contr<pos, op, arg1, arg2, p_pack>;
-		constexpr auto i = zero;
-		constexpr auto j = zero;
-
-		return machine_start<PD, c, d, i, j, Vs...>();
-	}
-
-	template<auto d, auto pos, auto op, auto arg1, auto arg2, auto... Vs>
-	constexpr auto pack_apply2 = f_pack_apply2<d, pos, op, arg1, arg2, Vs...>();
-
-/***********************************************************************************************************************/
-
-// list apply2:
-
-	template<depth_type d, index_type pos, index_type op, index_type arg1, index_type arg2, auto... Vs>
-	constexpr auto f_list_apply2(void(*)(auto_pack<Vs...>*))
-	{
-		return pack_apply2<d, pos, op, arg1, arg2, Vs...>;
-	}
-
-	template<typename List, index_type pos, index_type op, index_type arg1, index_type arg2, depth_type depth = 500>
-	constexpr auto list_apply2 = f_list_apply2<depth, pos, op, arg1, arg2>(U_type_T<List>);
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

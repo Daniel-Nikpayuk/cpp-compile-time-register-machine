@@ -17,38 +17,52 @@
 **
 ************************************************************************************************************************/
 
-#ifndef INCLUDE_H
-#define INCLUDE_H
+#ifndef _9_FUNCTION_TYPE_HPP
+#define _9_FUNCTION_TYPE_HPP
+
+// function type:
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
-// meta programming:
-
-	#include"source/0_meta_programming.hpp"
-
-/***********************************************************************************************************************/
-
-// machine-space:
-
-	#include"source/1_machine_declarations.hpp"
-
-	#include"source/define_parameter_macros.hpp"
-	#include"source/define_machine_macros.hpp"
-
-		#include"source/2_block_machines.hpp"
-		#include"source/3_variadic_machines.hpp"
-		#include"source/4_permutatic_machines.hpp"
-		#include"source/5_distributic_machines.hpp"
-		#include"source/6_near_linear_machines.hpp"
-		#include"source/7_register_machines.hpp"
-
-	#include"source/undef_all_macros.hpp"
+namespace function_space
+{
+	using namespace machine_space;
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
+
+// out type:
+
+	template<typename OutType, typename... InTypes>
+	constexpr auto f_out_type(OutType(*f)(InTypes...))
+	{
+		return U_type_T<OutType>;
+	}
+
+	template<auto f>
+	using out_type = T_type_U<f_out_type(f)>;
+
+/***********************************************************************************************************************/
+
+// in type:
+
+	template<auto depth, auto pos, typename OutType, typename... InTypes>
+	constexpr auto f_in_type(OutType(*f)(InTypes...))
+	{
+		return pack_at<depth, pos, U_type_T<InTypes>...>;
+	}
+
+	template<auto f, depth_type pos = 0, depth_type depth = 500>
+	using in_type = T_type_U<f_in_type<depth, pos>(f)>;
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+}
 
 #endif
 

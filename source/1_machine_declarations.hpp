@@ -151,129 +151,150 @@ namespace machine_space
 
 	struct MN
 	{
+		// abstract:
+
+			// passers:
+
+				static constexpr index_type id				=  0;
+
 		// block:
 
 			// halters:
 
-				static constexpr index_type pause			=  0;
+				static constexpr index_type pause			=  1;
 
-				static constexpr index_type first			=  1;
-				static constexpr index_type rest			=  2;
-				static constexpr index_type pack			=  3;
+				static constexpr index_type first			=  2;
+				static constexpr index_type rest			=  3;
+				static constexpr index_type pack			=  4;
 
 			// debuggers:
 
-				static constexpr index_type depth			=  4;
-				static constexpr index_type dump			=  5;
+				static constexpr index_type depth			=  5;
+				static constexpr index_type dump			=  6;
 
 			// interoperability:
 
-				static constexpr index_type pass			=  6;
+				static constexpr index_type pass			=  7;
 
 			// passers:
 
 				// stack -> stack:
 
-				static constexpr index_type pop_2_n			=  7;
-				static constexpr index_type push_2_n			=  8;
-				static constexpr index_type fold_2_n			=  9;
-				static constexpr index_type roll_2_n			= 10;
+				static constexpr index_type pop_2_n			=  8;
+				static constexpr index_type push_2_n			=  9;
+				static constexpr index_type fold_2_n			= 10;
+				static constexpr index_type roll_2_n			= 11;
 
 				// stack -> heap:
 
-				static constexpr index_type move_2_n_s_to_h0		= 11;
-				static constexpr index_type move_2_n_s_to_h1		= 12;
+				static constexpr index_type move_2_n_s_to_h0		= 12;
+				static constexpr index_type move_2_n_s_to_h1		= 13;
 
 		// variadic:
 
 			// halters:
 
-				static constexpr index_type stop			= 13;
+				static constexpr index_type stop			= 14;
 
 			// passers:
 
 				// stack -> stack:
 
-				static constexpr index_type pop				= 14;
-				static constexpr index_type push			= 15;
-				static constexpr index_type fold			= 16;
-				static constexpr index_type roll			= 17;
+				static constexpr index_type pop				= 15;
+				static constexpr index_type push			= 16;
+
+				static constexpr index_type fold_s0			= 17;
+				static constexpr index_type roll_s0			= 18;
 
 				// stack -> heap:
 
-				static constexpr index_type copy_s0_to_h0		= 18;
+				static constexpr index_type copy_s0_to_h0		= 19;
 
-				static constexpr index_type move_s_to_h0		= 19;
-				static constexpr index_type move_s_to_h1		= 20;
+				static constexpr index_type move_s_to_h0		= 20;
+				static constexpr index_type move_s_to_h1		= 21;
 
 				// heap -> stack:
 
-				static constexpr index_type copy_h0_to_sf		= 21;
-				static constexpr index_type copy_h1_to_sf		= 22;
+				static constexpr index_type copy_h0_to_sf		= 22;
+				static constexpr index_type copy_h1_to_sf		= 23;
 
-				static constexpr index_type move_h0_to_sf		= 23;
-				static constexpr index_type move_h1_to_sf		= 24;
+				static constexpr index_type move_h0_to_sf		= 24;
+				static constexpr index_type move_h1_to_sf		= 25;
 
-				static constexpr index_type apply1_move_h0_to_sf	= 25;
-				static constexpr index_type apply2_move_h0_to_sf	= 26;
+				static constexpr index_type apply1_move_h0_to_sf	= 26;
+				static constexpr index_type apply2_move_h0_to_sf	= 27;
+
+				static constexpr index_type compel1_move_h0_to_sf	= 28;
+				static constexpr index_type compel2_move_h0_to_sf	= 29;
 
 		// permutatic:
 
 			// passers:
 
-				static constexpr index_type copy_sn_to_h0		= 27;
-				static constexpr index_type move_sn_to_h0		= 28;
+				static constexpr index_type copy_sn_to_h0		= 30;
+				static constexpr index_type move_sn_to_h0		= 31;
 
-				static constexpr index_type erase_sn			= 29;
-				static constexpr index_type insert_h0_to_sn		= 30;
-				static constexpr index_type replace_h0_to_sn		= 31;
+				static constexpr index_type erase_sn			= 32;
+				static constexpr index_type rotate_sn			= 33;
+				static constexpr index_type insert_h0_to_sn		= 34;
+				static constexpr index_type replace_h0_to_sn		= 35;
 
-				static constexpr index_type apply1_replace_h0_to_sn	= 32;
-				static constexpr index_type apply2_replace_h0_to_sn	= 33;
+				static constexpr index_type apply1_replace_h0_to_sn	= 36;
+				static constexpr index_type apply2_replace_h0_to_sn	= 37;
+
+				static constexpr index_type compel1_replace_h0_to_sn	= 38;
+				static constexpr index_type compel2_replace_h0_to_sn	= 39;
 
 		// distributic:
 
 			// passers:
 
-				static constexpr index_type erase			= 34;
-				static constexpr index_type insert			= 35;
-				static constexpr index_type replace			= 36;
+				static constexpr index_type erase			= 40;
+				static constexpr index_type insert			= 41;
+				static constexpr index_type replace			= 42;
 
-				static constexpr index_type apply			= 37;
-				static constexpr index_type test			= 38;
-				static constexpr index_type jump			= 39;
+				static constexpr index_type fold			= 43;
+				static constexpr index_type roll			= 44;
+
+				static constexpr index_type apply			= 45;
+				static constexpr index_type compel			= 46;
+
+				static constexpr index_type test			= 47;
+				static constexpr index_type check			= 48;
+
+				static constexpr index_type jump			= 49;
 
 		// near linear:
 
 			// halters:
 
-				static constexpr index_type halt			= 40;
+				static constexpr index_type halt			= 50;
 
 			// passers:
 
-				static constexpr index_type lift			= 41;
-				static constexpr index_type stem			= 42;
-				static constexpr index_type costem			= 43;
-				static constexpr index_type cycle			= 44;
+				static constexpr index_type lift			= 51;
+				static constexpr index_type stem			= 52;
+				static constexpr index_type costem			= 53;
+				static constexpr index_type cycle			= 54;
 
 		// register:
 
 			// passers:
 
-				static constexpr index_type assign			= 45;
+				static constexpr index_type assign			= 55;
 
-				static constexpr index_type branch			= 46;
-				static constexpr index_type go_to_s0			= 47;
-				static constexpr index_type go_to			= 48;
+				static constexpr index_type branch			= 56;
+				static constexpr index_type go_to_s0			= 57;
+				static constexpr index_type go_to			= 58;
 
-				static constexpr index_type save			= 49;
-				static constexpr index_type restore			= 50;
+				static constexpr index_type save			= 59;
+				static constexpr index_type restore			= 60;
 
 		// reflection:
 
 			// sizes:
 
-				static constexpr index_type reg_size			= 51;
+				static constexpr index_type reg_size			= 61;
 	};
 
 /***********************************************************************************************************************/
@@ -309,7 +330,7 @@ namespace machine_space
 
 			// predications:
 
-			static constexpr index_type test	= 3;
+			static constexpr index_type pred	= 3;
 			static constexpr index_type input	= 4;
 			static constexpr index_type input1	= 4;
 			static constexpr index_type input2	= 5;
@@ -380,6 +401,70 @@ namespace machine_space
 
 //	template<depth_type x, depth_type y>
 //	constexpr pair_type pair = f_array<depth_type, x, y>;
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// abstract:
+
+/***********************************************************************************************************************/
+
+// id:
+
+	template<>
+	struct machine<MN::id>
+	{
+		template<CONTR_PARAMS, auto... Vs, typename... Heaps>
+		static constexpr auto result(Heaps... Hs)
+		{
+			return MACHINE(n, c, d, i, j)(Hs...);
+		}
+	};
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// trampolining:
+
+/***********************************************************************************************************************/
+
+// trampoline:
+
+	template<auto d, typename T>
+	constexpr auto machine_trampoline(T v) { return v; }
+
+	template<auto d, auto RPack, auto... Hs>
+	constexpr auto machine_trampoline(void(*)(alt_pack<RPack, Hs...>*));
+
+	// helper (unpacks stack):
+
+		template<auto d, auto un, auto c, auto i, auto j, auto... Vs, typename... Heaps>
+		constexpr auto trampoline_next(void(*)(auto_pack<un, c, i, j, Vs...>*), Heaps... Hs)
+		{
+			using n = T_type_U<un>;
+
+			return machine_trampoline<d-2>(MACHINE(n, c, d, i, j)(Hs...));
+		}
+
+	template<auto d, auto RPack, auto... Hs>
+	constexpr auto machine_trampoline(void(*)(alt_pack<RPack, Hs...>*))
+	{
+		static_assert(bool(d), "machine trampolining nesting depth exceeded.");
+
+		return trampoline_next<d>(RPack, Hs...);
+	}
+
+/***********************************************************************************************************************/
+
+// start:
+
+	template<CONTR_PARAMS, auto... Vs, typename... Heaps>
+	constexpr auto machine_start()
+	{
+		return machine_trampoline<d>(MACHINE(n, c, d, i, j)(U_pack_Vs<>, U_pack_Vs<>));
+	}
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

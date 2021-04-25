@@ -17,39 +17,42 @@
 **
 ************************************************************************************************************************/
 
-#include<cstdio>
+#ifndef INCLUDE_H
+#define INCLUDE_H
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// meta programming:
+
+	#include"source/0_meta_programming.hpp"
 
 /***********************************************************************************************************************/
 
-#include"include.hpp"
+// machine-space:
 
-	using namespace machine_space;
+	#include"source/define_parameter_macros.hpp"
+	#include"source/define_machine_macros.hpp"
 
-//#include"testing/unit_lists.hpp"
-//#include"case-studies/0_factorial.hpp"
-#include"case-studies/2_filter.hpp"
+		#include"source/1_machine_declarations.hpp"
+		#include"source/2_block_machines.hpp"
+		#include"source/3_variadic_machines.hpp"
+		#include"source/4_permutatic_machines.hpp"
+		#include"source/5_distributic_machines.hpp"
+		#include"source/6_near_linear_machines.hpp"
+		#include"source/7_register_machines.hpp"
+
+	#include"source/undef_all_macros.hpp"
+
+	//
+
+	#include"source/8_list_type.hpp"
+	#include"source/9_function_type.hpp"
 
 /***********************************************************************************************************************/
-
-	using utype = unsigned long long;
-	using stype =   signed long long;
-
+/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
-	template<typename T>
-	constexpr T square(T x) { return x*x; }
-
-//	constexpr auto func = do_compose<square<int>, square<int>, multiply_by<int, 2>, add_by<int, 1>>;
-	constexpr auto func = n_safe_compose<add_by<int, 1>, multiply_by<int, 2>, _id_, square<int>>;
-
-/***********************************************************************************************************************/
-
-	int main(int argc, char *argv[])
-	{
-		printf("%d\n", func(utype(5)));
-
-	//	printf("%llu\n", r_factorial<utype(5)>);
-
-		return 0;
-	}
+#endif
 

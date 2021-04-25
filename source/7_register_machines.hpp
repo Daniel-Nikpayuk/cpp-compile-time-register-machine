@@ -230,41 +230,63 @@ namespace machine_space
 
 	// syntactic sugar:
 
-		constexpr ra_type r_dump = m_application<MN::dump, zero>;
-		constexpr ra_type r_pack = m_application<MN::pack, zero>;
+		constexpr ra_type r_dump = r_application<MN::dump, zero>;
+		constexpr ra_type r_pack = r_application<MN::pack, zero>;
+
+		template<index_type Pos>
+		constexpr ra_type r_rotate_sn = r_application<MN::rotate_sn, zero, Pos>;
 
 		template<index_type Op, index_type... Args>
-		constexpr ra_type r_test = m_application<MN::test, MA::arity(sizeof...(Args)), Op, Args...>;
+		constexpr ra_type r_test = r_application<MN::test, MA::arity(sizeof...(Args)), Op, Args...>;
+
+		template<index_type Op, index_type... Args>
+		constexpr ra_type r_check = r_application<MN::check, MA::arity(sizeof...(Args)), Op, Args...>;
 
 		template<index_type Pos, index_type Op, index_type... Args>
-		constexpr ra_type r_apply = m_application<MN::apply, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
+		constexpr ra_type r_apply = r_application<MN::apply, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
+
+		template<index_type Pos, index_type Op, index_type... Args>
+		constexpr ra_type r_compel = r_application<MN::compel, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
+
+		//
+
+		template<index_type Pos>
+		constexpr ra_type r_pop = r_application<MN::pop, zero, Pos>;
+
+		template<index_type Pos>
+		constexpr ra_type r_erase = r_application<MN::erase, zero, Pos>;
 
 		template<index_type Pos, index_type Obj>
-		constexpr ra_type r_replace = m_application<MN::replace, zero, Pos, Obj>;
+		constexpr ra_type r_insert = r_application<MN::insert, zero, Pos, Obj>;
 
 		template<index_type Pos, index_type Obj>
-		constexpr ra_type r_assign = m_application<MN::assign, zero, Pos, Obj>;
+		constexpr ra_type r_replace = r_application<MN::replace, zero, Pos, Obj>;
+
+		//
+
+		template<index_type Pos, index_type Obj>
+		constexpr ra_type r_assign = r_application<MN::assign, zero, Pos, Obj>;
 
 		template<index_type Pos>
-		constexpr ra_type r_branch = m_application<MN::branch, zero, Pos>;
+		constexpr ra_type r_branch = r_application<MN::branch, zero, Pos>;
 
 		template<index_type Pos>
-		constexpr ra_type r_save = m_application<MN::save, zero, Pos>;
+		constexpr ra_type r_save = r_application<MN::save, zero, Pos>;
 
 		template<index_type Pos>
-		constexpr ra_type r_restore = m_application<MN::restore, zero, Pos>;
+		constexpr ra_type r_restore = r_application<MN::restore, zero, Pos>;
 
 		template<index_type Pos>
-		constexpr ra_type r_goto_contr = m_application<MN::go_to, MD::contr, Pos>;
+		constexpr ra_type r_goto_contr = r_application<MN::go_to, MD::contr, Pos>;
 
 		template<index_type Pos>
-		constexpr ra_type r_goto_regtr = m_application<MN::go_to, MD::regtr, Pos>;
+		constexpr ra_type r_goto_regtr = r_application<MN::go_to, MD::regtr, Pos>;
 
 		template<index_type Pos>
-		constexpr ra_type r_stop = m_application<MN::stop, zero, Pos>;
+		constexpr ra_type r_stop = r_application<MN::stop, zero, Pos>;
 
 		template<index_type Num>
-		constexpr ra_type r_reg_size = m_application<MN::reg_size, zero, Num>;
+		constexpr ra_type r_reg_size = r_application<MN::reg_size, zero, Num>;
 
 /***********************************************************************************************************************/
 
@@ -342,7 +364,7 @@ namespace machine_space
 			static constexpr index_type arg1   (rc_type c, index_type i, index_type j) { return c(i)(j)(RA::arg1  ); }
 			static constexpr index_type arg2   (rc_type c, index_type i, index_type j) { return c(i)(j)(RA::arg2  ); }
 
-			static constexpr index_type test   (rc_type c, index_type i, index_type j) { return c(i)(j)(RA::test  ); }
+			static constexpr index_type pred   (rc_type c, index_type i, index_type j) { return c(i)(j)(RA::pred  ); }
 			static constexpr index_type input  (rc_type c, index_type i, index_type j) { return c(i)(j)(RA::input ); }
 			static constexpr index_type input1 (rc_type c, index_type i, index_type j) { return c(i)(j)(RA::input1); }
 			static constexpr index_type input2 (rc_type c, index_type i, index_type j) { return c(i)(j)(RA::input2); }

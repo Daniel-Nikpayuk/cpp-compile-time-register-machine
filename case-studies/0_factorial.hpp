@@ -78,7 +78,7 @@
 
 // perf:
 
-	//	printf("%llu\n", n_factorial<utype(5)>);
+//		printf("%llu\n", n_factorial<utype(5)>);
 
 //			gcc compile time:		gcc run time:
 //			                                
@@ -96,7 +96,7 @@
 //			user	0m0.702s                user	0m0.001s
 //			sys	0m0.057s                sys	0m0.000s
 
-	//	printf("%llu\n", n_factorial<utype(20)>);
+//		printf("%llu\n", n_factorial<utype(20)>);
 
 //			gcc compile time:		gcc run time:
 //			                                
@@ -205,7 +205,7 @@
 
 // perf:
 
-	//	printf("%llu\n", r_factorial<utype(5)>);
+//		printf("%llu\n", r_factorial<utype(5)>);
 
 //			gcc compile time:		gcc run time:
 //			                                
@@ -223,7 +223,7 @@
 //			user	0m1.036s                user	0m0.001s
 //			sys	0m0.081s                sys	0m0.000s
 
-	//	printf("%llu\n", r_factorial<utype(20)>);
+//		printf("%llu\n", r_factorial<utype(20)>);
 
 //			gcc compile time:		gcc run time:
 //			                                

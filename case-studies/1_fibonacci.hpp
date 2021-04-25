@@ -126,7 +126,7 @@
 
 // perf:
 
-	//	printf("%llu\n", r_fibonacci<utype(5)>);
+//		printf("%llu\n", r_fibonacci<utype(5)>);
 
 //			gcc compile time:		gcc run time:
 //			                                
@@ -144,9 +144,7 @@
 //			user	0m2.722s                user	0m0.001s
 //			sys	0m0.160s                sys	0m0.000s
 
-	//	printf("%llu\n", r_fibonacci<utype(13)>);
-
-	//		currently any higher value than n == 13 exceeds template nesting depth limits.
+//		printf("%llu\n", r_fibonacci<utype(13)>);
 
 //			gcc compile time:		gcc run time:
 //			                                
@@ -163,6 +161,24 @@
 //			real	2m3.677s                real	0m0.001s
 //			user	1m58.793s               user	0m0.000s
 //			sys	0m3.142s                sys	0m0.001s
+
+//		printf("%llu\n", r_fibonacci<utype(14)>);
+
+//			gcc compile time:		gcc run time:
+//			                                
+//			                                static assert error: nesting depth exceeded.
+//			                                
+//			real	1m21.179s               real	0m0.002s
+//			user	1m16.767s               user	0m0.000s
+//			sys	0m2.818s                sys	0m0.002s
+//			                                
+//			clang compile time:             clang run time:
+//			                                
+//			                                static assert error: nesting depth exceeded.
+//			                                
+//			real	2m16.306s               real	0m0.002s
+//			user	2m12.003s               user	0m0.002s
+//			sys	0m3.413s                sys	0m0.000s
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

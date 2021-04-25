@@ -17,7 +17,7 @@
 **
 ************************************************************************************************************************/
 
-// define macros:
+// define machine macros:
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -319,6 +319,37 @@
 
 /***********************************************************************************************************************/
 
+// (fast) rotate stack position:
+
+	#define define_permutatic_machine_rotate_stack_position(S, N, C)						\
+															\
+		template<>												\
+		struct machine<MN::rotate_sn, S>									\
+		{													\
+			template<CONTR_PARAMS, _ ## S ## _fast_auto_Vs, auto... Vs, typename... Heaps>			\
+			static constexpr auto result(Heaps... Hs)							\
+			{												\
+				return machine										\
+				<											\
+					n::next_name(c, d, i, j),							\
+					n::next_note(c, d, i, j)							\
+															\
+				>::template result									\
+				<											\
+					n, c,										\
+															\
+					n::next_depth(d),								\
+					n::next_index1(c, d, i, j),							\
+					n::next_index2(c, d, i, j),							\
+															\
+					_ ## N ## _fast_Vs  _ ## C ## _comma  Vs..., V ## N				\
+															\
+				>(Hs...);										\
+			}												\
+		}
+
+/***********************************************************************************************************************/
+
 // (fast) insert heap zero to stack position:
 
 	#define define_permutatic_machine_insert_heap_zero_to_stack_position(S, N, C)					\
@@ -448,6 +479,80 @@
 					n::next_index2(c, d, i, j),							\
 															\
 					_ ## N ## _fast_Vs  _ ## C ## _comma  op(arg1, arg2), Vs...			\
+															\
+				>(U_pack_Vs<>, Hs...);									\
+			}												\
+		}
+
+/***********************************************************************************************************************/
+
+// unary compel replace heap zero to stack position:
+
+	#define define_permutatic_machine_unary_compel_replace_heap_zero_to_stack_position(S, N, C)			\
+															\
+		template<>												\
+		struct machine<MN::compel1_replace_h0_to_sn, S>								\
+		{													\
+			template											\
+			<												\
+				CONTR_PARAMS, _ ## S ## _fast_auto_Vs, auto... Vs,					\
+				auto act, auto arg, typename... Heaps							\
+			>												\
+			static constexpr auto result(void(*H0)(auto_pack<act, arg>*), Heaps... Hs)			\
+			{												\
+				return machine										\
+				<											\
+					n::next_name(c, d, i, j),							\
+					n::next_note(c, d, i, j)							\
+															\
+				>::template result									\
+				<											\
+					n, c,										\
+															\
+					n::next_depth(d),								\
+					n::next_index1(c, d, i, j),							\
+					n::next_index2(c, d, i, j),							\
+															\
+					_ ## N ## _fast_Vs  _ ## C ## _comma						\
+															\
+					T_type_U<act>::template result<arg>, Vs...					\
+															\
+				>(U_pack_Vs<>, Hs...);									\
+			}												\
+		}
+
+/***********************************************************************************************************************/
+
+// binary compel replace heap zero to stack position:
+
+	#define define_permutatic_machine_binary_compel_replace_heap_zero_to_stack_position(S, N, C)			\
+															\
+		template<>												\
+		struct machine<MN::compel2_replace_h0_to_sn, S>								\
+		{													\
+			template											\
+			<												\
+				CONTR_PARAMS, _ ## S ## _fast_auto_Vs, auto... Vs,					\
+				auto act, auto arg1, auto arg2, typename... Heaps					\
+			>												\
+			static constexpr auto result(void(*H0)(auto_pack<act, arg1, arg2>*), Heaps... Hs)		\
+			{												\
+				return machine										\
+				<											\
+					n::next_name(c, d, i, j),							\
+					n::next_note(c, d, i, j)							\
+															\
+				>::template result									\
+				<											\
+					n, c,										\
+															\
+					n::next_depth(d),								\
+					n::next_index1(c, d, i, j),							\
+					n::next_index2(c, d, i, j),							\
+															\
+					_ ## N ## _fast_Vs  _ ## C ## _comma						\
+															\
+					T_type_U<act>::template result<arg1, arg2>, Vs...				\
 															\
 				>(U_pack_Vs<>, Hs...);									\
 			}												\

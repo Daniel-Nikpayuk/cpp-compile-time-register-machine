@@ -448,42 +448,6 @@ namespace machine_space
 
 /***********************************************************************************************************************/
 
-// trampoline:
-
-	template<auto d, typename T>
-	constexpr auto machine_trampoline(T v) { return v; }
-
-	template<auto d, auto RPack, auto... Hs>
-	constexpr auto machine_trampoline(void(*)(alt_pack<RPack, Hs...>*));
-
-	// helper (unpacks stack):
-
-		template<auto d, auto un, auto c, auto i, auto j, auto... Vs, typename... Heaps>
-		constexpr auto trampoline_next(void(*)(auto_pack<un, c, i, j, Vs...>*), Heaps... Hs)
-		{
-			using n = T_type_U<un>;
-
-			return machine_trampoline<d-2>(MACHINE(n, c, d, i, j)(Hs...));
-		}
-
-	template<auto d, auto RPack, auto... Hs>
-	constexpr auto machine_trampoline(void(*)(alt_pack<RPack, Hs...>*))
-	{
-		return trampoline_next<d>(RPack, Hs...);
-	}
-
-/***********************************************************************************************************************/
-
-// start:
-
-	template<CONTR_PARAMS, auto... Vs, typename... Heaps>
-	constexpr auto machine_start()
-	{
-		return machine_trampoline<d>(MACHINE(n, c, d, i, j)(U_pack_Vs<>, U_pack_Vs<>));
-	}
-
-/***********************************************************************************************************************/
-
 // pack at:
 
 	template<auto d, auto n, auto... Vs>
@@ -498,19 +462,6 @@ namespace machine_space
 
 	template<auto d, auto n, auto... Vs>
 	constexpr auto pack_at = f_pack_at<d, n, Vs...>();
-
-/***********************************************************************************************************************/
-
-// list at:
-
-	template<depth_type d, depth_type pos, auto... Vs>
-	constexpr auto f_list_at(void(*)(auto_pack<Vs...>*))
-	{
-		return pack_at<d, pos, Vs...>;
-	}
-
-	template<typename List, depth_type pos, depth_type depth = 500>
-	constexpr auto list_at = f_list_at<depth, pos>(U_type_T<List>);
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

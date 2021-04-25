@@ -128,19 +128,18 @@ namespace machine_space
 // fold:
 
 	template<>
-	struct machine<MN::fold>
+	struct machine<MN::fold_s0>
 	{
 		using nn			= BD;
 		static constexpr auto nc	= fold_contr<>;
 
 		template
 		<
-			CONTR_PARAMS, auto... Vs,
+			CONTR_PARAMS, auto pos, auto... Vs,
 			FIXED_HEAP_PARAMS, typename... Heaps
 		>
 		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
-			constexpr depth_type pos	= n::pos(c, i, j);
 			constexpr depth_type nj		= block_max_index2(pos);
 			constexpr depth_type ni		= pos + nj;
 
@@ -155,19 +154,18 @@ namespace machine_space
 // roll:
 
 	template<>
-	struct machine<MN::roll>
+	struct machine<MN::roll_s0>
 	{
 		using nn			= BD;
 		static constexpr auto nc	= roll_contr<>;
 
 		template
 		<
-			CONTR_PARAMS, auto... Vs,
+			CONTR_PARAMS, auto pos, auto... Vs,
 			FIXED_HEAP_PARAMS, typename... Heaps
 		>
 		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
-			constexpr depth_type pos	= n::pos(c, i, j);
 			constexpr depth_type nj		= block_max_index2(pos);
 			constexpr depth_type ni		= pos + nj;
 
@@ -457,6 +455,68 @@ namespace machine_space
 	};
 
 /***********************************************************************************************************************/
+
+// unary compel move heap zero to stack front:
+
+	template<>
+	struct machine<MN::compel1_move_h0_to_sf>
+	{
+		template<CONTR_PARAMS, auto... Vs, auto act, auto arg, typename... Heaps>
+		static constexpr auto result(void(*H0)(auto_pack<act, arg>*), Heaps... Hs)
+		{
+			return machine
+			<
+				n::next_name(c, d, i, j),
+				n::next_note(c, d, i, j)
+
+			>::template result
+			<
+				n, c,
+
+				n::next_depth(d),
+				n::next_index1(c, d, i, j),
+				n::next_index2(c, d, i, j),
+
+				T_type_U<act>::template result<arg>, Vs...
+
+			>(U_pack_Vs<>, Hs...);
+		}
+	};
+
+/***********************************************************************************************************************/
+
+// binary compel move heap zero to stack front:
+
+	template<>
+	struct machine<MN::compel2_move_h0_to_sf>
+	{
+		template
+		<
+			CONTR_PARAMS, auto... Vs,
+			auto act, auto arg1, auto arg2, typename... Heaps
+		>
+		static constexpr auto result(void(*H0)(auto_pack<act, arg1, arg2>*), Heaps... Hs)
+		{
+			return machine
+			<
+				n::next_name(c, d, i, j),
+				n::next_note(c, d, i, j)
+
+			>::template result
+			<
+				n, c,
+
+				n::next_depth(d),
+				n::next_index1(c, d, i, j),
+				n::next_index2(c, d, i, j),
+
+				T_type_U<act>::template result<arg1, arg2>, Vs...
+
+			>(U_pack_Vs<>, Hs...);
+		}
+	};
+
+/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
@@ -596,6 +656,22 @@ namespace machine_space
 
 /***********************************************************************************************************************/
 
+// rotate stack position:
+
+	template<index_type cont = MN::pass>
+	constexpr auto rotate_sn_contr = v_controller
+	<
+		MN::move_s_to_h0, MN::push_2_n, MN::move_h0_to_sf, cont
+	>;
+
+	template<depth_type pos>
+	constexpr auto rotate_sn_locus = v_locus
+	<
+		pos, zero, zero, zero
+	>;
+
+/***********************************************************************************************************************/
+
 // insert heap zero to stack position:
 
 	template<index_type cont = MN::pass>
@@ -654,6 +730,38 @@ namespace machine_space
 
 	template<depth_type pos>
 	constexpr auto apply2_replace_h0_to_sn_locus = v_locus
+	<
+		pos, zero, zero, zero, zero
+	>;
+
+/***********************************************************************************************************************/
+
+// unary compel replace heap zero to stack position:
+
+	template<index_type cont = MN::pass>
+	constexpr auto compel1_replace_h0_to_sn_contr = v_controller
+	<
+		MN::move_s_to_h1, MN::pop_2_n, MN::compel1_move_h0_to_sf, MN::move_h1_to_sf, cont
+	>;
+
+	template<depth_type pos>
+	constexpr auto compel1_replace_h0_to_sn_locus = v_locus
+	<
+		pos, zero, zero, zero, zero
+	>;
+
+/***********************************************************************************************************************/
+
+// binary compel replace heap zero to stack position:
+
+	template<index_type cont = MN::pass>
+	constexpr auto compel2_replace_h0_to_sn_contr = v_controller
+	<
+		MN::move_s_to_h1, MN::pop_2_n, MN::compel2_move_h0_to_sf, MN::move_h1_to_sf, cont
+	>;
+
+	template<depth_type pos>
+	constexpr auto compel2_replace_h0_to_sn_locus = v_locus
 	<
 		pos, zero, zero, zero, zero
 	>;

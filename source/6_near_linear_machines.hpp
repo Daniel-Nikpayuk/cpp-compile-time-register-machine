@@ -91,7 +91,7 @@ namespace machine_space
 		>
 		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
-			constexpr auto nc = jump_contr<n::pred(c, i, j), n::appl2(c, i, j), n::appl1(c, i, j)>;
+			constexpr auto nc = jump_contr<n::cond(c, i, j), n::appl2(c, i, j), n::appl1(c, i, j)>;
 			constexpr auto un = U_type_T<n>;
 
 			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
@@ -116,7 +116,7 @@ namespace machine_space
 		>
 		static constexpr auto result(FIXED_HEAP_SIG_ARGS, Heaps... Hs)
 		{
-			constexpr auto nc = jump_contr<n::pred(c, i, j), n::appl1(c, i, j), n::appl2(c, i, j)>;
+			constexpr auto nc = jump_contr<n::cond(c, i, j), n::appl1(c, i, j), n::appl2(c, i, j)>;
 			constexpr auto un = U_type_T<n>;
 
 			return MACHINE(nn, nc, d, ni, nj)(FIXED_HEAP_ARGS, U_pack_Vs<un, c, i, j>, Hs...);
@@ -149,14 +149,43 @@ namespace machine_space
 
 	// syntactic sugar:
 
+		template<index_type Note = zero>
+		constexpr na_type n_id = n_application<MN::id, Note>;
+
+		constexpr na_type n_pack = n_application<MN::pack, zero>;
+
+		template<index_type Note = zero>
+		constexpr na_type n_pass = n_application<MN::pass, Note>;
+
+		//
+
 		template<index_type Op, index_type... Args>
-		constexpr na_type n_test = m_application<MN::test, MA::arity(sizeof...(Args)), Op, Args...>;
+		constexpr na_type n_test = n_application<MN::test, MA::arity(sizeof...(Args)), Op, Args...>;
+
+		template<index_type Op, index_type... Args>
+		constexpr na_type n_check = n_application<MN::check, MA::arity(sizeof...(Args)), Op, Args...>;
 
 		template<index_type Pos>
-		constexpr na_type n_break = m_application<MN::stop, zero, Pos>;
+		constexpr na_type n_break = n_application<MN::stop, zero, Pos>;
+
+		//
+
+		template<index_type Pos>
+		constexpr na_type n_erase = n_application<MN::erase, zero, Pos>;
+
+		template<index_type Pos, index_type Obj>
+		constexpr na_type n_insert = n_application<MN::insert, zero, Pos, Obj>;
+
+		template<index_type Pos, index_type Obj>
+		constexpr na_type n_replace = n_application<MN::replace, zero, Pos, Obj>;
+
+		//
 
 		template<index_type Pos, index_type Op, index_type... Args>
-		constexpr na_type n_apply = m_application<MN::apply, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
+		constexpr na_type n_apply = n_application<MN::apply, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
+
+		template<index_type Pos, index_type Op, index_type... Args>
+		constexpr na_type n_compel = n_application<MN::compel, MA::arity(sizeof...(Args)), Pos, Op, Args...>;
 
 /***********************************************************************************************************************/
 
@@ -173,7 +202,7 @@ namespace machine_space
 
 			static constexpr index_type appl		= 2;
 
-			static constexpr index_type pred		= 2;
+			static constexpr index_type cond		= 2;
 			static constexpr index_type appl1		= 3;
 			static constexpr index_type appl2		= 4;
 
@@ -240,7 +269,7 @@ namespace machine_space
 
 			static constexpr auto appl(nc_type c, index_type i, index_type) { return c(i)(NP::appl); }
 
-			static constexpr auto pred(nc_type c, index_type i, index_type) { return c(i)(NP::pred); }
+			static constexpr auto cond(nc_type c, index_type i, index_type) { return c(i)(NP::cond); }
 			static constexpr auto appl1(nc_type c, index_type i, index_type) { return c(i)(NP::appl1); }
 			static constexpr auto appl2(nc_type c, index_type i, index_type) { return c(i)(NP::appl2); }
 
