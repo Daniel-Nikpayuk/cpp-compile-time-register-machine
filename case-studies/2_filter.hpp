@@ -89,17 +89,16 @@
 		<
 			test       < eq          , n   , c_0       >,
 			branch     < return_pack                   >,
+			apply      < n           , sub , n   , c_1 >,
 			check      < cond        , val             >,
 			branch     < pop_value                     >,
 			rotate_sn  < val                           >,
-			apply      < n           , sub , n   , c_1 >,
 			goto_contr < is_loop_end                   >
 		>,
 
 		r_label // pop value:
 		<
 			erase      < val                         >,
-			apply      < n           , sub , n , c_1 >,
 			goto_contr < is_loop_end                 >
 		>,
 
@@ -220,13 +219,13 @@
 /***********************************************************************************************************************/
 
 	template<auto d, auto... fs>
-	constexpr auto f_n_safe_compose()
+	constexpr auto f_n_safe_do_compose()
 	{
 		return f_auto_pack_do_compose<d>(r_filter<U_is_id, fs...>);
 	}
 
 	template<auto... fs>
-	constexpr auto n_safe_compose = f_n_safe_compose<500, fs...>();
+	constexpr auto n_safe_do_compose = f_n_safe_do_compose<500, fs...>();
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

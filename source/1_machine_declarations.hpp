@@ -57,7 +57,7 @@ namespace machine_space
 
 //					typename n, auto c, auto d, auto i, auto j, auto... Vs,
 
-//				// heap:
+//				// heaps:
 
 //					typename... Heaps
 //			>
