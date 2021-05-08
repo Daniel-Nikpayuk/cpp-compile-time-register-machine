@@ -23,19 +23,62 @@
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
+// machine:
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
 // permutatic:
 
 /***********************************************************************************************************************/
+
+#undef define_permutatic_machine_binary_compel_replace_heap_zero_to_stack_position
+#undef define_permutatic_machine_unary_compel_replace_heap_zero_to_stack_position
 
 #undef define_permutatic_machine_binary_apply_replace_heap_zero_to_stack_position
 #undef define_permutatic_machine_unary_apply_replace_heap_zero_to_stack_position
 
 #undef define_permutatic_machine_replace_heap_zero_to_stack_position
 #undef define_permutatic_machine_insert_heap_zero_to_stack_position
+#undef define_permutatic_machine_rotate_stack_position
 #undef define_permutatic_machine_erase_stack_position
 
 #undef define_permutatic_machine_move_stack_position_to_heap_zero
 #undef define_permutatic_machine_copy_stack_position_to_heap_zero
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// block:
+
+/***********************************************************************************************************************/
+
+#undef define_block_machine_move_stack_to_heap_one
+#undef define_block_machine_move_stack_to_heap_zero
+#undef define_block_machine_unload
+#undef define_block_machine_roll
+#undef define_block_machine_fold
+#undef define_block_machine_push
+#undef define_block_machine_pop
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// preamble:
+
+/***********************************************************************************************************************/
+
+#undef MACHINE
+#undef FIXED_HEAP_ARGS
+#undef FIXED_HEAP_SIG_ARGS
+#undef FIXED_HEAP_PARAMS
+#undef CONTR_PARAMS
+
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+/***********************************************************************************************************************/
+
+// parameter:
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/
@@ -77,12 +120,33 @@
 
 /***********************************************************************************************************************/
 
-// stack:
+// block array values:
 
-#undef define_block_machine_move_stack_to_heap_one
-#undef define_block_machine_move_stack_to_heap_zero
-#undef define_block_machine_push
-#undef define_block_machine_pop
+#undef _2_9_arr_Vs
+#undef _2_8_arr_Vs
+#undef _2_7_arr_Vs
+#undef _2_6_arr_Vs
+#undef _2_5_arr_Vs
+#undef _2_4_arr_Vs
+#undef _2_3_arr_Vs
+#undef _2_2_arr_Vs
+#undef _2_1_arr_Vs
+#undef _2_0_arr_Vs
+
+/***********************************************************************************************************************/
+
+// block action values:
+
+#undef _2_9_act_Vs
+#undef _2_8_act_Vs
+#undef _2_7_act_Vs
+#undef _2_6_act_Vs
+#undef _2_5_act_Vs
+#undef _2_4_act_Vs
+#undef _2_3_act_Vs
+#undef _2_2_act_Vs
+#undef _2_1_act_Vs
+#undef _2_0_act_Vs
 
 /***********************************************************************************************************************/
 
@@ -98,6 +162,21 @@
 #undef _2_2_op_Vs
 #undef _2_1_op_Vs
 #undef _2_0_op_Vs
+
+/***********************************************************************************************************************/
+
+// block actions:
+
+#undef _2_9_acts
+#undef _2_8_acts
+#undef _2_7_acts
+#undef _2_6_acts
+#undef _2_5_acts
+#undef _2_4_acts
+#undef _2_3_acts
+#undef _2_2_acts
+#undef _2_1_acts
+#undef _2_0_acts
 
 /***********************************************************************************************************************/
 
@@ -146,6 +225,36 @@
 
 /***********************************************************************************************************************/
 
+// upper array values:
+
+#undef _upper_512_arr_Vs
+#undef _upper_256_arr_Vs
+#undef _upper_128_arr_Vs
+#undef _upper_64_arr_Vs
+#undef _upper_32_arr_Vs
+#undef _upper_16_arr_Vs
+#undef _upper_8_arr_Vs
+#undef _upper_4_arr_Vs
+#undef _upper_2_arr_Vs
+#undef _upper_1_arr_Vs
+
+/***********************************************************************************************************************/
+
+// upper action values:
+
+#undef _upper_512_act_Vs
+#undef _upper_256_act_Vs
+#undef _upper_128_act_Vs
+#undef _upper_64_act_Vs
+#undef _upper_32_act_Vs
+#undef _upper_16_act_Vs
+#undef _upper_8_act_Vs
+#undef _upper_4_act_Vs
+#undef _upper_2_act_Vs
+#undef _upper_1_act_Vs
+
+/***********************************************************************************************************************/
+
 // upper operation values:
 
 #undef _upper_512_op_Vs
@@ -190,15 +299,11 @@
 #undef _upper_1_auto_Vs
 
 /***********************************************************************************************************************/
-/***********************************************************************************************************************/
 
-// machine:
+// preamble:
 
-#undef MACHINE
-#undef FIXED_HEAP_ARGS
-#undef FIXED_HEAP_SIG_ARGS
-#undef FIXED_HEAP_PARAMS
-#undef CONTR_PARAMS
+#undef _1_comma
+#undef _0_comma
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

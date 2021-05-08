@@ -184,117 +184,120 @@ namespace machine_space
 				static constexpr index_type push_2_n			=  9;
 				static constexpr index_type fold_2_n			= 10;
 				static constexpr index_type roll_2_n			= 11;
+				static constexpr index_type unload_2_n			= 12;
 
 				// stack -> heap:
 
-				static constexpr index_type move_2_n_s_to_h0		= 12;
-				static constexpr index_type move_2_n_s_to_h1		= 13;
+				static constexpr index_type move_2_n_s_to_h0		= 13;
+				static constexpr index_type move_2_n_s_to_h1		= 14;
 
 		// variadic:
 
 			// halters:
 
-				static constexpr index_type stop			= 14;
+				static constexpr index_type stop			= 15;
 
 			// passers:
 
 				// stack -> stack:
 
-				static constexpr index_type pop				= 15;
-				static constexpr index_type push			= 16;
+				static constexpr index_type pop				= 16;
+				static constexpr index_type push			= 17;
 
-				static constexpr index_type fold_s0			= 17;
-				static constexpr index_type roll_s0			= 18;
+				static constexpr index_type fold_s0			= 18;
+				static constexpr index_type roll_s0			= 19;
+				static constexpr index_type unload_s0			= 20;
 
 				// stack -> heap:
 
-				static constexpr index_type copy_s0_to_h0		= 19;
+				static constexpr index_type copy_s0_to_h0		= 21;
 
-				static constexpr index_type move_s_to_h0		= 20;
-				static constexpr index_type move_s_to_h1		= 21;
+				static constexpr index_type move_s_to_h0		= 22;
+				static constexpr index_type move_s_to_h1		= 23;
 
 				// heap -> stack:
 
-				static constexpr index_type copy_h0_to_sf		= 22;
-				static constexpr index_type copy_h1_to_sf		= 23;
+				static constexpr index_type copy_h0_to_sf		= 24;
+				static constexpr index_type copy_h1_to_sf		= 25;
 
-				static constexpr index_type move_h0_to_sf		= 24;
-				static constexpr index_type move_h1_to_sf		= 25;
+				static constexpr index_type move_h0_to_sf		= 26;
+				static constexpr index_type move_h1_to_sf		= 27;
 
-				static constexpr index_type apply1_move_h0_to_sf	= 26;
-				static constexpr index_type apply2_move_h0_to_sf	= 27;
+				static constexpr index_type apply1_move_h0_to_sf	= 28;
+				static constexpr index_type apply2_move_h0_to_sf	= 29;
 
-				static constexpr index_type compel1_move_h0_to_sf	= 28;
-				static constexpr index_type compel2_move_h0_to_sf	= 29;
+				static constexpr index_type compel1_move_h0_to_sf	= 30;
+				static constexpr index_type compel2_move_h0_to_sf	= 31;
 
 		// permutatic:
 
 			// passers:
 
-				static constexpr index_type copy_sn_to_h0		= 30;
-				static constexpr index_type move_sn_to_h0		= 31;
+				static constexpr index_type copy_sn_to_h0		= 32;
+				static constexpr index_type move_sn_to_h0		= 33;
 
-				static constexpr index_type erase_sn			= 32;
-				static constexpr index_type rotate_sn			= 33;
-				static constexpr index_type insert_h0_to_sn		= 34;
-				static constexpr index_type replace_h0_to_sn		= 35;
+				static constexpr index_type erase_sn			= 34;
+				static constexpr index_type rotate_sn			= 35;
+				static constexpr index_type insert_h0_to_sn		= 36;
+				static constexpr index_type replace_h0_to_sn		= 37;
 
-				static constexpr index_type apply1_replace_h0_to_sn	= 36;
-				static constexpr index_type apply2_replace_h0_to_sn	= 37;
+				static constexpr index_type apply1_replace_h0_to_sn	= 38;
+				static constexpr index_type apply2_replace_h0_to_sn	= 39;
 
-				static constexpr index_type compel1_replace_h0_to_sn	= 38;
-				static constexpr index_type compel2_replace_h0_to_sn	= 39;
+				static constexpr index_type compel1_replace_h0_to_sn	= 40;
+				static constexpr index_type compel2_replace_h0_to_sn	= 41;
 
 		// distributic:
 
 			// passers:
 
-				static constexpr index_type erase			= 40;
-				static constexpr index_type insert			= 41;
-				static constexpr index_type replace			= 42;
+				static constexpr index_type erase			= 42;
+				static constexpr index_type insert			= 43;
+				static constexpr index_type replace			= 44;
 
-				static constexpr index_type fold			= 43;
-				static constexpr index_type roll			= 44;
+				static constexpr index_type fold			= 45;
+				static constexpr index_type roll			= 46;
+				static constexpr index_type unload			= 47;
 
-				static constexpr index_type apply			= 45;
-				static constexpr index_type compel			= 46;
+				static constexpr index_type apply			= 48;
+				static constexpr index_type compel			= 49;
 
-				static constexpr index_type test			= 47;
-				static constexpr index_type check			= 48;
+				static constexpr index_type test			= 50;
+				static constexpr index_type check			= 51;
 
-				static constexpr index_type jump			= 49;
+				static constexpr index_type jump			= 52;
 
 		// near linear:
 
 			// halters:
 
-				static constexpr index_type halt			= 50;
+				static constexpr index_type halt			= 53;
 
 			// passers:
 
-				static constexpr index_type lift			= 51;
-				static constexpr index_type stem			= 52;
-				static constexpr index_type costem			= 53;
-				static constexpr index_type cycle			= 54;
+				static constexpr index_type lift			= 54;
+				static constexpr index_type stem			= 55;
+				static constexpr index_type costem			= 56;
+				static constexpr index_type cycle			= 57;
 
 		// register:
 
 			// passers:
 
-				static constexpr index_type assign			= 55;
+				static constexpr index_type assign			= 58;
 
-				static constexpr index_type branch			= 56;
-				static constexpr index_type go_to_s0			= 57;
-				static constexpr index_type go_to			= 58;
+				static constexpr index_type branch			= 59;
+				static constexpr index_type go_to_s0			= 60;
+				static constexpr index_type go_to			= 61;
 
-				static constexpr index_type save			= 59;
-				static constexpr index_type restore			= 60;
+				static constexpr index_type save			= 62;
+				static constexpr index_type restore			= 63;
 
 		// reflection:
 
 			// sizes:
 
-				static constexpr index_type reg_size			= 61;
+				static constexpr index_type reg_size			= 64;
 	};
 
 /***********************************************************************************************************************/
@@ -500,28 +503,6 @@ namespace machine_space
 
 	template<index_type Num>
 	constexpr ma_type reg_size = m_application<MN::reg_size, zero, Num>;
-
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-/***********************************************************************************************************************/
-
-// pair (experimental):
-
-/***********************************************************************************************************************/
-
-	using pair_type = depth_type const *;
-
-	struct MInd
-	{
-		static constexpr index_type depth	= 0;
-		static constexpr index_type index	= 1;
-	};
-
-	template<depth_type x, depth_type y>
-	constexpr depth_type pair[] = { x, y };
-
-//	template<depth_type x, depth_type y>
-//	constexpr pair_type pair = f_array<depth_type, x, y>;
 
 /***********************************************************************************************************************/
 /***********************************************************************************************************************/

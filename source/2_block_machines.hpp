@@ -254,6 +254,21 @@ namespace machine_space
 	define_block_machine_roll(9);
 
 /***********************************************************************************************************************/
+
+// unload (2^N):
+
+	define_block_machine_unload(0);
+	define_block_machine_unload(1);
+	define_block_machine_unload(2);
+	define_block_machine_unload(3);
+	define_block_machine_unload(4);
+	define_block_machine_unload(5);
+	define_block_machine_unload(6);
+	define_block_machine_unload(7);
+	define_block_machine_unload(8);
+	define_block_machine_unload(9);
+
+/***********************************************************************************************************************/
 /***********************************************************************************************************************/
 
 // passers (stack to heap):

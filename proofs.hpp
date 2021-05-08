@@ -57,9 +57,9 @@
 	Comments:
 
 	I say *at least* because there is a finite number of additional depths required, for example when calling
-	MN::apply machines.
+	MN::apply, MN::compel machines.
 
-	Also, the default depth is d = 500, so the default total depth is 250(251) = 62 250.
+	Also, the default depth is d = 500, so the default total depth is 250(251) = 62 750.
 */
 
 /***********************************************************************************************************************/
